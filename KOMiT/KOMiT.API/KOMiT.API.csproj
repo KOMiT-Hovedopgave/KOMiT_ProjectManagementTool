@@ -11,9 +11,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Client\KOMiT.Client.csproj" />
-    <ProjectReference Include="..\Shared\KOMiT.App.csproj" />
+    <ProjectReference Include="..\KOMiT.App\KOMiT.App.csproj" />
+    <ProjectReference Include="..\KOMiT.Client\KOMiT.Client.csproj" />
   </ItemGroup>
+
+
 
 
 </Project>

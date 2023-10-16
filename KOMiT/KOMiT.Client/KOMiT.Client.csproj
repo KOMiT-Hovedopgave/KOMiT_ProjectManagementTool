@@ -12,7 +12,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Shared\KOMiT.App.csproj" />
+    <ProjectReference Include="..\KOMiT.App\KOMiT.App.csproj" />
   </ItemGroup>
+
+
 
 </Project>
