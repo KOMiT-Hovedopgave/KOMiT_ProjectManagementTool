@@ -1,9 +1,11 @@
+using KOMiT.DataAccess.Persistence;
 using Microsoft.AspNetCore.ResponseCompression;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
+builder.Services.AddKOMiTApp();
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
