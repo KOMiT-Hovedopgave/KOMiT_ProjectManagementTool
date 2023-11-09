@@ -13,6 +13,7 @@
   <ItemGroup>
     <ProjectReference Include="..\KOMiT.App\KOMiT.App.csproj" />
     <ProjectReference Include="..\KOMiT.Client\KOMiT.Client.csproj" />
+    <ProjectReference Include="..\KOMiT.Core\KOMiT.Core.csproj" />
   </ItemGroup>
 
 

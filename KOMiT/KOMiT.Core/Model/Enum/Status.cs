@@ -4,12 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace KOMiT.App.Model.Enum
+namespace KOMiT.Core.Model.Enum
 {
-    public enum CurrentTaskStatus
+    public enum Status
     {
-        Igang = 0,
-        Færdiggjort = 1,
-        Pause = 2,
+        Aktiv = 0,
+        Inaktiv = 1,
     }
 }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace KOMiT.App.Model.Enum
+namespace KOMiT.Core.Model.Enum
 {
     public enum ProjectType
     {

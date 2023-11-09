@@ -1,12 +1,5 @@
-﻿using KOMiT.App.Model.Enum;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace KOMiT.App.Model
-{
+﻿using KOMiT.Core.Model.Enum;
+namespace KOMiT.Core.Model;
     public class CurrentTask
     {
         public int Id { get; set; }
@@ -23,4 +16,4 @@ namespace KOMiT.App.Model
         public ICollection<ProjectMember>? ProjectMembers { get; set; }
         public ICollection<CurrentTaskProjectMember>? CurrentTaskProjectMembers { get; set; }
     }
-}
+
