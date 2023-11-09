@@ -7,8 +7,8 @@ namespace KOMiT.Core.Model;
         public string Description { get; set; }
         public CurrentTaskStatus CurrentTaskStatus { get; set; }
         public DateTime EstimatedNumberOfDays { get; set; }
-        public string Comment { get; set; } 
-        public DateTime RealizedDate { get; set; }
+        public string? Comment{ get; set; } 
+        public DateTime? RealizedDate { get; set; }
 
         public int? CurrentSubGoalId { get; set; }
         public CurrentSubGoal? CurrentSubGoal { get; set; }

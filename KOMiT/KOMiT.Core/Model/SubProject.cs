@@ -7,11 +7,11 @@ public class SubProject
     public Status Status { get; set; }
     public DateTime EstimatedStartDate { get; set; }
     public DateTime EstimatedEndDate { get; set; }
-    public string Comment { get; set; }
-    public DateTime RealizedDate { get; set; }
+    public string? Comment { get; set; }
+    public DateTime? RealizedDate { get; set; }
 
     public int? ProjectId {get; set;}
-    public Project Project { get; set; }
+    public Project? Project { get; set; }
 
     public ICollection <CurrentSubGoal>? CurrentSubGoals { get; set; }
 

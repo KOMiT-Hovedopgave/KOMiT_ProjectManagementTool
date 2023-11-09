@@ -14,8 +14,8 @@ public class CurrentSubGoal
     public string Description { get; set; }
     public Status Status { get; set; }
     public DateTime EstimatedEndDate { get; set; }
-    public string Comment { get; set; }
-    public DateTime RealizedDate { get; set; }
+    public string? Comment { get; set; }
+    public DateTime? RealizedDate { get; set; }
 
     public int? SubProjectId { get; set; }
     public SubProject? SubProject { get; set; }
