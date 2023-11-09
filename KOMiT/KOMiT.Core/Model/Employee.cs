@@ -17,6 +17,6 @@ public class Employee
     public int? ProjectMemberId { get; set; }
     public ProjectMember? ProjectMember { get; set; }
 
-    public ICollection <Competence>? Competences { get; set;}
+    public ICollection <Competence>? Competences { get;}
 
 }

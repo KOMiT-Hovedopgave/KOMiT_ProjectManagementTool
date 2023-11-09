@@ -16,5 +16,5 @@ public class StandardSubGoal
     public int? PhaseId { get; set; }
     public Phase? Phase {get; set;}
 
-    public ICollection <StandardTask>? StandardTasks { get; set; }
+    public ICollection <StandardTask>? StandardTasks { get; }
 }

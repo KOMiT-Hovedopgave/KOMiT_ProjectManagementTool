@@ -12,8 +12,7 @@ public class Phase
     public string Name { get; set; }
     public string Description { get; set; }
 
-    public ICollection<SubProject> SubProjects { get; set; }
-    public ICollection<SubProjectPhase> SubProjectPhases { get; set; }
+    public ICollection<SubProject> SubProjects { get; } 
 
-    public ICollection<StandardSubGoal>? StandardSubGoals { get; set; }
+    public ICollection<StandardSubGoal>? StandardSubGoals { get; }
 }

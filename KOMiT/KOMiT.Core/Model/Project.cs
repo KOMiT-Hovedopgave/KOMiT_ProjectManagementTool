@@ -13,5 +13,5 @@ public class Project
     public string? Comment { get; set; }
     public DateTime? RealizedDate { get; set; }
 
-    public ICollection<SubProject>? SubProjects { get; set;}
+    public ICollection<SubProject>? SubProjects { get; }
 }
