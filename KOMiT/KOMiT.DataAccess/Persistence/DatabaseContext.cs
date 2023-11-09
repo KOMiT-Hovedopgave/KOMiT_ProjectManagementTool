@@ -20,4 +20,35 @@ public class DatabaseContext : DbContext
     public DbSet<Employee> Employees { get; set; }
     public DbSet<ProjectMember> ProjectMembers { get; set; }
 
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Project>().HasData(
+            new Project
+            {
+                Id= 1,
+                Name= "Skema og tid",
+                Description= "Dette projekt...",
+                ProjectType = Core.Model.Enum.ProjectType.Udvikling,
+                EstimatedStartDate = DateTime.Now,
+                EstimatedEndDate = new DateTime(2023, 12, 09),
+            },
+            new Project
+            {
+                Id = 2,
+                Name = "Skema og tid",
+                Description = "Dette projekt...",
+                ProjectType = Core.Model.Enum.ProjectType.Udvikling,
+                EstimatedStartDate = DateTime.Now,
+                EstimatedEndDate = new DateTime(2023, 12, 09),
+            }
+            );
+        //modelBuilder.Entity<SubProject>().HasData(
+        //    new SubProject
+        //    {
+        //        ProjectId= 1,
+        //    }
+        //    );
+
+    }
+
 }
