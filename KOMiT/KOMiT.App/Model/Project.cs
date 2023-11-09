@@ -17,5 +17,7 @@ namespace KOMiT.App.Model
         public DateTime EstimatedEndDate { get; set; }
         public string? Comment { get; set; }
         public DateTime? RealizedDate { get; set; }
+
+        public ICollection<SubProject>? SubProjects { get; set;}
     }
 }
