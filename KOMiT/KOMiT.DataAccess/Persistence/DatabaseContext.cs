@@ -71,87 +71,87 @@ public class DatabaseContext : DbContext
         //   );
 
         modelBuilder.Entity<StandardSubGoal>().HasData(
-           new StandardSubGoal
-           {
-               Id = 1,
-               Name = "E2E test",
-               Description = "Dette delmål...",
-           },
-           new StandardSubGoal
-           {
-               Id = 2,
-               Name = "Unit Testing",
-               Description = "Dette delmål...",
-           },
-           new StandardSubGoal
-           {
+            new StandardSubGoal
+            {
+                Id = 1,
+                Name = "E2E test",
+                Description = "Dette delmål...",
+            },
+            new StandardSubGoal
+            {
+                Id = 2,
+                Name = "Unit Testing",
+                Description = "Dette delmål...",
+            },
+            new StandardSubGoal
+            {
                Id = 3,
                Name = "Integration",
                Description = "Dette delmål...",
-           }
+            }
            );
 
          modelBuilder.Entity<StandardTask>().HasData(
-           new StandardTask
-           {
+            new StandardTask
+            {
                Id = 1,
                Title = "Implementer test fixture for E2E",
                Description = "Denne opgave...",
-           },
-           new StandardTask
-           {
+            },
+            new StandardTask
+            {
                Id = 2,
                Title = "Unit Testing",
                Description = "Denne opgave...",
-           },
-           new StandardTask
-           {
+            },
+            new StandardTask
+            {
                Id = 3,
                Title = "Tilføj API til projekt",
                Description = "Denne opgave...",
-           }
-           );
-
-        modelBuilder.Entity<Employee>().HasData(
-         new Employee
-         {
-             Id = 1,
-             Name = "Pia Olsen",
-             JobPosition = "Udvikler",
-             Email = "pia@komit.dk",
-         },
-         new Employee
-         {
-             Id = 2,
-             Name = "Per Hansen",
-             JobPosition = "Konsulent",
-             Email = "per@komit.dk",
-         }
-         );
-
-        modelBuilder.Entity<Competence>().HasData(
-         new Competence
-         {
-             Id = 1,
-             Title = "SQL",
-             Description = "Jeg føler mig stærk i...",
-             Experience = "5 år",
-         },
-         new Competence
-         {
-             Id = 2,
-             Title = "C#",
-             Description = "Jeg føler mig stærk i...",
-             Experience = "4 år",
-         },
-         new Competence
-            {
-                 Id = 3,
-                 Title = "Blazor",
-                 Description = "Jeg føler mig stærk i...",
-                 Experience = "6 år",
             }
             );
+
+        modelBuilder.Entity<Employee>().HasData(
+            new Employee
+            {
+                 Id = 1,
+                 Name = "Pia Olsen",
+                 JobPosition = "Udvikler",
+                 Email = "pia@komit.dk",
+            },
+            new Employee
+            {
+                 Id = 2,
+                 Name = "Per Hansen",
+                 JobPosition = "Konsulent",
+                 Email = "per@komit.dk",
+            }
+            );
+
+        modelBuilder.Entity<Competence>().HasData(
+            new Competence
+            {
+                 Id = 1,
+                 Title = "SQL",
+                 Description = "Jeg føler mig stærk i...",
+                 Experience = "5 år",
+            },
+            new Competence
+            {
+                 Id = 2,
+                 Title = "C#",
+                 Description = "Jeg føler mig stærk i...",
+                 Experience = "4 år",
+            },
+            new Competence
+                {
+                     Id = 3,
+                     Title = "Blazor",
+                     Description = "Jeg føler mig stærk i...",
+                     Experience = "6 år",
+                }
+                );
 
         modelBuilder.Entity<ProjectMember>().HasData(
             new ProjectMember
@@ -173,10 +173,10 @@ public class DatabaseContext : DbContext
             }
             );
 
-        modelBuilder.Entity<CurrentTask>()
-        .HasMany(e => e.ProjectMembers)
-        .WithMany(e => e.CurrentTasks)
-        .UsingEntity("CurrentTaskProjectMemberJoinTable");
+       //modelBuilder.Entity<CurrentTask>()
+       //.HasMany(e => e.ProjectMembers)
+       //.WithMany(e => e.CurrentTasks)
+       //.UsingEntity("CurrentTaskProjectMemberJoinTable");
 
 
     }
