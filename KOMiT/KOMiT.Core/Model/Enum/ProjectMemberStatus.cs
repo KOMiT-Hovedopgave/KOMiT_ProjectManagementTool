@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace KOMiT.Core.Model.Enum
 {
-    public enum Status
+    public enum ProjectMemberStatus
     {
         Aktiv = 0,
         Inaktiv = 1,
-        Færdiggjort = 2,
     }
 }

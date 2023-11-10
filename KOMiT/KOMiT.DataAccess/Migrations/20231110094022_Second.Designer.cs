@@ -4,6 +4,7 @@ using KOMiT.DataAccess.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KOMiT.DataAccess.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20231110094022_Second")]
+    partial class Second
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -37,7 +40,7 @@ namespace KOMiT.DataAccess.Migrations
                     b.ToTable("CurrentSubGoalProjectMember");
                 });
 
-            modelBuilder.Entity("CurrentTaskProjectMemberJoinTable", b =>
+            modelBuilder.Entity("CurrentTaskProjectMember", b =>
                 {
                     b.Property<int>("CurrentTasksId")
                         .HasColumnType("int");
@@ -49,7 +52,7 @@ namespace KOMiT.DataAccess.Migrations
 
                     b.HasIndex("ProjectMembersId");
 
-                    b.ToTable("CurrentTaskProjectMemberJoinTable");
+                    b.ToTable("CurrentTaskProjectMember");
                 });
 
             modelBuilder.Entity("KOMiT.Core.Model.Competence", b =>
@@ -80,29 +83,6 @@ namespace KOMiT.DataAccess.Migrations
                     b.HasIndex("EmployeeId");
 
                     b.ToTable("Competence");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Description = "Jeg føler mig stærk i...",
-                            Experience = "5 år",
-                            Title = "SQL"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Description = "Jeg føler mig stærk i...",
-                            Experience = "4 år",
-                            Title = "C#"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Description = "Jeg føler mig stærk i...",
-                            Experience = "6 år",
-                            Title = "Blazor"
-                        });
                 });
 
             modelBuilder.Entity("KOMiT.Core.Model.CurrentSubGoal", b =>
@@ -179,16 +159,6 @@ namespace KOMiT.DataAccess.Migrations
                     b.HasIndex("CurrentSubGoalId");
 
                     b.ToTable("CurrentTasks");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Description = "Klassen skal være public",
-                            EstimatedNumberOfDays = new DateTime(2023, 11, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Status = 0,
-                            Title = "Tilføj en klasse"
-                        });
                 });
 
             modelBuilder.Entity("KOMiT.Core.Model.Employee", b =>
@@ -219,22 +189,6 @@ namespace KOMiT.DataAccess.Migrations
                     b.HasIndex("ProjectMemberId");
 
                     b.ToTable("Employees");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Email = "pia@komit.dk",
-                            JobPosition = "Udvikler",
-                            Name = "Pia Olsen"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Email = "per@komit.dk",
-                            JobPosition = "Konsulent",
-                            Name = "Per Hansen"
-                        });
                 });
 
             modelBuilder.Entity("KOMiT.Core.Model.Phase", b =>
@@ -304,8 +258,8 @@ namespace KOMiT.DataAccess.Migrations
                         {
                             Id = 1,
                             Description = "Dette projekt...",
-                            EstimatedEndDate = new DateTime(2024, 12, 9, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EstimatedStartDate = new DateTime(2023, 11, 9, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EstimatedEndDate = new DateTime(2023, 12, 9, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EstimatedStartDate = new DateTime(2023, 11, 10, 10, 40, 21, 993, DateTimeKind.Local).AddTicks(6291),
                             Name = "Skema og tid",
                             Priority = 0,
                             ProjectType = 1,
@@ -315,11 +269,11 @@ namespace KOMiT.DataAccess.Migrations
                         {
                             Id = 2,
                             Description = "Dette projekt...",
-                            EstimatedEndDate = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EstimatedStartDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "ElevDataPro",
+                            EstimatedEndDate = new DateTime(2023, 12, 9, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            EstimatedStartDate = new DateTime(2023, 11, 10, 10, 40, 21, 993, DateTimeKind.Local).AddTicks(6348),
+                            Name = "Skema og tid",
                             Priority = 0,
-                            ProjectType = 0,
+                            ProjectType = 1,
                             Status = 0
                         });
                 });
@@ -342,14 +296,6 @@ namespace KOMiT.DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ProjectMembers");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            ProjectMemberStatus = 0,
-                            ProjectRole = "Udvikler"
-                        });
                 });
 
             modelBuilder.Entity("KOMiT.Core.Model.StandardSubGoal", b =>
@@ -376,26 +322,6 @@ namespace KOMiT.DataAccess.Migrations
                     b.HasIndex("PhaseId");
 
                     b.ToTable("StandardSubGoals");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Description = "Dette delmål...",
-                            Name = "E2E test"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Description = "Dette delmål...",
-                            Name = "Unit Testing"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Description = "Dette delmål...",
-                            Name = "Integration"
-                        });
                 });
 
             modelBuilder.Entity("KOMiT.Core.Model.StandardTask", b =>
@@ -422,26 +348,6 @@ namespace KOMiT.DataAccess.Migrations
                     b.HasIndex("StandardSubGoalId");
 
                     b.ToTable("StandardTasks");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Description = "Denne opgave...",
-                            Title = "Implementer test fixture for E2E"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Description = "Denne opgave...",
-                            Title = "Unit Testing"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Description = "Denne opgave...",
-                            Title = "Tilføj API til projekt"
-                        });
                 });
 
             modelBuilder.Entity("KOMiT.Core.Model.SubProject", b =>
@@ -475,24 +381,6 @@ namespace KOMiT.DataAccess.Migrations
                     b.HasIndex("ProjectId");
 
                     b.ToTable("SubProjects");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 3,
-                            EstimatedEndDate = new DateTime(2023, 12, 24, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EstimatedStartDate = new DateTime(2023, 11, 9, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ProjectId = 1,
-                            Status = 0
-                        },
-                        new
-                        {
-                            Id = 4,
-                            EstimatedEndDate = new DateTime(2024, 12, 24, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EstimatedStartDate = new DateTime(2024, 11, 9, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ProjectId = 2,
-                            Status = 1
-                        });
                 });
 
             modelBuilder.Entity("PhaseSubProject", b =>
@@ -525,7 +413,7 @@ namespace KOMiT.DataAccess.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("CurrentTaskProjectMemberJoinTable", b =>
+            modelBuilder.Entity("CurrentTaskProjectMember", b =>
                 {
                     b.HasOne("KOMiT.Core.Model.CurrentTask", null)
                         .WithMany()

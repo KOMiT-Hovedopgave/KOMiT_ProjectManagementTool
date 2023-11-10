@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace KOMiT.Core.Model.Enum
 {
-    public enum CurrentTaskStatus
+    public enum Priority
     {
-        Igang = 0,
-        Færdiggjort = 1,
-        Pause = 2,
+        Høj = 0,
+        Mellem = 1,
+        Lav = 2,
+
     }
 }

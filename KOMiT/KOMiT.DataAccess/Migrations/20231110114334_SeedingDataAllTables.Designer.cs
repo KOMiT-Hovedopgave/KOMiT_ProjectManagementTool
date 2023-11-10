@@ -4,6 +4,7 @@ using KOMiT.DataAccess.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KOMiT.DataAccess.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20231110114334_SeedingDataAllTables")]
+    partial class SeedingDataAllTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -37,7 +40,7 @@ namespace KOMiT.DataAccess.Migrations
                     b.ToTable("CurrentSubGoalProjectMember");
                 });
 
-            modelBuilder.Entity("CurrentTaskProjectMemberJoinTable", b =>
+            modelBuilder.Entity("CurrentTaskProjectMember", b =>
                 {
                     b.Property<int>("CurrentTasksId")
                         .HasColumnType("int");
@@ -49,7 +52,7 @@ namespace KOMiT.DataAccess.Migrations
 
                     b.HasIndex("ProjectMembersId");
 
-                    b.ToTable("CurrentTaskProjectMemberJoinTable");
+                    b.ToTable("CurrentTaskProjectMember");
                 });
 
             modelBuilder.Entity("KOMiT.Core.Model.Competence", b =>
@@ -179,16 +182,6 @@ namespace KOMiT.DataAccess.Migrations
                     b.HasIndex("CurrentSubGoalId");
 
                     b.ToTable("CurrentTasks");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Description = "Klassen skal være public",
-                            EstimatedNumberOfDays = new DateTime(2023, 11, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Status = 0,
-                            Title = "Tilføj en klasse"
-                        });
                 });
 
             modelBuilder.Entity("KOMiT.Core.Model.Employee", b =>
@@ -342,14 +335,6 @@ namespace KOMiT.DataAccess.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("ProjectMembers");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            ProjectMemberStatus = 0,
-                            ProjectRole = "Udvikler"
-                        });
                 });
 
             modelBuilder.Entity("KOMiT.Core.Model.StandardSubGoal", b =>
@@ -525,7 +510,7 @@ namespace KOMiT.DataAccess.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("CurrentTaskProjectMemberJoinTable", b =>
+            modelBuilder.Entity("CurrentTaskProjectMember", b =>
                 {
                     b.HasOne("KOMiT.Core.Model.CurrentTask", null)
                         .WithMany()
