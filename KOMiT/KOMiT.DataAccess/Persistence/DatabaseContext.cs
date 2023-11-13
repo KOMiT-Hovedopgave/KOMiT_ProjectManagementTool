@@ -216,6 +216,7 @@ public class DatabaseContext : DbContext
                Description = "Dette delmål...",
                Status = Core.Model.Enum.Status.Aktiv,
                EstimatedEndDate = new DateTime(2024, 11, 09),
+               SubProjectId = 1
            }
            );
 
@@ -227,6 +228,7 @@ public class DatabaseContext : DbContext
                 Description = "Denne opgave...",
                 Status = Core.Model.Enum.Status.Aktiv,
                 EstimatedNumberOfDays = new DateTime(2023, 11, 10),
+                CurrentSubGoalId= 1,
             }
             );
 
