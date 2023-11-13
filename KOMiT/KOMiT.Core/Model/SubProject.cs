@@ -13,8 +13,8 @@ public class SubProject
     public int? ProjectId {get; set;}
     public Project? Project { get; set; }
 
-    public ICollection <CurrentSubGoal>? CurrentSubGoals { get; }
+    public ICollection<CurrentSubGoal>? CurrentSubGoals { get; } = new List<CurrentSubGoal>();
 
-    public ICollection<Phase> Phases { get; } 
+    public ICollection<Phase> Phases { get; } = new List<Phase>();
 
 }

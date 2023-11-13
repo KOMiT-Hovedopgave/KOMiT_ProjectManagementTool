@@ -7,9 +7,9 @@ public class ProjectMember
     public string ProjectRole { get; set; }
     public ProjectMemberStatus ProjectMemberStatus { get; set; }
 
-    public ICollection<CurrentSubGoal>? CurrentSubGoals { get; }
+    public ICollection<CurrentSubGoal>? CurrentSubGoals { get; } = new List<CurrentSubGoal>();
 
-    public ICollection <CurrentTask>? CurrentTasks { get; }
+    public ICollection<CurrentTask>? CurrentTasks { get; } = new List<CurrentTask>();
 
-    public ICollection <Employee>? Employees { get; }
+    public ICollection<Employee>? Employees { get; } = new List<Employee>();
 }

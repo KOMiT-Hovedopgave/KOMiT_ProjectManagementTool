@@ -13,6 +13,6 @@ namespace KOMiT.Core.Model;
         public int? CurrentSubGoalId { get; set; }
         public CurrentSubGoal? CurrentSubGoal { get; set; }
 
-        public ICollection<ProjectMember>? ProjectMembers { get; }
+        public ICollection<ProjectMember>? ProjectMembers { get; } = new List<ProjectMember>();
     }
 

@@ -20,7 +20,7 @@ public class CurrentSubGoal
     public int? SubProjectId { get; set; }
     public SubProject? SubProject { get; set; }
 
-    public ICollection <CurrentTask>? CurrentTasks { get;  }
+    public ICollection <CurrentTask>? CurrentTasks { get;  } = new List<CurrentTask>();
 
-    public ICollection <ProjectMember>? ProjectMembers { get; }
+    public ICollection<ProjectMember>? ProjectMembers { get; } = new List<ProjectMember>();
 }

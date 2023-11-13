@@ -4,6 +4,7 @@ using KOMiT.DataAccess.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KOMiT.DataAccess.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20231113164934_fixes")]
+    partial class fixes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -79,13 +82,6 @@ namespace KOMiT.DataAccess.Migrations
                     b.HasIndex("ProjectMembersId");
 
                     b.ToTable("EmployeeProjectMember");
-
-                    b.HasData(
-                        new
-                        {
-                            EmployeesId = 1,
-                            ProjectMembersId = 1
-                        });
                 });
 
             modelBuilder.Entity("KOMiT.Core.Model.Competence", b =>

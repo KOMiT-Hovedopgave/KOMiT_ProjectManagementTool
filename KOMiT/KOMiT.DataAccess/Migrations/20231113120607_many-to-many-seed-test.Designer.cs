@@ -4,6 +4,7 @@ using KOMiT.DataAccess.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KOMiT.DataAccess.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20231113120607_many-to-many-seed-test")]
+    partial class manytomanyseedtest
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -35,13 +38,6 @@ namespace KOMiT.DataAccess.Migrations
                     b.HasIndex("ProjectMembersId");
 
                     b.ToTable("CurrentSubGoalProjectMember");
-
-                    b.HasData(
-                        new
-                        {
-                            CurrentSubGoalsId = 1,
-                            ProjectMembersId = 1
-                        });
                 });
 
             modelBuilder.Entity("CurrentTaskProjectMember", b =>
@@ -57,35 +53,6 @@ namespace KOMiT.DataAccess.Migrations
                     b.HasIndex("ProjectMembersId");
 
                     b.ToTable("CurrentTaskProjectMember");
-
-                    b.HasData(
-                        new
-                        {
-                            CurrentTasksId = 1,
-                            ProjectMembersId = 1
-                        });
-                });
-
-            modelBuilder.Entity("EmployeeProjectMember", b =>
-                {
-                    b.Property<int>("EmployeesId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ProjectMembersId")
-                        .HasColumnType("int");
-
-                    b.HasKey("EmployeesId", "ProjectMembersId");
-
-                    b.HasIndex("ProjectMembersId");
-
-                    b.ToTable("EmployeeProjectMember");
-
-                    b.HasData(
-                        new
-                        {
-                            EmployeesId = 1,
-                            ProjectMembersId = 1
-                        });
                 });
 
             modelBuilder.Entity("KOMiT.Core.Model.Competence", b =>
@@ -122,7 +89,6 @@ namespace KOMiT.DataAccess.Migrations
                         {
                             Id = 1,
                             Description = "Jeg føler mig stærk i...",
-                            EmployeeId = 2,
                             Experience = "5 år",
                             Title = "SQL"
                         },
@@ -130,7 +96,6 @@ namespace KOMiT.DataAccess.Migrations
                         {
                             Id = 2,
                             Description = "Jeg føler mig stærk i...",
-                            EmployeeId = 2,
                             Experience = "4 år",
                             Title = "C#"
                         },
@@ -138,7 +103,6 @@ namespace KOMiT.DataAccess.Migrations
                         {
                             Id = 3,
                             Description = "Jeg føler mig stærk i...",
-                            EmployeeId = 1,
                             Experience = "6 år",
                             Title = "Blazor"
                         });
@@ -180,16 +144,6 @@ namespace KOMiT.DataAccess.Migrations
                     b.HasIndex("SubProjectId");
 
                     b.ToTable("CurrentSubGoals");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Description = "Dette delmål...",
-                            EstimatedEndDate = new DateTime(2024, 11, 9, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "E2E",
-                            Status = 0
-                        });
                 });
 
             modelBuilder.Entity("KOMiT.Core.Model.CurrentTask", b =>
@@ -233,10 +187,10 @@ namespace KOMiT.DataAccess.Migrations
                         new
                         {
                             Id = 1,
-                            Description = "Denne opgave...",
+                            Description = "Klassen skal være public",
                             EstimatedNumberOfDays = new DateTime(2023, 11, 10, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Status = 0,
-                            Title = "Implementere textfixture for E2E"
+                            Title = "Tilføj en klasse"
                         });
                 });
 
@@ -260,7 +214,12 @@ namespace KOMiT.DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("ProjectMemberId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("ProjectMemberId");
 
                     b.ToTable("Employees");
 
@@ -306,13 +265,13 @@ namespace KOMiT.DataAccess.Migrations
                         {
                             Id = 1,
                             Description = "Denne fase...",
-                            Name = "Testning"
+                            Name = "Opstartsfase"
                         },
                         new
                         {
                             Id = 2,
                             Description = "Denne fase...",
-                            Name = "Opstartsfase"
+                            Name = "Testning"
                         });
                 });
 
@@ -440,22 +399,19 @@ namespace KOMiT.DataAccess.Migrations
                         {
                             Id = 1,
                             Description = "Dette delmål...",
-                            Name = "E2E test",
-                            PhaseId = 1
+                            Name = "E2E test"
                         },
                         new
                         {
                             Id = 2,
                             Description = "Dette delmål...",
-                            Name = "Unit Testing",
-                            PhaseId = 1
+                            Name = "Unit Testing"
                         },
                         new
                         {
                             Id = 3,
                             Description = "Dette delmål...",
-                            Name = "Integration",
-                            PhaseId = 1
+                            Name = "Integration"
                         });
                 });
 
@@ -489,29 +445,19 @@ namespace KOMiT.DataAccess.Migrations
                         {
                             Id = 1,
                             Description = "Denne opgave...",
-                            StandardSubGoalId = 1,
                             Title = "Implementer test fixture for E2E"
                         },
                         new
                         {
                             Id = 2,
                             Description = "Denne opgave...",
-                            StandardSubGoalId = 2,
                             Title = "Unit Testing"
                         },
                         new
                         {
                             Id = 3,
                             Description = "Denne opgave...",
-                            StandardSubGoalId = 3,
-                            Title = "Implementere test fixture for integration"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Description = "Denne opgave...",
-                            StandardSubGoalId = 3,
-                            Title = "Test database"
+                            Title = "Tilføj API til projekt"
                         });
                 });
 
@@ -589,7 +535,7 @@ namespace KOMiT.DataAccess.Migrations
                         new
                         {
                             PhasesId = 2,
-                            SubProjectsId = 2
+                            SubProjectsId = 1
                         });
                 });
 
@@ -613,21 +559,6 @@ namespace KOMiT.DataAccess.Migrations
                     b.HasOne("KOMiT.Core.Model.CurrentTask", null)
                         .WithMany()
                         .HasForeignKey("CurrentTasksId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("KOMiT.Core.Model.ProjectMember", null)
-                        .WithMany()
-                        .HasForeignKey("ProjectMembersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("EmployeeProjectMember", b =>
-                {
-                    b.HasOne("KOMiT.Core.Model.Employee", null)
-                        .WithMany()
-                        .HasForeignKey("EmployeesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -663,6 +594,15 @@ namespace KOMiT.DataAccess.Migrations
                         .HasForeignKey("CurrentSubGoalId");
 
                     b.Navigation("CurrentSubGoal");
+                });
+
+            modelBuilder.Entity("KOMiT.Core.Model.Employee", b =>
+                {
+                    b.HasOne("KOMiT.Core.Model.ProjectMember", "ProjectMember")
+                        .WithMany("Employees")
+                        .HasForeignKey("ProjectMemberId");
+
+                    b.Navigation("ProjectMember");
                 });
 
             modelBuilder.Entity("KOMiT.Core.Model.StandardSubGoal", b =>
@@ -725,6 +665,11 @@ namespace KOMiT.DataAccess.Migrations
             modelBuilder.Entity("KOMiT.Core.Model.Project", b =>
                 {
                     b.Navigation("SubProjects");
+                });
+
+            modelBuilder.Entity("KOMiT.Core.Model.ProjectMember", b =>
+                {
+                    b.Navigation("Employees");
                 });
 
             modelBuilder.Entity("KOMiT.Core.Model.StandardSubGoal", b =>

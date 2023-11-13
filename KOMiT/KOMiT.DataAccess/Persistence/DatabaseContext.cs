@@ -48,7 +48,7 @@ public class DatabaseContext : DbContext
             new SubProject
             {
                 ProjectId = 1,
-                Id = 3,
+                Id = 1,
                 Status = Core.Model.Enum.Status.Aktiv,
                 EstimatedStartDate = new DateTime(2023, 11, 09),
                 EstimatedEndDate = new DateTime(2023, 12, 24),
@@ -56,19 +56,33 @@ public class DatabaseContext : DbContext
             new SubProject
             {
                 ProjectId = 2,
-                Id = 4,
+                Id = 2,
                 Status = Core.Model.Enum.Status.Inaktiv,
                 EstimatedStartDate = new DateTime(2024, 11, 09),
                 EstimatedEndDate = new DateTime(2024, 12, 24),
             }
             );
 
-        //modelBuilder.Entity<Phase>().HasData(
-        //   new Phase
-        //    {
+        modelBuilder.Entity("PhaseSubProject").HasData(
+            new { PhasesId = 1, SubProjectsId = 1 },
+            new { PhasesId = 2, SubProjectsId = 2 }
+            );
 
-        //    }
-        //   );
+        modelBuilder.Entity<Phase>().HasData(
+           new Phase
+           {
+               Id = 1,
+               Name = "Testning",
+               Description = "Denne fase..."
+
+           },
+           new Phase
+           {
+               Id = 2,
+               Name = "Opstartsfase",
+               Description = "Denne fase..."
+           }
+           );
 
         modelBuilder.Entity<StandardSubGoal>().HasData(
             new StandardSubGoal
@@ -76,109 +90,147 @@ public class DatabaseContext : DbContext
                 Id = 1,
                 Name = "E2E test",
                 Description = "Dette delmål...",
+                PhaseId = 1
             },
             new StandardSubGoal
             {
                 Id = 2,
                 Name = "Unit Testing",
                 Description = "Dette delmål...",
+                PhaseId = 1
             },
             new StandardSubGoal
             {
-               Id = 3,
-               Name = "Integration",
-               Description = "Dette delmål...",
+                Id = 3,
+                Name = "Integration",
+                Description = "Dette delmål...",
+                PhaseId = 1
             }
            );
 
-         modelBuilder.Entity<StandardTask>().HasData(
-            new StandardTask
-            {
+        modelBuilder.Entity<StandardTask>().HasData(
+           new StandardTask
+           {
                Id = 1,
                Title = "Implementer test fixture for E2E",
                Description = "Denne opgave...",
-            },
-            new StandardTask
-            {
+               StandardSubGoalId = 1
+           },
+           new StandardTask
+           {
                Id = 2,
                Title = "Unit Testing",
                Description = "Denne opgave...",
-            },
-            new StandardTask
-            {
+               StandardSubGoalId = 2
+           },
+           new StandardTask
+           {
                Id = 3,
-               Title = "Tilføj API til projekt",
+               Title = "Implementere test fixture for integration",
                Description = "Denne opgave...",
-            }
-            );
+               StandardSubGoalId = 3
+           },
+             new StandardTask
+             {
+                 Id = 4,
+                 Title = "Test database",
+                 Description = "Denne opgave...",
+                 StandardSubGoalId = 3
+             }
+           );
 
         modelBuilder.Entity<Employee>().HasData(
             new Employee
             {
-                 Id = 1,
-                 Name = "Pia Olsen",
-                 JobPosition = "Udvikler",
-                 Email = "pia@komit.dk",
+                Id = 1,
+                Name = "Pia Olsen",
+                JobPosition = "Udvikler",
+                Email = "pia@komit.dk",
             },
             new Employee
             {
-                 Id = 2,
-                 Name = "Per Hansen",
-                 JobPosition = "Konsulent",
-                 Email = "per@komit.dk",
+                Id = 2,
+                Name = "Per Hansen",
+                JobPosition = "Konsulent",
+                Email = "per@komit.dk",
             }
             );
 
         modelBuilder.Entity<Competence>().HasData(
             new Competence
             {
-                 Id = 1,
-                 Title = "SQL",
-                 Description = "Jeg føler mig stærk i...",
-                 Experience = "5 år",
+                Id = 1,
+                Title = "SQL",
+                Description = "Jeg føler mig stærk i...",
+                Experience = "5 år",
+                EmployeeId = 2
             },
             new Competence
             {
-                 Id = 2,
-                 Title = "C#",
-                 Description = "Jeg føler mig stærk i...",
-                 Experience = "4 år",
+                Id = 2,
+                Title = "C#",
+                Description = "Jeg føler mig stærk i...",
+                Experience = "4 år",
+                EmployeeId = 2
             },
             new Competence
-                {
-                     Id = 3,
-                     Title = "Blazor",
-                     Description = "Jeg føler mig stærk i...",
-                     Experience = "6 år",
-                }
-                );
+            {
+                Id = 3,
+                Title = "Blazor",
+                Description = "Jeg føler mig stærk i...",
+                Experience = "6 år",
+                EmployeeId = 1
+            }
+            );
 
         modelBuilder.Entity<ProjectMember>().HasData(
             new ProjectMember
             {
-                 Id = 1,
-                 ProjectRole = "Udvikler",
-                 ProjectMemberStatus = Core.Model.Enum.ProjectMemberStatus.Aktiv,
+                Id = 1,
+                ProjectRole = "Udvikler",
+                ProjectMemberStatus = Core.Model.Enum.ProjectMemberStatus.Aktiv,
             }
             );
+
+        modelBuilder.Entity("CurrentSubGoalProjectMember").HasData(
+         new { CurrentSubGoalsId = 1, ProjectMembersId = 1 }
+         );
+
+
+
+        modelBuilder.Entity("CurrentTaskProjectMember").HasData(
+            new { CurrentTasksId = 1, ProjectMembersId = 1 }
+            );
+
+
+        modelBuilder.Entity("EmployeeProjectMember").HasData(
+            new { EmployeesId = 1, ProjectMembersId = 1 }
+            );
+
+
+        modelBuilder.Entity<CurrentSubGoal>().HasData(
+           new CurrentSubGoal
+           {
+               Id = 1,
+               Name = "E2E",
+               Description = "Dette delmål...",
+               Status = Core.Model.Enum.Status.Aktiv,
+               EstimatedEndDate = new DateTime(2024, 11, 09),
+           }
+           );
 
         modelBuilder.Entity<CurrentTask>().HasData(
             new CurrentTask
             {
-                 Id = 1,
-                 Title = "Tilføj en klasse",
-                 Description = "Klassen skal være public",
-                 Status = Core.Model.Enum.Status.Aktiv,
-                 EstimatedNumberOfDays = new DateTime(2023, 11, 10),
+                Id = 1,
+                Title = "Implementere textfixture for E2E",
+                Description = "Denne opgave...",
+                Status = Core.Model.Enum.Status.Aktiv,
+                EstimatedNumberOfDays = new DateTime(2023, 11, 10),
             }
             );
-
-       //modelBuilder.Entity<CurrentTask>()
-       //.HasMany(e => e.ProjectMembers)
-       //.WithMany(e => e.CurrentTasks)
-       //.UsingEntity("CurrentTaskProjectMemberJoinTable");
-
 
     }
 
 }
+
