@@ -15,4 +15,12 @@ public class Phase
     public ICollection<SubProject> SubProjects { get; } = new List<SubProject>();
 
     public ICollection<StandardSubGoal>? StandardSubGoals { get; } = new List<StandardSubGoal>();
+
+    public Phase() { }
+    public Phase(int id, string name, string description)
+    {
+        Id = id;
+        Name = name;
+        Description = description;
+    }
 }

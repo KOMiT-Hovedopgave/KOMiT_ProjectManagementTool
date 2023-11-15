@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KOMiT.Client", "KOMiT.Clien
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KOMiT.Test", "KOMiT.Test\KOMiT.Test.csproj", "{B0085A4E-CB0A-4690-9BF2-EFDDADDE80EA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KOMiT.Core", "KOMiT.Core\KOMiT.Core.csproj", "{0D40C0C9-617F-4C85-9E9A-5BC9FFB441D9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KOMiT.Core", "KOMiT.Core\KOMiT.Core.csproj", "{0D40C0C9-617F-4C85-9E9A-5BC9FFB441D9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

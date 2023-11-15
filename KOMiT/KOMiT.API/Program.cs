@@ -1,4 +1,8 @@
+using KOMiT.App.Service;
+using KOMiT.App.Service.Implementations;
 using KOMiT.DataAccess.Persistence;
+using KOMiT.DataAccess.Repositories;
+using KOMiT.DataAccess.Repositories.Implementations;
 using Microsoft.AspNetCore.ResponseCompression;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,6 +12,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddKOMiTApp();
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
+builder.Services.AddSwaggerGen();
+builder.Services.AddScoped<IProjectService, ProjectService>();
+builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
 
 var app = builder.Build();
 
@@ -15,6 +22,11 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseWebAssemblyDebugging();
+    app.UseSwagger();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "Blazor API V1");
+    });
 }
 else
 {

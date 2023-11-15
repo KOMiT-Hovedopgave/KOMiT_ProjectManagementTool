@@ -16,4 +16,24 @@ public class Project
     public DateTime? RealizedDate { get; set; }
 
     public ICollection<SubProject>? SubProjects { get; } = new List<SubProject>();
+
+    public  Project()
+    {
+
+    }
+
+    public Project(int id, string name, string description, ProjectType projectType, Priority priority, Status status, DateTime estimatedStartDate, DateTime estimatedEndDate, string? comment, DateTime? realizedDate, ICollection<SubProject>? subProjects)
+    {
+        Id = id;
+        Name = name;
+        Description = description;
+        ProjectType = projectType;
+        Priority = priority;
+        Status = status;
+        EstimatedStartDate = estimatedStartDate;
+        EstimatedEndDate = estimatedEndDate;
+        Comment = comment;
+        RealizedDate = realizedDate;
+        SubProjects = subProjects;
+    }
 }
