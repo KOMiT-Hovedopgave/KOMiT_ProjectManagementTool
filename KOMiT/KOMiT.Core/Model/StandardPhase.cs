@@ -6,18 +6,18 @@ using System.Threading.Tasks;
 
 namespace KOMiT.Core.Model;
 
-public class Phase
+public class StandardPhase
 {
     public int Id { get; set; }
     public string Name { get; set; }
     public string Description { get; set; }
 
-    public ICollection<SubProject> SubProjects { get; } = new List<SubProject>();
+    public ICollection<CurrentPhase> SubProjects { get; } = new List<CurrentPhase>();
 
     public ICollection<StandardSubGoal>? StandardSubGoals { get; } = new List<StandardSubGoal>();
 
-    public Phase() { }
-    public Phase(int id, string name, string description)
+    public StandardPhase() { }
+    public StandardPhase(int id, string name, string description)
     {
         Id = id;
         Name = name;

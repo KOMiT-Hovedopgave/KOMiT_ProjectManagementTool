@@ -12,9 +12,10 @@ public class DatabaseContext : DbContext
     }
 
     public DbSet<Project> Projects { get; set; }
-    public DbSet<SubProject> SubProjects { get; set; }
+    public DbSet<CurrentPhase> CurrentPhases { get; set; }
     public DbSet<CurrentSubGoal> CurrentSubGoals { get; set; }
     public DbSet<CurrentTask> CurrentTasks { get; set; }
+    public DbSet<StandardPhase> StandardPhases { get; set; }
     public DbSet<StandardSubGoal> StandardSubGoals { get; set; }
     public DbSet<StandardTask> StandardTasks { get; set; }
     public DbSet<Employee> Employees { get; set; }
@@ -44,39 +45,37 @@ public class DatabaseContext : DbContext
             }
             );
 
-        modelBuilder.Entity<SubProject>().HasData(
-            new SubProject
+        modelBuilder.Entity<CurrentPhase>().HasData(
+            new CurrentPhase
             {
                 ProjectId = 1,
                 Id = 1,
                 Status = Core.Model.Enum.Status.Aktiv,
                 EstimatedStartDate = new DateTime(2023, 11, 09),
                 EstimatedEndDate = new DateTime(2023, 12, 24),
+                StandardPhaseId= 1,
             },
-            new SubProject
+            new CurrentPhase
             {
                 ProjectId = 2,
                 Id = 2,
                 Status = Core.Model.Enum.Status.Inaktiv,
                 EstimatedStartDate = new DateTime(2024, 11, 09),
                 EstimatedEndDate = new DateTime(2024, 12, 24),
+                StandardPhaseId= 2,
             }
             );
 
-        modelBuilder.Entity("PhaseSubProject").HasData(
-            new { PhasesId = 1, SubProjectsId = 1 },
-            new { PhasesId = 2, SubProjectsId = 2 }
-            );
 
-        modelBuilder.Entity<Phase>().HasData(
-           new Phase
+        modelBuilder.Entity<StandardPhase>().HasData(
+           new StandardPhase
            {
                Id = 1,
                Name = "Testning",
                Description = "Denne fase..."
 
            },
-           new Phase
+           new StandardPhase
            {
                Id = 2,
                Name = "Opstartsfase",

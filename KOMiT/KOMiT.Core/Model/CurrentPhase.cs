@@ -3,7 +3,7 @@ using System.Xml.Linq;
 
 namespace KOMiT.Core.Model;
 
-public class SubProject
+public class CurrentPhase
 {
     public int Id { get; set; }
     public Status Status { get; set; }
@@ -15,15 +15,17 @@ public class SubProject
     public int? ProjectId {get; set;}
     public Project? Project { get; set; }
 
-    public ICollection<CurrentSubGoal>? CurrentSubGoals { get; } 
+    public ICollection<CurrentSubGoal>? CurrentSubGoals { get; }
 
-    public ICollection<Phase> Phases { get; }
+    public int StandardPhaseId { get; set; }
+    public StandardPhase StandardPhase { get; set; }
 
-    public SubProject()
+
+    public CurrentPhase()
     {
 
     }
-    public SubProject(int id, Status status, DateTime estimatedStartDate, DateTime estimatedEndDate, string? comment, DateTime? realizedDate, int? projectId, ICollection<Phase> phases)     
+    public CurrentPhase(int id, Status status, DateTime estimatedStartDate, DateTime estimatedEndDate, string? comment, DateTime? realizedDate, int? projectId, int standardPhaseId, StandardPhase standardPhase)     
     {
         Id = id;
         Status = status;
@@ -32,7 +34,8 @@ public class SubProject
         Comment = comment;
         RealizedDate = realizedDate;
         ProjectId = id;
-        Phases = phases;
+        StandardPhaseId = standardPhaseId;
+        StandardPhase = standardPhase;
     }
 
 }

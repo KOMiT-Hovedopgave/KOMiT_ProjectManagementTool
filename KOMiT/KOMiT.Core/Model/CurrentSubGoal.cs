@@ -18,7 +18,7 @@ public class CurrentSubGoal
     public DateTime? RealizedDate { get; set; }
 
     public int? SubProjectId { get; set; }
-    public SubProject? SubProject { get; set; }
+    public CurrentPhase? SubProject { get; set; }
 
     public ICollection <CurrentTask>? CurrentTasks { get;  } = new List<CurrentTask>();
 

@@ -4,6 +4,7 @@ using KOMiT.DataAccess.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KOMiT.DataAccess.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20231116085825_domainmodel")]
+    partial class domainmodel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -179,7 +182,7 @@ namespace KOMiT.DataAccess.Migrations
 
                     b.HasIndex("StandardPhaseId");
 
-                    b.ToTable("CurrentPhases");
+                    b.ToTable("SubProjects");
 
                     b.HasData(
                         new
@@ -453,7 +456,7 @@ namespace KOMiT.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("StandardPhases");
+                    b.ToTable("StandardPhase");
 
                     b.HasData(
                         new

@@ -31,19 +31,20 @@ public class ProjectRepository : IProjectRepository
           x.EstimatedEndDate,
           x.Comment,
           x.RealizedDate,
-          x.SubProjects.Select(sp => new SubProject(
-              sp.Id,
-              sp.Status,
-              sp.EstimatedStartDate,
-              sp.EstimatedEndDate,
-              sp.Comment,
-              sp.RealizedDate,
-              sp.ProjectId,
-              sp.Phases.Select(phase => new Phase(
-                  phase.Id,
-                  phase.Name,
-                  phase.Description
-              )).ToList()
+          x.CurrentPhases.Select(cp => new CurrentPhase(
+              cp.Id,
+              cp.Status,
+              cp.EstimatedStartDate,
+              cp.EstimatedEndDate,
+              cp.Comment,
+              cp.RealizedDate,
+              cp.ProjectId,
+              cp.StandardPhase.Id,
+                  new StandardPhase(
+                cp.StandardPhase.Id,
+                cp.StandardPhase.Name,
+                cp.StandardPhase.Description
+            )
           )).ToList()
       ));
         return await result.ToListAsync();

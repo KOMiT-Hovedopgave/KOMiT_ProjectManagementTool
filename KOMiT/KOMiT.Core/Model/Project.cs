@@ -15,14 +15,14 @@ public class Project
     public string? Comment { get; set; }
     public DateTime? RealizedDate { get; set; }
 
-    public ICollection<SubProject>? SubProjects { get; } = new List<SubProject>();
+    public ICollection<CurrentPhase>? CurrentPhases { get; } = new List<CurrentPhase>();
 
     public  Project()
     {
 
     }
 
-    public Project(int id, string name, string description, ProjectType projectType, Priority priority, Status status, DateTime estimatedStartDate, DateTime estimatedEndDate, string? comment, DateTime? realizedDate, ICollection<SubProject>? subProjects)
+    public Project(int id, string name, string description, ProjectType projectType, Priority priority, Status status, DateTime estimatedStartDate, DateTime estimatedEndDate, string? comment, DateTime? realizedDate, ICollection<CurrentPhase>? currentPhases)
     {
         Id = id;
         Name = name;
@@ -34,6 +34,6 @@ public class Project
         EstimatedEndDate = estimatedEndDate;
         Comment = comment;
         RealizedDate = realizedDate;
-        SubProjects = subProjects;
+        CurrentPhases = currentPhases;
     }
 }
