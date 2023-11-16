@@ -16,7 +16,7 @@ namespace KOMiT.API.Controllers
             _projectService = projectService;
         }
 
-        [HttpGet]
+        [HttpGet("GetAll")]
         public async Task<ActionResult<ICollection<Project>>> GetAll()
         {
             var result = await _projectService.GetAll();

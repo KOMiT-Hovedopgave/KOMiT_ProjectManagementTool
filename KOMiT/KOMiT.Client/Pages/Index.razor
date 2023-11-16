@@ -1,9 +1,30 @@
 ﻿@page "/"
+@using KOMiT.Core.Model;
 
-<PageTitle>Index</PageTitle>
 
-<h1>Hello, world!</h1>
+<h1>Hello, KOMiT!</h1>
 
-Welcome to your new app.
+<Grid DataProvider="ProjectDataProvider" TItem="Project" AllowPaging="true" PageSize="15" AllowSorting="true">
+    <GridColumn TItem="Project" HeaderText="Id">
+        @context.Id
+    </GridColumn>
+     <GridColumn TItem="Project" HeaderText="Projekt">
+        @context.Name
+    </GridColumn>
+     <GridColumn TItem="Project" HeaderText="Beskrivelse">
+        @context.Description
+    </GridColumn>
+     <GridColumn TItem="Project" HeaderText="Projekttype">
+        @context.ProjectType.ToString()
+    </GridColumn>
+     <GridColumn TItem="Project" HeaderText="Prioritet">
+        @context.Priority.ToString()
+    </GridColumn>
+     <GridColumn TItem="Project" HeaderText="Status">
+        @context.Status.ToString()
+    </GridColumn>
+</Grid>
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+
+
+
