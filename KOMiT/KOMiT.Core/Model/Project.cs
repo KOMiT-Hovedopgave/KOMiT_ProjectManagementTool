@@ -15,7 +15,7 @@ public class Project
     public string? Comment { get; set; }
     public DateTime? RealizedDate { get; set; }
 
-    public ICollection<CurrentPhase>? CurrentPhases { get; } = new List<CurrentPhase>();
+    public ICollection<CurrentPhase>? CurrentPhases { get; set; } = new List<CurrentPhase>();
 
     public  Project()
     {

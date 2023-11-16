@@ -30,8 +30,28 @@ else
         <GridColumn TItem="Project" HeaderText="Status" SortKeySelector=" Item => Item.Status">
             @context.Status.ToString()
         </GridColumn>
-    </Grid>
-}
+             <GridColumn TItem="Project" HeaderText="Fase" SortKeySelector="Item => Item.CurrentPhases.FirstOrDefault().StandardPhase.Name">
+            @foreach (var item in @context.CurrentPhases)
+                {
+                    <div class="is-link">@item.StandardPhase.Name</div>
+                }
+        </GridColumn>
+         <GridColumn TItem="Project" HeaderText="Startdato" SortKeySelector="Item => Item.CurrentPhases.FirstOrDefault().EstimatedStartDate">
+            @foreach (var item in @context.CurrentPhases)
+                {
+                    @item.EstimatedStartDate.ToShortDateString()
+                }
+        </GridColumn>
+        <GridColumn TItem="Project" HeaderText="Næste delmål">
+        </GridColumn>
+             <GridColumn TItem="Project" HeaderText="Slutdato" SortKeySelector="Item => Item.CurrentPhases.FirstOrDefault().EstimatedEndDate">
+            @foreach (var item in @context.CurrentPhases)
+                {
+                    @item.EstimatedEndDate.ToShortDateString()
+                }
+        </GridColumn>
+        </Grid>
+    }
 
 @code {
     private ICollection<Project>? Projects { get; set; }
