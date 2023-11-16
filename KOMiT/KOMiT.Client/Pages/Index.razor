@@ -5,7 +5,13 @@
 
 <h1>Hello, KOMiT!</h1>
 
-<Grid DataProvider="ProjectDataProvider" TItem="Project" AllowPaging="true" PageSize="15" AllowSorting="true">
+@if (Projects == null)
+{
+    <h1>Loading...</h1>
+}
+else
+{
+    <Grid DataProvider="ProjectDataProvider" TItem="Project" AllowPaging="true" PageSize="15" AllowSorting="true">
     <GridColumn TItem="Project" HeaderText="Id">
         @context.Id
     </GridColumn>
@@ -25,18 +31,19 @@
         @context.Status.ToString()
     </GridColumn>
 </Grid>
+}
 
 @code{
-    private IEnumerable<Project>? _projects;
+    private IEnumerable<Project>? Projects { get; set; } = null;
 
     protected override async Task OnInitializedAsync()
     {
-        _projects = await _httpClient.GetFromJsonAsync<IEnumerable<Project>>($"api/project/GetAll");
+        Projects = await _httpClient.GetFromJsonAsync<IEnumerable<Project>>("https://localhost:7282/api/project/getall");
     }
 
     private async Task<GridDataProviderResult<Project>> ProjectDataProvider(GridDataProviderRequest<Project> request)
     {
-        return await Task.FromResult(request.ApplyTo(_projects));
+        return await Task.FromResult(request.ApplyTo(Projects));
     }
 }
 
