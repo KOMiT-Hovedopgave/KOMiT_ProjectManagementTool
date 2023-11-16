@@ -1,5 +1,6 @@
 ﻿@page "/"
 @using KOMiT.Core.Model;
+@inject HttpClient _httpClient
 
 
 <h1>Hello, KOMiT!</h1>
@@ -25,6 +26,19 @@
     </GridColumn>
 </Grid>
 
+@code{
+    private IEnumerable<Project>? _projects;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _projects = await _httpClient.GetFromJsonAsync<IEnumerable<Project>>($"api/project/GetAll");
+    }
+
+    private async Task<GridDataProviderResult<Project>> ProjectDataProvider(GridDataProviderRequest<Project> request)
+    {
+        return await Task.FromResult(request.ApplyTo(_projects));
+    }
+}
 
 
 
