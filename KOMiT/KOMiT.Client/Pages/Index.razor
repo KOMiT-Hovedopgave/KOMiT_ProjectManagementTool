@@ -16,10 +16,14 @@ else
             @context.Id
         </GridColumn>
         <GridColumn TItem="Project" HeaderText="Projekt" SortKeySelector=" Item => Item.Name">
-            @context.Name
+           <div class="is-link">@context.Name</div>
         </GridColumn>
         <GridColumn TItem="Project" HeaderText="Beskrivelse">
-            @context.Description
+               <div style="text-align:center">
+                   <Tooltip Title="@context.Description">
+                       <Icon Name="IconName.InfoCircleFill"  Color="IconColor.Primary" /> 
+                   </Tooltip>
+               </div>
         </GridColumn>
         <GridColumn TItem="Project" HeaderText="Projekttype" SortKeySelector=" Item => Item.ProjectType">
             @context.ProjectType.ToString()
