@@ -11,31 +11,29 @@
 }
 else
 {
-<Grid DataProvider="ProjectDataProvider" TItem="Project" AllowPaging="true" PageSize="15" AllowSorting="true">
-    <GridColumn TItem="Project" HeaderText="Id" SortKeySelector=" Item => Item.Id">
-        @context.Id
-    </GridColumn>
-     <GridColumn TItem="Project" HeaderText="Projekt" SortKeySelector=" Item => Item.Name">
-        @context.Name
-    </GridColumn>
-     <GridColumn TItem="Project" HeaderText="Beskrivelse">
-        @context.Description
-    </GridColumn>
-     <GridColumn TItem="Project" HeaderText="Projekttype" SortKeySelector=" Item => Item.ProjectType">
-        @context.ProjectType.ToString()
-    </GridColumn>
-     <GridColumn TItem="Project" HeaderText="Prioritet" SortKeySelector=" Item => Item.Priority">
-        @context.Priority.ToString()
-    </GridColumn>
-     <GridColumn TItem="Project" HeaderText="Status" SortKeySelector=" Item => Item.Status">
-        @context.Status.ToString()
-    </GridColumn>
-
-
-</Grid>
+    <Grid DataProvider="ProjectDataProvider" TItem="Project" AllowPaging="true" PageSize="15" AllowSorting="true">
+        <GridColumn TItem="Project" HeaderText="Id" SortKeySelector=" Item => Item.Id">
+            @context.Id
+        </GridColumn>
+        <GridColumn TItem="Project" HeaderText="Projekt" SortKeySelector=" Item => Item.Name">
+            @context.Name
+        </GridColumn>
+        <GridColumn TItem="Project" HeaderText="Beskrivelse">
+            @context.Description
+        </GridColumn>
+        <GridColumn TItem="Project" HeaderText="Projekttype" SortKeySelector=" Item => Item.ProjectType">
+            @context.ProjectType.ToString()
+        </GridColumn>
+        <GridColumn TItem="Project" HeaderText="Prioritet" SortKeySelector=" Item => Item.Priority">
+            @context.Priority.ToString()
+        </GridColumn>
+        <GridColumn TItem="Project" HeaderText="Status" SortKeySelector=" Item => Item.Status">
+            @context.Status.ToString()
+        </GridColumn>
+    </Grid>
 }
 
-@code{
+@code {
     private ICollection<Project>? Projects { get; set; }
 
     protected override async Task OnInitializedAsync()
