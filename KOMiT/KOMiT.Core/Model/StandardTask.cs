@@ -15,4 +15,12 @@ public class StandardTask
     public int? StandardSubGoalId { get; set; }
     public StandardSubGoal? StandardSubGoal { get; set; }
 
+    public StandardTask() { }
+    public StandardTask(int id, string title, string description) 
+    { 
+        Id = id;
+        Title = title;
+        Description = description;
+    }
+
 }

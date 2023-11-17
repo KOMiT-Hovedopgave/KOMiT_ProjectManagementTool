@@ -12,15 +12,22 @@ public class StandardPhase
     public string Name { get; set; }
     public string Description { get; set; }
 
-    public ICollection<CurrentPhase> SubProjects { get; } = new List<CurrentPhase>();
+    public ICollection<CurrentPhase> CurrentPhases { get; } = new List<CurrentPhase>();
 
-    public ICollection<StandardSubGoal>? StandardSubGoals { get; } = new List<StandardSubGoal>();
+    public ICollection<StandardSubGoal>? StandardSubGoals { get; set; } = new List<StandardSubGoal>();
 
-    public StandardPhase() { }
+    public StandardPhase() : this(0, "", "") { }
     public StandardPhase(int id, string name, string description)
     {
         Id = id;
         Name = name;
         Description = description;
     }
+
+    public StandardPhase(int id, string name, string description, ICollection<StandardSubGoal?> standardSubGoals) : this(id, name, description)
+    {
+        StandardSubGoals = standardSubGoals;
+    }
+
+
 }

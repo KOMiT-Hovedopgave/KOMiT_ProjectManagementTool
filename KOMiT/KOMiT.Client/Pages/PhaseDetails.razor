@@ -1,0 +1,38 @@
+﻿@page "/phasedetails/{ID:int}"
+@using KOMiT.Core.Model;
+@inject HttpClient _httpClient
+
+<p>
+    @_currentPhase.StandardPhase.Name   
+    <Tooltip Title="@_currentPhase.StandardPhase.Description">
+        <Icon Name="IconName.InfoCircleFill" Color="IconColor.Primary" />
+    </Tooltip>
+</p>
+<p>
+    Status: @_currentPhase.Status.ToString()
+    @if (_currentPhase.Status == Core.Model.Enum.Status.Aktiv)
+    {
+        <Icon Name="IconName.CircleFill" Color="IconColor.Warning" />
+    }
+    else if (_currentPhase.Status == Core.Model.Enum.Status.Inaktiv)
+    {
+        <Icon Name="IconName.CircleFill" Color="IconColor.Danger" />
+    }
+    else
+    {
+        <Icon Name="IconName.CircleFill" Color="IconColor.Success" />
+    }
+</p>
+
+@code {
+
+    [Parameter]
+    public int ID { get; set; }
+
+    private CurrentPhase? _currentPhase;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _currentPhase = await _httpClient.GetFromJsonAsync<CurrentPhase>($"https://localhost:7282/api/currentphase/GetDetailsById/{ID}");
+    }
+}

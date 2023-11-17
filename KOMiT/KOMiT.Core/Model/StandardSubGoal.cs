@@ -14,7 +14,19 @@ public class StandardSubGoal
     public string Description { get; set; }
 
     public int? PhaseId { get; set; }
-    public StandardPhase? Phase {get; set;}
+    public StandardPhase? StandardPhase {get; set;}
 
-    public ICollection<StandardTask>? StandardTasks { get; } = new List<StandardTask>();
+    public ICollection<StandardTask>? StandardTasks { get; set; } = new List<StandardTask>();
+
+     public StandardSubGoal()
+    {
+
+    }
+    public StandardSubGoal(int id, string name, string description, ICollection<StandardTask>? standardTasks)
+    {
+        Id = id;
+        Name = name;
+        Description = description;
+        StandardTasks = standardTasks;
+    }
 }

@@ -15,6 +15,8 @@ builder.Services.AddRazorPages();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IProjectService, ProjectService>();
 builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
+builder.Services.AddScoped<ICurrentPhaseService, CurrentPhaseService>();
+builder.Services.AddScoped<ICurrentPhaseRepository, CurrentPhaseRepository>();
 
 var app = builder.Build();
 

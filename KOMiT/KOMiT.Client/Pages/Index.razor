@@ -1,6 +1,7 @@
 ﻿@page "/"
 @using KOMiT.Core.Model;
 @inject HttpClient _httpClient
+@inject NavigationManager NavigationManager
 
 
 
@@ -17,6 +18,23 @@ else
         </GridColumn>
         <GridColumn TItem="Project" HeaderText="Projekt" SortKeySelector=" Item => Item.Name">
                <Button Color="ButtonColor.Link">@context.Name</Button>
+        </GridColumn>
+                    <GridColumn TItem="Project">
+                @if(context.Status == Core.Model.Enum.Status.Aktiv)
+                {
+                <Icon Name="IconName.CircleFill" Color="IconColor.Warning" /> 
+                }
+                else if(context.Status == Core.Model.Enum.Status.Inaktiv)
+                {
+                <Icon Name="IconName.CircleFill" Color="IconColor.Danger" /> 
+                }
+                else
+                {
+                <Icon Name="IconName.CircleFill" Color="IconColor.Success" /> 
+                }
+            </GridColumn>
+        <GridColumn TItem="Project" HeaderText="Status" SortKeySelector=" Item => Item.Status">
+            @context.Status.ToString()
         </GridColumn>
         <GridColumn TItem="Project">
             <Dropdown AutoClose="true">
@@ -41,27 +59,10 @@ else
         <GridColumn TItem="Project" HeaderText="Prioritet" SortKeySelector=" Item => Item.Priority">
             @context.Priority.ToString()
         </GridColumn>
-            <GridColumn TItem="Project">
-                @if(context.Status == Core.Model.Enum.Status.Aktiv)
-                {
-                <Icon Name="IconName.CircleFill" Color="IconColor.Warning" /> 
-                }
-                else if(context.Status == Core.Model.Enum.Status.Inaktiv)
-                {
-                <Icon Name="IconName.CircleFill" Color="IconColor.Danger" /> 
-                }
-                else
-                {
-                <Icon Name="IconName.CircleFill" Color="IconColor.Success" /> 
-                }
-            </GridColumn>
-        <GridColumn TItem="Project" HeaderText="Status" SortKeySelector=" Item => Item.Status">
-            @context.Status.ToString()
-        </GridColumn>
          <GridColumn TItem="Project" HeaderText="Fase" SortKeySelector="Item => Item.CurrentPhases.FirstOrDefault().StandardPhase.Name">
             @foreach (var item in @context.CurrentPhases)
                 {
-                    <Button Color="ButtonColor.Link">@item.StandardPhase.Name</Button>
+                    <Button @onclick="() => PhaseDetails(item.Id)" Color="ButtonColor.Link">@item.StandardPhase.Name</Button>
                 }
         </GridColumn>
         <GridColumn TItem="Project">
@@ -104,6 +105,11 @@ else
     private async Task<GridDataProviderResult<Project>> ProjectDataProvider(GridDataProviderRequest<Project> request)
     {
         return await Task.FromResult(request.ApplyTo(Projects));
+    }
+
+    private void PhaseDetails(int ID)
+    {
+        NavigationManager.NavigateTo($"/phasedetails/{ID}");
     }
 }
 
