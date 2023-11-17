@@ -17,10 +17,12 @@ public class CurrentSubGoal
     public string? Comment { get; set; }
     public DateTime? RealizedDate { get; set; }
 
-    public int? SubProjectId { get; set; }
-    public CurrentPhase? SubProject { get; set; }
+    public int? CurrentPhaseId { get; set; }
+    public CurrentPhase? CurrentPhase { get; set; }
 
+    
     public ICollection <CurrentTask>? CurrentTasks { get;  } = new List<CurrentTask>();
 
+    //Join klasse bliver lavet her mellem CurrentSubGoal og ProjectMember
     public ICollection<ProjectMember>? ProjectMembers { get; } = new List<ProjectMember>();
 }
