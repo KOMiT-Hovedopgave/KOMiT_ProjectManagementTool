@@ -4,6 +4,7 @@ using KOMiT.DataAccess.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KOMiT.DataAccess.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20231117051213_more-seeding")]
+    partial class moreseeding
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -189,7 +192,7 @@ namespace KOMiT.DataAccess.Migrations
                             EstimatedStartDate = new DateTime(2023, 11, 9, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             ProjectId = 1,
                             StandardPhaseId = 1,
-                            Status = 2
+                            Status = 0
                         },
                         new
                         {
@@ -235,78 +238,6 @@ namespace KOMiT.DataAccess.Migrations
                             ProjectId = 6,
                             StandardPhaseId = 3,
                             Status = 0
-                        },
-                        new
-                        {
-                            Id = 7,
-                            EstimatedEndDate = new DateTime(2024, 5, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EstimatedStartDate = new DateTime(2024, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ProjectId = 7,
-                            StandardPhaseId = 2,
-                            Status = 0
-                        },
-                        new
-                        {
-                            Id = 8,
-                            EstimatedEndDate = new DateTime(2024, 5, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EstimatedStartDate = new DateTime(2024, 4, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ProjectId = 8,
-                            StandardPhaseId = 2,
-                            Status = 0
-                        },
-                        new
-                        {
-                            Id = 9,
-                            EstimatedEndDate = new DateTime(2024, 12, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EstimatedStartDate = new DateTime(2024, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ProjectId = 9,
-                            StandardPhaseId = 3,
-                            Status = 0
-                        },
-                        new
-                        {
-                            Id = 10,
-                            EstimatedEndDate = new DateTime(2025, 4, 15, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EstimatedStartDate = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ProjectId = 10,
-                            StandardPhaseId = 2,
-                            Status = 0
-                        },
-                        new
-                        {
-                            Id = 13,
-                            EstimatedEndDate = new DateTime(2022, 12, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EstimatedStartDate = new DateTime(2022, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ProjectId = 13,
-                            StandardPhaseId = 1,
-                            Status = 2
-                        },
-                        new
-                        {
-                            Id = 14,
-                            EstimatedEndDate = new DateTime(2022, 11, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EstimatedStartDate = new DateTime(2022, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ProjectId = 14,
-                            StandardPhaseId = 4,
-                            Status = 2
-                        },
-                        new
-                        {
-                            Id = 15,
-                            EstimatedEndDate = new DateTime(2023, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EstimatedStartDate = new DateTime(2022, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ProjectId = 15,
-                            StandardPhaseId = 4,
-                            Status = 2
-                        },
-                        new
-                        {
-                            Id = 16,
-                            EstimatedEndDate = new DateTime(2023, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EstimatedStartDate = new DateTime(2022, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            ProjectId = 16,
-                            StandardPhaseId = 4,
-                            Status = 2
                         });
                 });
 
@@ -500,7 +431,7 @@ namespace KOMiT.DataAccess.Migrations
                             Name = "Skema og tid",
                             Priority = 0,
                             ProjectType = 1,
-                            Status = 2
+                            Status = 0
                         },
                         new
                         {
@@ -509,7 +440,7 @@ namespace KOMiT.DataAccess.Migrations
                             EstimatedEndDate = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             EstimatedStartDate = new DateTime(2024, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Name = "ElevDataPro",
-                            Priority = 1,
+                            Priority = 0,
                             ProjectType = 0,
                             Status = 0
                         },
@@ -533,7 +464,7 @@ namespace KOMiT.DataAccess.Migrations
                             Name = "ElevTilmeldingPro",
                             Priority = 1,
                             ProjectType = 2,
-                            Status = 1
+                            Status = 0
                         },
                         new
                         {
@@ -556,94 +487,6 @@ namespace KOMiT.DataAccess.Migrations
                             Priority = 1,
                             ProjectType = 0,
                             Status = 0
-                        },
-                        new
-                        {
-                            Id = 7,
-                            Description = "Dette projekt fokuserer på udviklingen af en avanceret læringsplatform, der integrerer diverse undervisningsressourcer og muliggør effektiv kommunikation mellem elever og lærere. Med en prioritet på 'Høj' og planlagt start den 1. februar 2024 og forventet afslutning den 1. august 2025, sigter projektet mod at forbedre undervisningsoplevelsen og styrke samarbejdet i skolemiljøet.",
-                            EstimatedEndDate = new DateTime(2025, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EstimatedStartDate = new DateTime(2024, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "LæringsplatformPro",
-                            Priority = 0,
-                            ProjectType = 1,
-                            Status = 0
-                        },
-                        new
-                        {
-                            Id = 8,
-                            Description = "Dette projekt fokuserer på at styrke IT-sikkerheden i skolemiljøet ved implementering af avancerede sikkerhedsforanstaltninger og trusselsbeskyttelse. Med en prioritet på 'Mellem' og planlagt start den 1. april 2024 og forventet afslutning den 1. juni 2024, sigter projektet mod at skabe en tryggere digital læringsmiljø.",
-                            EstimatedEndDate = new DateTime(2024, 6, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EstimatedStartDate = new DateTime(2024, 4, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "IT-SikkerhedPro",
-                            Priority = 1,
-                            ProjectType = 1,
-                            Status = 0
-                        },
-                        new
-                        {
-                            Id = 9,
-                            Description = "Dette projekt fokuserer på at udvikle en omfattende eksamensadministrationssystem til skoler. Målet er at gøre processen med at planlægge og administrere eksamener mere effektiv og strømlinet. Med en prioritet på 'Mellem' og planlagt start den 1. september 2024 og forventet afslutning den 1. januar 2025, sigter projektet mod at lette byrden for skoleledere og eksamensansvarlige.",
-                            EstimatedEndDate = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EstimatedStartDate = new DateTime(2024, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "EksamensadministrationPro",
-                            Priority = 1,
-                            ProjectType = 1,
-                            Status = 0
-                        },
-                        new
-                        {
-                            Id = 10,
-                            Description = "Dette projekt fokuserer på at integrere avancerede digitale værktøjer i klasseværelset for at forbedre undervisningsmetoderne. Med en prioritet på 'Høj' og planlagt start den 1. januar 2025 og forventet afslutning den 1. juni 2025, sigter projektet mod at skabe en innovativ læringsoplevelse for eleverne.",
-                            EstimatedEndDate = new DateTime(2025, 6, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EstimatedStartDate = new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Digitalt Klasseværelse",
-                            Priority = 0,
-                            ProjectType = 1,
-                            Status = 1
-                        },
-                        new
-                        {
-                            Id = 13,
-                            Description = "Projektet 'ForældreportalOptimering' har til formål at optimere og forbedre skolens forældreportal. Med en prioritet på 'Mellem' og planlagt start den 1. september 2022 og forventet afslutning den 1. december 2022, sigter projektet mod at styrke kommunikationen mellem skole og forældre.",
-                            EstimatedEndDate = new DateTime(2022, 12, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EstimatedStartDate = new DateTime(2022, 9, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "ForældreportalOptimering",
-                            Priority = 1,
-                            ProjectType = 1,
-                            Status = 2
-                        },
-                        new
-                        {
-                            Id = 14,
-                            Description = "Projektet 'SkolebiblioteksIntegration' fokuserer på integration af et avanceret bibliotekssystem direkte i skolens digitale infrastruktur. Med en prioritet på 'Høj' og planlagt start den 1. maj 2022 og forventet afslutning den 1. november 2022, sigter projektet mod at gøre det lettere for elever og lærere at få adgang til læringsressourcer.",
-                            EstimatedEndDate = new DateTime(2022, 11, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EstimatedStartDate = new DateTime(2022, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "SkolebiblioteksIntegration",
-                            Priority = 0,
-                            ProjectType = 2,
-                            Status = 2
-                        },
-                        new
-                        {
-                            Id = 15,
-                            Description = "Projektet 'Digital Evaluering' sigter mod at implementere et digitalt evalueringssystem for lærere og elever. Med en prioritet på 'Mellem' og planlagt start den 1. oktober 2022 og forventet afslutning den 1. februar 2023, vil projektet gøre det lettere at indsamle og analysere feedback for at forbedre undervisningen.",
-                            EstimatedEndDate = new DateTime(2023, 2, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EstimatedStartDate = new DateTime(2022, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Digital Evaluering",
-                            Priority = 1,
-                            ProjectType = 1,
-                            Status = 2
-                        },
-                        new
-                        {
-                            Id = 16,
-                            Description = "Projektet 'KlasserumsstyringPro' fokuserer på udviklingen af avancerede værktøjer til effektiv styring af klasseværelser. Med en prioritet på 'Høj' og planlagt start den 1. august 2022 og forventet afslutning den 1. maj 2023, sigter projektet mod at optimere læringsmiljøet.",
-                            EstimatedEndDate = new DateTime(2023, 5, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            EstimatedStartDate = new DateTime(2022, 8, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "KlasserumsstyringPro",
-                            Priority = 0,
-                            ProjectType = 3,
-                            Status = 2
                         });
                 });
 
