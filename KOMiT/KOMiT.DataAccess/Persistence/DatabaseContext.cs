@@ -344,21 +344,21 @@ public class DatabaseContext : DbContext
                 Id = 1,
                 Name = "E2E test",
                 Description = "Dette delmål...",
-                PhaseId = 1
+                StandardPhaseId = 1
             },
             new StandardSubGoal
             {
                 Id = 2,
                 Name = "Unit Testing",
                 Description = "Dette delmål...",
-                PhaseId = 1
+                StandardPhaseId = 1
             },
             new StandardSubGoal
             {
                 Id = 3,
                 Name = "Integration",
                 Description = "Dette delmål...",
-                PhaseId = 1
+                StandardPhaseId = 1
             }
            );
 
@@ -470,7 +470,7 @@ public class DatabaseContext : DbContext
                Description = "Dette delmål...",
                Status = Core.Model.Enum.Status.Aktiv,
                EstimatedEndDate = new DateTime(2024, 11, 09),
-               SubProjectId = 1
+               CurrentPhaseId = 1
            }
            );
 

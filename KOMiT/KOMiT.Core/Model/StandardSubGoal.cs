@@ -13,8 +13,8 @@ public class StandardSubGoal
     public string Name { get; set; }
     public string Description { get; set; }
 
-    public int? PhaseId { get; set; }
-    public StandardPhase? Phase {get; set;}
+    public int? StandardPhaseId { get; set; }
+    public StandardPhase? StandardPhase { get; set;}
 
     public ICollection<StandardTask>? StandardTasks { get; } = new List<StandardTask>();
 }

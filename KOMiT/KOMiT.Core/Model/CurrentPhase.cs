@@ -12,11 +12,13 @@ public class CurrentPhase
     public string? Comment { get; set; }
     public DateTime? RealizedDate { get; set; }
 
+    //FK bliver lavet her (ProjectId)
     public int? ProjectId {get; set;}
     public Project? Project { get; set; }
 
     public ICollection<CurrentSubGoal>? CurrentSubGoals { get; }
 
+    //FK bliver lavet her (StandardPhaseId)
     public int StandardPhaseId { get; set; }
     public StandardPhase StandardPhase { get; set; }
 
