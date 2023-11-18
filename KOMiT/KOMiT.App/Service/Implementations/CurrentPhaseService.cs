@@ -21,5 +21,10 @@ namespace KOMiT.App.Service.Implementations
         {
             return await _currentPhaseRepository.GetDetailsById(id);
         }
+
+        //public double CalculateDateDays(DateTime endDate, DateTime startDate)
+        //{
+        //    return (endDate - startDate).TotalDays;
+        //}
     }
 }

@@ -20,9 +20,9 @@ public class CurrentSubGoal
     public int? CurrentPhaseId { get; set; }
     public CurrentPhase? CurrentPhase { get; set; }
 
-    
     public ICollection <CurrentTask>? CurrentTasks { get;  } = new List<CurrentTask>();
 
     //Join klasse bliver lavet her mellem CurrentSubGoal og ProjectMember
     public ICollection<ProjectMember>? ProjectMembers { get; } = new List<ProjectMember>();
+
 }

@@ -189,6 +189,8 @@ public class DatabaseContext : DbContext
                 EstimatedStartDate = new DateTime(2023, 11, 09),
                 EstimatedEndDate = new DateTime(2023, 12, 24),
                 StandardPhaseId= 1,
+                RealizedDate = new DateTime(2023, 12, 10),
+                Comment = "Dette er en realiseret kommentar"
             },
             new CurrentPhase
             {

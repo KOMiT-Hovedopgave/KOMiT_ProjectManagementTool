@@ -2,27 +2,116 @@
 @using KOMiT.Core.Model;
 @inject HttpClient _httpClient
 
-<p>
-    @_currentPhase.StandardPhase.Name   
-    <Tooltip Title="@_currentPhase.StandardPhase.Description">
-        <Icon Name="IconName.InfoCircleFill" Color="IconColor.Primary" />
-    </Tooltip>
-</p>
-<p>
-    Status: @_currentPhase.Status.ToString()
-    @if (_currentPhase.Status == Core.Model.Enum.Status.Aktiv)
-    {
-        <Icon Name="IconName.CircleFill" Color="IconColor.Warning" />
+
+<div class="parent">
+    <div style="background-color:aliceblue" class="div1">
+        <p>
+            @_currentPhase.StandardPhase.Name
+            <Tooltip Title="@_currentPhase.StandardPhase.Description">
+                <Icon Name="IconName.InfoCircleFill" Color="IconColor.Primary" />
+            </Tooltip>
+        </p>
+        <p>
+            Status: @_currentPhase.Status.ToString()
+            @if (_currentPhase.Status == Core.Model.Enum.Status.Aktiv)
+            {
+                <Icon Name="IconName.CircleFill" Color="IconColor.Warning" />
+            }
+            else if (_currentPhase.Status == Core.Model.Enum.Status.Inaktiv)
+            {
+                <Icon Name="IconName.CircleFill" Color="IconColor.Danger" />
+            }
+            else
+            {
+                <Icon Name="IconName.CircleFill" Color="IconColor.Success" />
+            }
+        </p> 
+        <table style="width: 100%;">
+            <tbody>
+                <tr>
+                    <td>Estimeret: @CalculateDateDays(_currentPhase.EstimatedEndDate, _currentPhase.EstimatedStartDate).ToString() dage</td>
+                    <td>Startdato: @_currentPhase.EstimatedStartDate.ToShortDateString() <Icon Name="IconName.Calendar" Color="IconColor.Primary" /></td>
+                    <td>Startdato: @_currentPhase.EstimatedEndDate.ToShortDateString() <Icon Name="IconName.Calendar" Color="IconColor.Primary" /></td>
+                </tr>
+                <tr>
+                    <td>Realiseret: @if (_currentPhase.RealizedDate.HasValue) { @CalculateDateDays(_currentPhase.RealizedDate.Value, _currentPhase.EstimatedStartDate).ToString(); } dage</td>
+                    <td>Startdato: @_currentPhase.EstimatedStartDate.ToShortDateString() <Icon Name="IconName.Calendar" Color="IconColor.Success" /></td>
+                    <td>Startdato: @_currentPhase.RealizedDate?.ToShortDateString() <Icon Name="IconName.Calendar" Color="IconColor.Success" /></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div style="background-color:aliceblue" class="div2">
+        <p>Delmål i alt</p>
+        <p>Status:</p>
+        <table style="width: 100%;">
+            <tbody>
+                <tr>
+                    <td>Estimeret: dage</td>
+                </tr>
+                <tr>
+                    <td>Realiseret: dage</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div style="background-color:aliceblue" class="div3">
+        <p>Opgaver i alt</p>
+        <p>Status:</p>
+        <table style="width: 100%;">
+            <tbody>
+                <tr>
+                    <td>Estimeret: dage</td>
+                </tr>
+                <tr>
+                    <td>Realiseret: dage</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div style="background-color:aliceblue" class="div4">4 </div>
+    <div style="background-color:aliceblue" class="div5"> 5</div>
+    <div style="background-color:aliceblue" class="div6">6 </div>
+    <div style="background-color:aliceblue" class="div7"> 7</div>
+</div>
+
+<style>
+    .parent {
+        display: grid;
+        grid-template-columns: 10fr repeat(2, 5fr);
+        grid-template-rows: 0.5fr repeat(2, 1.5fr);
+        grid-column-gap: 10px;
+        grid-row-gap: 19px;
     }
-    else if (_currentPhase.Status == Core.Model.Enum.Status.Inaktiv)
-    {
-        <Icon Name="IconName.CircleFill" Color="IconColor.Danger" />
+
+    .div1 {
+        grid-area: 1 / 1 / 2 / 2;
     }
-    else
-    {
-        <Icon Name="IconName.CircleFill" Color="IconColor.Success" />
+
+    .div2 {
+        grid-area: 1 / 2 / 2 / 3;
     }
-</p>
+
+    .div3 {
+        grid-area: 1 / 3 / 2 / 4;
+    }
+
+    .div4 {
+        grid-area: 2 / 1 / 3 / 2;
+    }
+
+    .div5 {
+        grid-area: 2 / 2 / 3 / 4;
+    }
+
+    .div6 {
+        grid-area: 3 / 1 / 4 / 2;
+    }
+
+    .div7 {
+        grid-area: 3 / 2 / 4 / 4;
+    }
+</style>
 
 @code {
 
@@ -35,4 +124,10 @@
     {
         _currentPhase = await _httpClient.GetFromJsonAsync<CurrentPhase>($"https://localhost:7282/api/currentphase/GetDetailsById/{ID}");
     }
+
+    private double CalculateDateDays(DateTime endDate, DateTime startDate)
+    {
+        return (endDate - startDate).TotalDays;
+    }
+
 }
