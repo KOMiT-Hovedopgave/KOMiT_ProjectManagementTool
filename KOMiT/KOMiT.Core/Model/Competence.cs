@@ -15,4 +15,14 @@ public class Competence
 
     public int? EmployeeId { get; set; }
     public Employee? Employee { get; set; }
+    
+    public Competence() { }
+    public Competence(int id, string title, string description, string experience)
+    {
+        Id = id;
+        Title = title;
+        Description = description;
+        Experience = experience;
+    }
+
 }

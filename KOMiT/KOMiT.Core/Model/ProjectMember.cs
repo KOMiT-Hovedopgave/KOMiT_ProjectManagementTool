@@ -12,4 +12,20 @@ public class ProjectMember
     public ICollection<CurrentTask>? CurrentTasks { get; } = new List<CurrentTask>();
 
     public ICollection<Employee>? Employees { get; } = new List<Employee>();
+
+    public ProjectMember()
+    {
+
+    }
+    
+    public ProjectMember(int id)
+    {
+        Id = id;
+    }
+    public ProjectMember(int id, string projectRole, ProjectMemberStatus projectMemberStatus, ICollection<Employee>? employees) : this(id)
+    {
+        ProjectRole = projectRole;
+        ProjectMemberStatus = projectMemberStatus;
+        Employees = employees;
+    }
 }

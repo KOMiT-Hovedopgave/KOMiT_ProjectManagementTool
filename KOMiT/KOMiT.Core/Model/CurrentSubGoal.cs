@@ -20,9 +20,26 @@ public class CurrentSubGoal
     public int? CurrentPhaseId { get; set; }
     public CurrentPhase? CurrentPhase { get; set; }
 
-    public ICollection <CurrentTask>? CurrentTasks { get;  } = new List<CurrentTask>();
+    public ICollection <CurrentTask>? CurrentTasks { get; set; } 
 
     //Join klasse bliver lavet her mellem CurrentSubGoal og ProjectMember
-    public ICollection<ProjectMember>? ProjectMembers { get; } = new List<ProjectMember>();
+    public ICollection<ProjectMember>? ProjectMembers { get; set; } 
 
+    public CurrentSubGoal()
+    {
+
+    }
+
+    public CurrentSubGoal(int id, string name, string description, Status status, DateTime estimatedEndDate, string? comment, DateTime? realizedDate, ICollection<CurrentTask>? currentTasks, ICollection<ProjectMember>? projectMembers)
+    {
+        Id = id;
+        Name = name;
+        Description = description;
+        Status = status;
+        EstimatedEndDate = estimatedEndDate;
+        Comment = comment;
+        RealizedDate = realizedDate;
+        CurrentTasks = currentTasks;
+        ProjectMembers = projectMembers;
+    }
 }

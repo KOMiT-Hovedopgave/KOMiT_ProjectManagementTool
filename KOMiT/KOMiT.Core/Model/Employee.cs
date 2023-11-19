@@ -18,4 +18,15 @@ public class Employee
 
     public ICollection<Competence>? Competences { get; } = new List<Competence>();
 
+    public Employee() { }
+
+    public Employee(int id, string name, string jobPosition, string email, ICollection<Competence>? competences)
+    {
+        Id = id;
+        Name = name;
+        JobPosition = jobPosition;
+        Email = email;
+        Competences = competences;
+    }
+
 }

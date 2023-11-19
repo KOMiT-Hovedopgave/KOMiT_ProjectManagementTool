@@ -12,7 +12,22 @@ namespace KOMiT.Core.Model;
 
         public int? CurrentSubGoalId { get; set; }
         public CurrentSubGoal? CurrentSubGoal { get; set; }
+        public ICollection<ProjectMember>? ProjectMembers { get; set; }
 
-        public ICollection<ProjectMember>? ProjectMembers { get; } = new List<ProjectMember>();
+
+        public CurrentTask() { }
+
+        public CurrentTask(int id, string title, string description, Status status, DateTime estimatedNumberofDays, string? comment, DateTime? realizedDate, ICollection<ProjectMember> projektMembers)
+        {
+            Id = id;
+            Title = title; 
+            Description = description;
+            Status = status;
+            EstimatedNumberOfDays= estimatedNumberofDays;
+            Comment = comment;
+            RealizedDate = realizedDate;
+            ProjectMembers = projektMembers;
     }
+
+}
 

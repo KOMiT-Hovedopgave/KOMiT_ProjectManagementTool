@@ -1,4 +1,5 @@
-﻿using KOMiT.Core.Model;
+﻿using KOMiT.Core.DTO_s;
+using KOMiT.Core.Model;
 using KOMiT.Core.Model.Enum;
 using KOMiT.DataAccess.Persistence;
 using Microsoft.EntityFrameworkCore;
@@ -18,72 +19,90 @@ namespace KOMiT.DataAccess.Repositories.Implementations
             _context = context;
         }
 
-        //public async Task<CurrentPhase> GetDetailsById(int id)
-        //{
-        //    var result = _context.CurrentPhases.Where(x => x.Id == id)
-        //        .Select(cp => new CurrentPhase
-        //        (cp.Id, cp.Status, cp.EstimatedStartDate, cp.EstimatedEndDate, cp.Comment, cp.RealizedDate, cp.StandardPhaseId,
-        //           new StandardPhase(cp.StandardPhase.Id, cp.StandardPhase.Name, cp.StandardPhase.Description,
-        //           cp.StandardPhase.StandardSubGoals.Select(ssg => new StandardSubGoal(ssg.Id, ssg.Name, ssg.Description, ssg.StandardTasks.Select(st => new StandardTask(st.Id, st.Title, st.Description))).Single();
-        //}
         public async Task<CurrentPhase> GetDetailsById(int id)
         {
             var result = _context.CurrentPhases
-                .Where(x => x.Id == id)
-                .Select(cp => new CurrentPhase
-                (
-                    cp.Id,
-                    cp.Status,
-                    cp.EstimatedStartDate,
-                    cp.EstimatedEndDate,
-                    cp.Comment,
-                    cp.RealizedDate,
-                    cp.ProjectId,
-                    cp.StandardPhaseId,             
-                    new StandardPhase
-                    (
-                        cp.StandardPhase.Id,
-                        cp.StandardPhase.Name,
-                        cp.StandardPhase.Description,
-                        cp.StandardPhase.StandardSubGoals
-                            //.Select(ssg => new StandardSubGoal
-                            //(
-                            //    ssg.Id,
-                            //    ssg.Name,
-                            //    ssg.Description,
-                            //    ssg.StandardTasks
-                            //        .Select(st => new StandardTask
-                            //        (
-                            //            st.Id,
-                            //            st.Title,
-                            //            st.Description
-                            //        ))
-                            //        .ToList()
-                            //))
-                            //.ToList()
-                    )
-                    //cp.CurrentSubGoals.Select(csg => new CurrentSubGoal()).ToList())
-                ));
-
+        .Where(x => x.Id == id)
+        .Select(cp => new CurrentPhase
+        (
+            cp.Id,
+            cp.Status,
+            cp.EstimatedStartDate,
+            cp.EstimatedEndDate,
+            cp.Comment,
+            cp.RealizedDate,
+            cp.ProjectId,
+            cp.StandardPhaseId,
+            new StandardPhase
+            (
+                cp.StandardPhase.Id,
+                cp.StandardPhase.Name,
+                cp.StandardPhase.Description
+            ),
+            cp.CurrentSubGoals.Select(csg => new CurrentSubGoal(
+                csg.Id,
+                csg.Name,
+                csg.Description,
+                csg.Status,
+                csg.EstimatedEndDate,
+                csg.Comment,
+                csg.RealizedDate,
+                csg.CurrentTasks.Select(ct => new CurrentTask(
+                    ct.Id,
+                    ct.Title,
+                    ct.Description,
+                    ct.Status,
+                    ct.EstimatedNumberOfDays,
+                    ct.Comment,
+                    ct.RealizedDate,
+                    ct.ProjectMembers.Select(pm => new ProjectMember(pm.Id)).ToList()
+                )).ToList(),
+                csg.ProjectMembers.Select(pm => new ProjectMember(
+                    pm.Id,
+                    pm.ProjectRole,
+                    pm.ProjectMemberStatus,
+                    pm.Employees.Select(e => new Employee(
+                        e.Id,
+                        e.Name,
+                        e.JobPosition,
+                        e.Email,
+                        e.Competences.Select(c => new Competence(
+                            c.Id,
+                            c.Title,
+                            c.Description,
+                            c.Experience
+                        )).ToList()
+                    )).ToList()
+                )).ToList()
+              )).ToList()
+            )
+        );
             return await result.SingleOrDefaultAsync();
+        }
 
-        //        public int Id { get; set; }
-        //public string Name { get; set; }
-        //public string Description { get; set; }
-        //public Status Status { get; set; }
-        //public DateTime EstimatedEndDate { get; set; }
-        //public string? Comment { get; set; }
-        //public DateTime? RealizedDate { get; set; }
+        public async Task<CurrentPhase> GetEstimatedAndRealizedData(int id)
+        {
+            var result = await _context.CurrentPhases
+             .Where(x => x.Id == id)
+             .Select(cp => new CurrentPhase
+             {
+                 EstimatedStartDate = cp.EstimatedStartDate,
+                 EstimatedEndDate = cp.EstimatedEndDate,
+                 CurrentSubGoals = cp.CurrentSubGoals.Select(csg => new CurrentSubGoal
+                 {
+                     EstimatedEndDate = csg.EstimatedEndDate,
+                     RealizedDate = csg.RealizedDate,
+                     CurrentTasks = csg.CurrentTasks.Select(ct => new CurrentTask
+                     {
+                         EstimatedNumberOfDays = ct.EstimatedNumberOfDays,
+                         RealizedDate = ct.RealizedDate
+                     }).ToList()
+                 }).ToList()
+             })
+             .SingleOrDefaultAsync();
 
-        //public int? CurrentPhaseId { get; set; }
-        //public CurrentPhase? CurrentPhase { get; set; }
+            return result;
 
-
-        //public ICollection<CurrentTask>? CurrentTasks { get; } = new List<CurrentTask>();
-
-        ////Join klasse bliver lavet her mellem CurrentSubGoal og ProjectMember
-        //public ICollection<ProjectMember>? ProjectMembers { get; } = new List<ProjectMember>();
-    }
-
+        }
     }
 }
