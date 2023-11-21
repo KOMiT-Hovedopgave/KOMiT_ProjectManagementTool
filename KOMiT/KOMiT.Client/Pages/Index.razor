@@ -19,8 +19,14 @@ else
         <GridColumn TItem="Project" HeaderText="Id" SortKeySelector=" Item => Item.Id">
             @context.Id
         </GridColumn>
-        <GridColumn TItem="Project" HeaderText="Projekt" SortKeySelector=" Item => Item.Name">
-               <Button Color="ButtonColor.Link">@context.Name</Button>
+        <GridColumn TItem="Project" HeaderText="Projekt" SortKeySelector="Item => Item.Name">
+            @foreach (var item in Projects)
+            {
+                if (item.Id == context.Id)
+                {
+                    <Button @onclick="() => ProjectDetails(item.Id)" Color="ButtonColor.Link">@item.Name</Button>
+                }
+            }
         </GridColumn>
                     <GridColumn TItem="Project">
                 @if(context.Status == Core.Model.Enum.Status.Aktiv)
@@ -113,6 +119,11 @@ else
     private void PhaseDetails(int ID)
     {
         NavigationManager.NavigateTo($"/phasedetails/{ID}");
+    }
+
+        private void ProjectDetails(int ID)
+    {
+        NavigationManager.NavigateTo($"/projectdetails/{ID}");
     }
 }
 
