@@ -10,5 +10,6 @@ namespace KOMiT.DataAccess.Repositories
     public interface IProjectRepository
     {
         Task<ICollection<Project>> GetAll();
+        Task<Project> GetDetailsById(int id);
     }
 }

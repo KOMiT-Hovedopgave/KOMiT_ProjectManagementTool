@@ -22,5 +22,12 @@ namespace KOMiT.API.Controllers
             var result = await _projectService.GetAll();
             return Ok(result);
         }
+
+        [HttpGet("GetDetailsById/{id}")]
+        public async Task<ActionResult<Project>> GetDetailsById(int id)
+        {
+            var result = await _projectService.GetDetailsById(id);
+            return Ok(result);
+        }
     }
 }

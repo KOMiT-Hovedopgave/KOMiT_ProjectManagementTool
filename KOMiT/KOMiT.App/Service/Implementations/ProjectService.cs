@@ -21,5 +21,11 @@ namespace KOMiT.App.Service.Implementations
         {
             return await _projectRepository.GetAll();
         }
+
+        public async Task<Project> GetDetailsById(int id)
+        {
+            return await _projectRepository.GetDetailsById(id);
+
+        }
     }
 }

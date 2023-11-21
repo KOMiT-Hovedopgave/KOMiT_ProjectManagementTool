@@ -1,0 +1,75 @@
+﻿@page "/projectdetails/{ID:int}"
+@using KOMiT.Core.Model;
+@inject HttpClient _httpClient
+
+<div class="parent">
+    <div style="background-color:aliceblue" class="div1">
+        <p>
+            @_project.Name
+            <Tooltip Title="@_project.Description">
+                <Icon Name="IconName.InfoCircleFill" Color="IconColor.Primary" />
+            </Tooltip>
+        </p>
+        <p>
+            Status: @_project.Status.ToString()
+            @if (_project.Status == Core.Model.Enum.Status.Aktiv)
+            {
+                    <Icon Name="IconName.CircleFill" Color="IconColor.Warning" />
+            }
+            else if (_project.Status == Core.Model.Enum.Status.Inaktiv)
+            {
+                    <Icon Name="IconName.CircleFill" Color="IconColor.Danger" />
+            }
+            else
+            {
+                    <Icon Name="IconName.CircleFill" Color="IconColor.Success" />
+            }
+        </p>
+    </div>
+    <div style="background-color:aliceblue" class="div2">
+        <p>Delmål i alt</p>
+        <p>Status:</p>
+        <table style="width: 100%;">
+            <tbody>
+                <tr>
+                    <td>Estimeret: dage</td>
+                </tr>
+                <tr>
+                    <td>Realiseret: dage</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div style="background-color:aliceblue" class="div3">
+        <p>Opgaver i alt</p>
+        <p>Status:</p>
+        <table style="width: 100%;">
+            <tbody>
+                <tr>
+                    <td>Estimeret: dage</td>
+                </tr>
+                <tr>
+                    <td>Realiseret: dage</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div style="background-color:aliceblue" class="div4">4 </div>
+    <div style="background-color:aliceblue" class="div5"> 5</div>
+    <div style="background-color:aliceblue" class="div6">6 </div>
+    <div style="background-color:aliceblue" class="div7"> 7</div>
+</div>
+
+@code {
+
+    [Parameter]
+    public int ID { get; set; }
+
+    private Project _project;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _project = await _httpClient.GetFromJsonAsync<Project>($"https://localhost:7282/api/project/GetDetailsById/{ID}");
+    }
+
+}
