@@ -17,6 +17,8 @@ builder.Services.AddScoped<IProjectService, ProjectService>();
 builder.Services.AddScoped<IProjectRepository, ProjectRepository>();
 builder.Services.AddScoped<ICurrentPhaseService, CurrentPhaseService>();
 builder.Services.AddScoped<ICurrentPhaseRepository, CurrentPhaseRepository>();
+builder.Services.AddScoped<IStandardPhaseService, StandardPhaseService>();
+builder.Services.AddScoped<IStandardPhaseRepository, StandardPhaseRepository>();
 
 var app = builder.Build();
 

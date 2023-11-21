@@ -15,8 +15,12 @@ namespace KOMiT.API.Controllers
             _standardPhaseService = standardPhaseService;
         }
         [HttpPost("CreatePhase")]
-        public async Task<ActionResult<ICollection<StandardPhase>>> CreatePhase()
+        public async Task<ActionResult<ICollection<StandardPhase>>> CreatePhase([FromBody] StandardPhase standardPhase)
         {
+            if (standardPhase == null)
+            {
+                return BadRequest("NoPhase");
+            }
             var result = await _standardPhaseService.CrreatePhase();
             return Ok(result);
         }
