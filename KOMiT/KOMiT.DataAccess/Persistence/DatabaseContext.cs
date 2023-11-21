@@ -436,6 +436,14 @@ public class DatabaseContext : DbContext
                 Description = "Jeg føler mig stærk i...",
                 Experience = "6 år",
                 EmployeeId = 1
+            },
+            new Competence
+            {
+                Id = 4,
+                Title = "Testning",
+                Description = "Jeg føler mig stærk i...",
+                Experience = "4 år",
+                EmployeeId = 1
             }
             );
 
@@ -445,22 +453,31 @@ public class DatabaseContext : DbContext
                 Id = 1,
                 ProjectRole = "Udvikler",
                 ProjectMemberStatus = Core.Model.Enum.ProjectMemberStatus.Aktiv,
+            },
+            new ProjectMember
+            {
+                Id = 2,
+                ProjectRole = "Projektleder",
+                ProjectMemberStatus = Core.Model.Enum.ProjectMemberStatus.Aktiv,
             }
             );
 
-        modelBuilder.Entity("CurrentSubGoalProjectMember").HasData(
-         new { CurrentSubGoalsId = 1, ProjectMembersId = 1 }
-         );
+        modelBuilder.Entity("CurrentPhaseProjectMember").HasData(
+             new { CurrentPhasesId = 1, ProjectMembersId = 1 },
+             new { CurrentPhasesId = 1, ProjectMembersId = 2 }
+             );
 
 
 
         modelBuilder.Entity("CurrentTaskProjectMember").HasData(
-            new { CurrentTasksId = 1, ProjectMembersId = 1 }
+            new { CurrentTasksId = 1, ProjectMembersId = 1 },
+            new { CurrentTasksId = 2, ProjectMembersId = 2 }
             );
 
 
         modelBuilder.Entity("EmployeeProjectMember").HasData(
-            new { EmployeesId = 1, ProjectMembersId = 1 }
+            new { EmployeesId = 1, ProjectMembersId = 1 },
+            new { EmployeesId = 2, ProjectMembersId = 2 }
             );
 
 
@@ -473,6 +490,15 @@ public class DatabaseContext : DbContext
                Status = Core.Model.Enum.Status.Aktiv,
                EstimatedEndDate = new DateTime(2024, 11, 09),
                CurrentPhaseId = 1
+           },
+           new CurrentSubGoal
+           {
+               Id = 2,
+               Name = "Test Integration",
+               Description = "Dette er en testintegration",
+               Status = Core.Model.Enum.Status.Aktiv,
+               EstimatedEndDate = new DateTime(2023, 12, 31),
+               CurrentPhaseId = 1
            }
            );
 
@@ -484,7 +510,16 @@ public class DatabaseContext : DbContext
                 Description = "Denne opgave...",
                 Status = Core.Model.Enum.Status.Aktiv,
                 EstimatedNumberOfDays = new DateTime(2023, 11, 10),
-                CurrentSubGoalId= 1,
+                CurrentSubGoalId= 1
+            },
+            new CurrentTask
+            {
+                Id = 2,
+                Title = "Udfør enhedstest",
+                Description = "Skriv og udfør enhedstest for integrationen",
+                Status = Core.Model.Enum.Status.Aktiv,
+                EstimatedNumberOfDays = new DateTime(2023, 11, 20),
+                CurrentSubGoalId = 2,
             }
             );
 

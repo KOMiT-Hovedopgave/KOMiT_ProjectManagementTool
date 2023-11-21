@@ -4,6 +4,7 @@ using KOMiT.DataAccess.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KOMiT.DataAccess.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20231120104207_more-seed-data")]
+    partial class moreseeddata
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -22,30 +25,30 @@ namespace KOMiT.DataAccess.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("CurrentPhaseProjectMember", b =>
+            modelBuilder.Entity("CurrentSubGoalProjectMember", b =>
                 {
-                    b.Property<int>("CurrentPhasesId")
+                    b.Property<int>("CurrentSubGoalsId")
                         .HasColumnType("int");
 
                     b.Property<int>("ProjectMembersId")
                         .HasColumnType("int");
 
-                    b.HasKey("CurrentPhasesId", "ProjectMembersId");
+                    b.HasKey("CurrentSubGoalsId", "ProjectMembersId");
 
                     b.HasIndex("ProjectMembersId");
 
-                    b.ToTable("CurrentPhaseProjectMember");
+                    b.ToTable("CurrentSubGoalProjectMember");
 
                     b.HasData(
                         new
                         {
-                            CurrentPhasesId = 1,
+                            CurrentSubGoalsId = 1,
                             ProjectMembersId = 1
                         },
                         new
                         {
-                            CurrentPhasesId = 1,
-                            ProjectMembersId = 2
+                            CurrentSubGoalsId = 2,
+                            ProjectMembersId = 1
                         });
                 });
 
@@ -72,7 +75,7 @@ namespace KOMiT.DataAccess.Migrations
                         new
                         {
                             CurrentTasksId = 2,
-                            ProjectMembersId = 2
+                            ProjectMembersId = 1
                         });
                 });
 
@@ -95,11 +98,6 @@ namespace KOMiT.DataAccess.Migrations
                         {
                             EmployeesId = 1,
                             ProjectMembersId = 1
-                        },
-                        new
-                        {
-                            EmployeesId = 2,
-                            ProjectMembersId = 2
                         });
                 });
 
@@ -156,14 +154,6 @@ namespace KOMiT.DataAccess.Migrations
                             EmployeeId = 1,
                             Experience = "6 år",
                             Title = "Blazor"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Description = "Jeg føler mig stærk i...",
-                            EmployeeId = 1,
-                            Experience = "4 år",
-                            Title = "Testning"
                         });
                 });
 
@@ -715,12 +705,6 @@ namespace KOMiT.DataAccess.Migrations
                             Id = 1,
                             ProjectMemberStatus = 0,
                             ProjectRole = "Udvikler"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            ProjectMemberStatus = 0,
-                            ProjectRole = "Projektleder"
                         });
                 });
 
@@ -876,11 +860,11 @@ namespace KOMiT.DataAccess.Migrations
                         });
                 });
 
-            modelBuilder.Entity("CurrentPhaseProjectMember", b =>
+            modelBuilder.Entity("CurrentSubGoalProjectMember", b =>
                 {
-                    b.HasOne("KOMiT.Core.Model.CurrentPhase", null)
+                    b.HasOne("KOMiT.Core.Model.CurrentSubGoal", null)
                         .WithMany()
-                        .HasForeignKey("CurrentPhasesId")
+                        .HasForeignKey("CurrentSubGoalsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

@@ -56,8 +56,10 @@ namespace KOMiT.DataAccess.Repositories.Implementations
                     ct.Comment,
                     ct.RealizedDate,
                     ct.ProjectMembers.Select(pm => new ProjectMember(pm.Id)).ToList()
-                )).ToList(),
-                csg.ProjectMembers.Select(pm => new ProjectMember(
+                )).ToList()
+              )).ToList()
+            .ToList(),
+            cp.ProjectMembers.Select(pm => new ProjectMember(
                     pm.Id,
                     pm.ProjectRole,
                     pm.ProjectMemberStatus,
@@ -73,10 +75,7 @@ namespace KOMiT.DataAccess.Repositories.Implementations
                             c.Experience
                         )).ToList()
                     )).ToList()
-                )).ToList()
-              )).ToList()
-            )
-        );
+                )).ToList()));
             return await result.SingleOrDefaultAsync();
         }
 
@@ -90,10 +89,12 @@ namespace KOMiT.DataAccess.Repositories.Implementations
                  EstimatedEndDate = cp.EstimatedEndDate,
                  CurrentSubGoals = cp.CurrentSubGoals.Select(csg => new CurrentSubGoal
                  {
+                     Name = csg.Name,
                      EstimatedEndDate = csg.EstimatedEndDate,
                      RealizedDate = csg.RealizedDate,
                      CurrentTasks = csg.CurrentTasks.Select(ct => new CurrentTask
                      {
+                         Title = ct.Title,
                          EstimatedNumberOfDays = ct.EstimatedNumberOfDays,
                          RealizedDate = ct.RealizedDate
                      }).ToList()

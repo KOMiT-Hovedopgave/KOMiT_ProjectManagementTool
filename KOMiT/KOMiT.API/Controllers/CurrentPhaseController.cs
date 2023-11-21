@@ -1,4 +1,5 @@
 ﻿using KOMiT.App.Service;
+using KOMiT.Core.DTO_s;
 using KOMiT.Core.Model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -19,6 +20,14 @@ namespace KOMiT.API.Controllers
         public async Task<ActionResult<CurrentPhase>> GetDetailsById(int id)
         {
             var result = await _currentPhaseService.GetDetailsById(id);
+            return Ok(result);
+        }
+
+
+        [HttpGet("GetCalculatedDays/{id}")]
+        public async Task<ActionResult<EstimatedAndRealizedDaysDTO>> GetCalculatedDays(int id)
+        {
+            var result = await _currentPhaseService.CalculatorEstimatedAndRealizedDaysDTO(id);
             return Ok(result);
         }
     }
