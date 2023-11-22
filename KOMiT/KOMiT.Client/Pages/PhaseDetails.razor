@@ -16,10 +16,10 @@ else
 
 <div class="parent">
     <div style="background-color:aliceblue" class="div1">
-        <p>
-                <b>@_currentPhase.StandardPhase.Name</b>
+            <p style="background-color: #6C6C6C; color: #ffffff;">
+                Fase: @_currentPhase.StandardPhase.Name
             <Tooltip Title="@_currentPhase.StandardPhase.Description">
-                <Icon Name="IconName.InfoCircleFill" Color="IconColor.Primary" />
+                <Icon Name="IconName.InfoCircleFill" Color="IconColor.White" />
             </Tooltip>
         </p>
         <p>
@@ -53,7 +53,7 @@ else
         </table>
     </div>
     <div style="background-color:aliceblue" class="div2">
-        <p><b>Delmål i alt</b></p>
+        <p style="background-color: #6C6C6C; color: #ffffff;">Delmål i alt</p>
         <p><b>Status:</b></p>
            
         <table style="width: 100%;">
@@ -68,7 +68,7 @@ else
         </table>
     </div>
     <div style="background-color:aliceblue" class="div3">
-        <p><b>Opgaver i alt</b></p>
+            <p style="background-color: #6C6C6C; color: #ffffff;">Opgaver i alt</p>
         <p><b>Status:</b></p>
         <table style="width: 100%;">
             <tbody>
@@ -178,21 +178,43 @@ else
             @foreach (var projectMember in _currentPhase.ProjectMembers)
             {
             <div style="float: left;">
-                <div style="width: 180px; height: 100px; background-color: #DBE5FF; border: 1px solid #808080;">
-                    <Icon Name="IconName.PersonFill" Color="IconColor.Primary" />
+                <div style="width: 180px; height: 150px; background-color: #DBE5FF; border: 1px solid #808080;">
+                        <div style="display: inline-block;">
+                            <Icon Name="IconName.PersonFill" Color="IconColor.Primary" />
+                        </div>
+                        <div style="display: inline-block;">
+                            <Dropdown AutoClose="true">
+                                <DropdownToggleButton Color="ButtonColor.None" Style="margin-bottom: 5px;">
+                                            <Icon Name="IconName.PlusCircleFill" Color="IconColor.Primary" />
+                                </DropdownToggleButton>
+                                <DropdownMenu>
+                                    <DropdownItem To="#" Type="ButtonType.Link">
+                                        <Icon Name="IconName.PencilSquare" Color="IconColor.Primary" /> Rediger
+                                    </DropdownItem>
+                                    <DropdownItem To="#" Type="ButtonType.Link">
+                                        <Icon Name="IconName.Trash3Fill" Color="IconColor.Primary" /> Slet
+                                    </DropdownItem>
+                                </DropdownMenu>
+                            </Dropdown>
+                        </div>
                         <div>@projectMember.Employees.Select(e => e.Name).FirstOrDefault()</div>
                     <div>Stilling: @projectMember.Employees.Select(e => e.JobPosition).FirstOrDefault()</div>
                     <div>Rolle: @projectMember.ProjectRole</div>
+                    <div>Status: @projectMember.ProjectMemberStatus.ToString()</div>
                 </div>
                 @foreach (var employee in projectMember.Employees)
                 {
-                         <div style="width: 160; height: 160px; background-color: #E1F3E9; border: 1px solid #808080;">                                                     
-                                <Tooltip Title="test">
-                                    <Icon Name="IconName.InfoCircleFill" Color="IconColor.Primary" />
-                                </Tooltip>
-                                
-                           
-                         </div>                      
+                    @foreach (var competence in employee.Competences)
+                    {
+                    <div style="width: 180px; height: 80px; background-color: #E1F3E9; border: 1px solid #808080;">
+
+                    <div>Title: @competence.Title</div>
+                    <div>Erfaring: @competence.Experience</div>
+                        <Tooltip Title="@competence.Description">
+                        <Icon Name="IconName.InfoCircleFill" Color="IconColor.Primary" />
+                        </Tooltip>
+                    </div>
+                        }              
                  }
             </div>
             }

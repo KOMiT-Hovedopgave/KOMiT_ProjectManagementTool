@@ -16,7 +16,7 @@ public class Employee
 
     public ICollection<ProjectMember>? ProjectMembers { get; } = new List<ProjectMember>();
 
-    public ICollection<Competence>? Competences { get; } = new List<Competence>();
+    public ICollection<Competence>? Competences { get; set; }
 
     public Employee() { }
 
