@@ -20,13 +20,13 @@ else
             </BodyTemplate>
             <FooterTemplate>
                 <Button Color="ButtonColor.Secondary" @onclick="OnHideModalClick">Close</Button>
-        
+
             </FooterTemplate>
         </Modal>
 
-       
+
     </div>
-    <Grid DataProvider="ProjectDataProvider"   HeaderRowCssClass="bg-secondary text-white border-bottom-0" TItem="Project" AllowPaging="true" PageSize="12" AllowSorting="true">
+    <Grid DataProvider="ProjectDataProvider" HeaderRowCssClass="bg-secondary text-white border-bottom-0" TItem="Project" AllowPaging="true" PageSize="12" AllowSorting="true">
         <GridColumn TItem="Project" HeaderText="Id" SortKeySelector=" Item => Item.Id">
             @context.Id
         </GridColumn>
@@ -39,39 +39,39 @@ else
                 }
             }
         </GridColumn>
-                    <GridColumn TItem="Project">
-                @if(context.Status == Core.Model.Enum.Status.Aktiv)
-                {
-                <Icon Name="IconName.CircleFill" Color="IconColor.Warning" /> 
-                }
-                else if(context.Status == Core.Model.Enum.Status.Inaktiv)
-                {
-                <Icon Name="IconName.CircleFill" Color="IconColor.Danger" /> 
-                }
-                else
-                {
-                <Icon Name="IconName.CircleFill" Color="IconColor.Success" /> 
-                }
-            </GridColumn>
+        <GridColumn TItem="Project">
+            @if (context.Status == Core.Model.Enum.Status.Aktiv)
+            {
+                <Icon Name="IconName.CircleFill" Color="IconColor.Warning" />
+            }
+            else if (context.Status == Core.Model.Enum.Status.Inaktiv)
+            {
+                <Icon Name="IconName.CircleFill" Color="IconColor.Danger" />
+            }
+            else
+            {
+                <Icon Name="IconName.CircleFill" Color="IconColor.Success" />
+            }
+        </GridColumn>
         <GridColumn TItem="Project" HeaderText="Status" SortKeySelector=" Item => Item.Status">
             @context.Status.ToString()
         </GridColumn>
         <GridColumn TItem="Project">
             <Dropdown AutoClose="true">
                 <DropdownToggleButton Color="ButtonColor.None"><Icon Name="IconName.PlusCircleFill" Color="IconColor.Primary" /></DropdownToggleButton>
-                    <DropdownMenu>
-                        <DropdownItem To="#" Type="ButtonType.Link"> <Icon Name="IconName.CheckSquareFill" Color="IconColor.Primary" /> Afslut</DropdownItem>
-                        <DropdownItem To="#" Type="ButtonType.Link"> <Icon Name="IconName.PencilSquare"  Color="IconColor.Primary" /> Rediger</DropdownItem>
-                        <DropdownItem To="#" Type="ButtonType.Link"> <Icon Name="IconName.Trash3Fill"  Color="IconColor.Primary" /> Slet</DropdownItem>
-                    </DropdownMenu>
+                <DropdownMenu>
+                    <DropdownItem To="#" Type="ButtonType.Link"> <Icon Name="IconName.CheckSquareFill" Color="IconColor.Primary" /> Afslut</DropdownItem>
+                    <DropdownItem To="#" Type="ButtonType.Link"> <Icon Name="IconName.PencilSquare" Color="IconColor.Primary" /> Rediger</DropdownItem>
+                    <DropdownItem To="#" Type="ButtonType.Link"> <Icon Name="IconName.Trash3Fill" Color="IconColor.Primary" /> Slet</DropdownItem>
+                </DropdownMenu>
             </Dropdown>
         </GridColumn>
         <GridColumn TItem="Project" HeaderText="Beskrivelse">
-               <div style="text-align:center">
-                   <Tooltip Title="@context.Description">
-                       <Icon Name="IconName.InfoCircleFill"  Color="IconColor.Primary" /> 
-                   </Tooltip>
-               </div>
+            <div style="text-align:center">
+                <Tooltip Title="@context.Description">
+                    <Icon Name="IconName.InfoCircleFill" Color="IconColor.Primary" />
+                </Tooltip>
+            </div>
         </GridColumn>
         <GridColumn TItem="Project" HeaderText="Projekttype" SortKeySelector=" Item => Item.ProjectType">
             @context.ProjectType.ToString()
@@ -79,42 +79,42 @@ else
         <GridColumn TItem="Project" HeaderText="Prioritet" SortKeySelector=" Item => Item.Priority">
             @context.Priority.ToString()
         </GridColumn>
-         <GridColumn TItem="Project" HeaderText="Fase" SortKeySelector="Item => Item.CurrentPhases.FirstOrDefault().StandardPhase.Name">
+        <GridColumn TItem="Project" HeaderText="Fase" SortKeySelector="Item => Item.CurrentPhases.FirstOrDefault().StandardPhase.Name">
             @foreach (var item in @context.CurrentPhases)
-                {
-                    <Button @onclick="() => PhaseDetails(item.Id)" Color="ButtonColor.Link">@item.StandardPhase.Name</Button>
-                }
+            {
+                <Button @onclick="() => PhaseDetails(item.Id)" Color="ButtonColor.Link">@item.StandardPhase.Name</Button>
+            }
         </GridColumn>
         <GridColumn TItem="Project">
             <Dropdown AutoClose="true">
                 <DropdownToggleButton Color="ButtonColor.None"><Icon Name="IconName.PlusCircleFill" Color="IconColor.Primary" /></DropdownToggleButton>
-                    <DropdownMenu>
-                        <DropdownItem To="#" Type="ButtonType.Link"> <Icon Name="IconName.CheckSquareFill" Color="IconColor.Primary" /> Afslut</DropdownItem>
-                        <DropdownItem To="#" Type="ButtonType.Link"> <Icon Name="IconName.PencilSquare"  Color="IconColor.Primary" /> Rediger</DropdownItem>
-                        <DropdownItem To="#" Type="ButtonType.Link"> <Icon Name="IconName.Trash3Fill"  Color="IconColor.Primary" /> Slet</DropdownItem>
-                    </DropdownMenu>
+                <DropdownMenu>
+                    <DropdownItem To="#" Type="ButtonType.Link"> <Icon Name="IconName.CheckSquareFill" Color="IconColor.Primary" /> Afslut</DropdownItem>
+                    <DropdownItem To="#" Type="ButtonType.Link"> <Icon Name="IconName.PencilSquare" Color="IconColor.Primary" /> Rediger</DropdownItem>
+                    <DropdownItem To="#" Type="ButtonType.Link"> <Icon Name="IconName.Trash3Fill" Color="IconColor.Primary" /> Slet</DropdownItem>
+                </DropdownMenu>
             </Dropdown>
 
         </GridColumn>
-         <GridColumn TItem="Project" HeaderText="Startdato" SortKeySelector="Item => Item.CurrentPhases.FirstOrDefault().EstimatedStartDate">
+        <GridColumn TItem="Project" HeaderText="Startdato" SortKeySelector="Item => Item.CurrentPhases.FirstOrDefault().EstimatedStartDate">
             @foreach (var item in @context.CurrentPhases)
-                {
-                    @item.EstimatedStartDate.ToShortDateString()
-                }
+            {
+                @item.EstimatedStartDate.ToShortDateString()
+            }
         </GridColumn>
         <GridColumn TItem="Project" HeaderText="Næste delmål">
         </GridColumn>
-             <GridColumn TItem="Project" HeaderText="Slutdato" SortKeySelector="Item => Item.CurrentPhases.FirstOrDefault().EstimatedEndDate">
+        <GridColumn TItem="Project" HeaderText="Slutdato" SortKeySelector="Item => Item.CurrentPhases.FirstOrDefault().EstimatedEndDate">
             @foreach (var item in @context.CurrentPhases)
-                {
-                    @item.EstimatedEndDate.ToShortDateString()
-                }
+            {
+                @item.EstimatedEndDate.ToShortDateString()
+            }
         </GridColumn>
-        </Grid>
-        
-    }
-    
-    
+    </Grid>
+
+}
+
+
 
 @code {
     private ICollection<Project>? Projects { get; set; }
@@ -135,7 +135,7 @@ else
     {
         navigationManager.NavigateTo($"/phasedetails/{ID}");
     }
-     
+
     private void ProjectDetails(int ID)
     {
         navigationManager.NavigateTo($"/projectdetails/{ID}");
@@ -152,5 +152,4 @@ else
         await modal?.HideAsync();
 
     }
-
-    }
+}
