@@ -10,5 +10,6 @@ namespace KOMiT.App.Service
     public interface IProjectService
     {
         Task<ICollection<Project>> GetAll();
+        Task<Project> GetDetailsById(int id);
     }
 }

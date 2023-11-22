@@ -49,6 +49,41 @@ public class ProjectRepository : IProjectRepository
       ));
         return await result.ToListAsync();
     }
+
+    public async Task<Project> GetDetailsById(int id)
+    {
+        var result = _context.Projects
+            .Where(x => x.Id == id)
+            .Select(p => new Project
+            (p.Id,
+             p.Name,
+             p.Description,
+             p.ProjectType,
+             p.Priority,
+             p.Status,
+             p.EstimatedStartDate,
+             p.EstimatedEndDate,
+             p.Comment,
+             p.RealizedDate,
+             p.CurrentPhases.Select(cp => new CurrentPhase(
+              cp.Id,
+              cp.Status,
+              cp.EstimatedStartDate,
+              cp.EstimatedEndDate,
+              cp.Comment,
+              cp.RealizedDate,
+              cp.ProjectId,
+              cp.StandardPhase.Id,
+                  new StandardPhase(
+                cp.StandardPhase.Id,
+                cp.StandardPhase.Name,
+                cp.StandardPhase.Description
+            )
+          )).ToList()
+      ));
+
+        return await result.SingleOrDefaultAsync();
+    }
 }
 
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using KOMiT.Core.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,22 +9,43 @@ namespace KOMiT.Core.DTO_s
 {
     public class EstimatedAndRealizedDaysDTO
     {
-        public int EstimatedSubProjectDays { get; set; } = 0;
-        public int RealizedSubProjectDays { get; set; } = 0;
-        public int EstimatedCurrentSubGoalsDays { get; set; } = 0;
-        public int RealizedCurrentSubGoalsDays { get; set; } = 0;
-        public int EstimatedCurrentTaskDays { get; set; } = 0;
-        public int RealizedCurrentTaskDays { get; set; } = 0;
+        public double EstimatedCurrentPhaseDaysSum { get; set; } = 0;
+        public double RealizedCurrentPhaseDaysSum { get; set; } = 0;
+        public double EstimatedCurrentSubGoalsDaysSum { get; set; } = 0;
+        public double RealizedCurrentSubGoalsDaysSum { get; set; } = 0;
+        public double EstimatedCurrentTaskDaysSum { get; set; } = 0;
+        public double RealizedCurrentTaskDaysSum { get; set; } = 0;
 
-        public EstimatedAndRealizedDaysDTO(int estimatedSubProjectDays, int realizedSubProjectDays, int estimatedCurrentSubGoalsDays, int realizedCurrentSubGoalDays, int estimatedCurrentTaskDays, int realizedCurrentTaskDays) 
-        { 
-            EstimatedSubProjectDays = estimatedSubProjectDays;
-            RealizedSubProjectDays = realizedSubProjectDays;
-            EstimatedCurrentSubGoalsDays= estimatedCurrentSubGoalsDays;
-            RealizedCurrentSubGoalsDays = realizedCurrentSubGoalDays;
-            EstimatedCurrentTaskDays = realizedCurrentTaskDays;
-            RealizedCurrentTaskDays= realizedCurrentTaskDays;
-       
+        public ICollection<CurrentSubGoalsDaysDTO> CurrentSubGoalsDaysDTOs { get; set; }
+        public class CurrentSubGoalsDaysDTO
+        {
+            public string Name { get; set; }
+            public double EstimatedCurrentSubGoalsDays { get; set; } = 0;
+            public double RealizedCurrentSubGoalsDays { get; set; } = 0;
+        }
+
+        public ICollection<CurrentTaskDaysDTO> CurrentTaskDaysDTOs { get; set; }
+        public class CurrentTaskDaysDTO
+        {
+            public string Title { get; set; }
+            public double EstimatedCurrentTaksDays { get; set; } = 0;
+            public double RealizedCurrentTaksDays { get; set; } = 0;
+        }
+
+        public EstimatedAndRealizedDaysDTO()
+        {
+
+        }
+        public EstimatedAndRealizedDaysDTO(double estimatedCurrentPhaseDaysSum, double realizedCurrentPhaseDaysSum, double estimatedCurrentSubGoalsDaysSum, double realizedCurrentSubGoalDaysSum, double estimatedCurrentTaskDaysSum, double realizedCurrentTaskDaysSum, ICollection<CurrentSubGoalsDaysDTO> currentSubGoalsDaysDTOs, ICollection<CurrentTaskDaysDTO> currentTaskDaysDTOs) 
+        {
+            EstimatedCurrentPhaseDaysSum = estimatedCurrentPhaseDaysSum;
+            RealizedCurrentPhaseDaysSum = realizedCurrentPhaseDaysSum;
+            EstimatedCurrentSubGoalsDaysSum= estimatedCurrentSubGoalsDaysSum;
+            RealizedCurrentSubGoalsDaysSum = realizedCurrentSubGoalDaysSum;
+            EstimatedCurrentTaskDaysSum = estimatedCurrentTaskDaysSum;
+            RealizedCurrentTaskDaysSum = realizedCurrentTaskDaysSum; 
+            CurrentSubGoalsDaysDTOs = currentSubGoalsDaysDTOs;
+            CurrentTaskDaysDTOs = currentTaskDaysDTOs;
         }    
 
     }

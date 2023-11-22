@@ -19,6 +19,8 @@ public class CurrentPhase
 
     public ICollection<CurrentSubGoal>? CurrentSubGoals { get; set; }
 
+    public ICollection<ProjectMember>? ProjectMembers { get; set; }
+
     //FK bliver lavet her (StandardPhaseId)
     public int StandardPhaseId { get; set; }
     public StandardPhase StandardPhase { get; set; }
@@ -41,9 +43,10 @@ public class CurrentPhase
         StandardPhase = standardPhase;
     }
 
-    public CurrentPhase(int id, Status status, DateTime estimatedStartDate, DateTime estimatedEndDate, string? comment, DateTime? realizedDate, int? projectId, int standardPhaseId, StandardPhase standardPhase, ICollection<CurrentSubGoal>? currentSubGoals) : this(id, status, estimatedStartDate, estimatedEndDate, comment, realizedDate, projectId, standardPhaseId, standardPhase)
+    public CurrentPhase(int id, Status status, DateTime estimatedStartDate, DateTime estimatedEndDate, string? comment, DateTime? realizedDate, int? projectId, int standardPhaseId, StandardPhase standardPhase, ICollection<CurrentSubGoal>? currentSubGoals, ICollection<ProjectMember>? projectMembers) : this(id, status, estimatedStartDate, estimatedEndDate, comment, realizedDate, projectId, standardPhaseId, standardPhase)
     {
         CurrentSubGoals = currentSubGoals;
+        ProjectMembers = projectMembers;
     }
 
 
