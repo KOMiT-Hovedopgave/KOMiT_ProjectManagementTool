@@ -9,6 +9,6 @@ namespace KOMiT.App.Service
 {
     public  interface IStandardPhaseService
     {
-        Task<ICollection<StandardPhase>> CrreatePhase();
+        Task CreatePhase(StandardPhase standardPhase);
     }
 }

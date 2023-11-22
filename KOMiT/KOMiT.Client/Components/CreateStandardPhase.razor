@@ -1,0 +1,40 @@
+﻿@using KOMiT.Core.Model
+@inject HttpClient http
+@inject NavigationManager navManger 
+
+
+<div class="row">
+    <div class="col-md-4">
+        <EditForm class="container" Model="standardPhase">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+
+            <div class="form-group">
+                <label >navn</label>
+                <input @bind-value="standardPhase.Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label >Længde</label>
+                <input @bind-value="standardPhase.Description" class="form-control" />
+                <span asp-validation-for="Beskrivelse" class="text-danger"></span>
+            </div>
+            </EditForm>
+            </div>
+            </div>
+
+<button class="btn btn-primary" @onclick="Create"> Opret </button>
+
+@code {
+    public StandardPhase standardPhase = new StandardPhase();
+
+    private async Task Create()
+    {
+        var response = await http.PostAsJsonAsync("https://localhost:7282/api/standardphase/CreatePhase", standardPhase);
+
+        if (response.IsSuccessStatusCode)
+        {
+            navManger.NavigateTo("/CreatePhase");
+        }
+    }
+}

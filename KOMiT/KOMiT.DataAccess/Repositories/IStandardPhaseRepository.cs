@@ -9,6 +9,6 @@ namespace KOMiT.DataAccess.Repositories
 {
     public interface IStandardPhaseRepository
     {
-        Task<ICollection<StandardPhase>> CreatePhase();
+        Task CreatePhase(StandardPhase standardPhase);
     }
 } 

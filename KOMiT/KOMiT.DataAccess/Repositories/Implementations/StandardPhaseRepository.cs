@@ -15,13 +15,11 @@ namespace KOMiT.DataAccess.Repositories.Implementations
         {
            _context= context;
         }
-        public async Task<ICollection<StandardPhase>> CreatePhase()
+        public async Task CreatePhase(StandardPhase standardPhase)
         {
-            var result = _context.StandardPhases.Select(x => new StandardPhase(
-                x.Id,
-                x.Name,
-                x.Description)).ToList();
-            return  await result.ToList();
+            var result = _context.StandardPhases.Add (standardPhase);
+            await _context.SaveChangesAsync();
+            
         }
     }
 }

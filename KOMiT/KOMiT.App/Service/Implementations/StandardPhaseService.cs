@@ -16,9 +16,9 @@ namespace KOMiT.App.Service.Implementations
         {
             _standardPhaseRepository = standardPhaseRepository;
         }
-        public async Task<ICollection<StandardPhase>> CreatePhase()
+        public async Task CreatePhase(StandardPhase standardPhase)
         {
-            return await _standardPhaseRepository.CreatePhase();
+             await _standardPhaseRepository.CreatePhase(standardPhase);
         }
     }
 }
