@@ -1,5 +1,4 @@
 ﻿@page "/"
-@using KOMiT.Core.Model;
 @inject HttpClient _httpClient
 @inject NavigationManager NavigationManager
 
@@ -13,7 +12,19 @@ else
 {
     <div style="margin:5px">
         <Button Color="ButtonColor.Primary">Opret projekt</Button>
-        <Button Color="ButtonColor.Primary">Opret fase</Button>
+        <Button Color="ButtonColor.Primary" @onclick="OnShowModalClick">Opret standardfase </Button>
+        <Modal @ref="modal" Title="Opret standardfase">
+            <BodyTemplate>
+                <CreateStandardPhase>
+                </CreateStandardPhase>
+            </BodyTemplate>
+            <FooterTemplate>
+                <Button Color="ButtonColor.Secondary" @onclick="OnHideModalClick">Close</Button>
+        
+            </FooterTemplate>
+        </Modal>
+
+       
     </div>
     <Grid DataProvider="ProjectDataProvider"   HeaderRowCssClass="bg-secondary text-white border-bottom-0" TItem="Project" AllowPaging="true" PageSize="12" AllowSorting="true">
         <GridColumn TItem="Project" HeaderText="Id" SortKeySelector=" Item => Item.Id">
@@ -105,6 +116,8 @@ else
 
 @code {
     private ICollection<Project>? Projects { get; set; }
+    private Modal modal;
+
 
     protected override async Task OnInitializedAsync()
     {
@@ -120,11 +133,22 @@ else
     {
         NavigationManager.NavigateTo($"/phasedetails/{ID}");
     }
-
-        private void ProjectDetails(int ID)
+      
+    private void ProjectDetails(int ID)
     {
         NavigationManager.NavigateTo($"/projectdetails/{ID}");
+
     }
+
+    private async Task OnShowModalClick()
+    {
+        await modal?.ShowAsync();
+    }
+
+    private async Task OnHideModalClick()
+    {
+        await modal?.HideAsync();
+
 }
 
 

@@ -1,0 +1,25 @@
+﻿using KOMiT.Core.Model;
+using KOMiT.DataAccess.Persistence;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace KOMiT.DataAccess.Repositories.Implementations
+{
+    public class StandardPhaseRepository : IStandardPhaseRepository 
+    {
+        private DatabaseContext _context;
+        public StandardPhaseRepository(DatabaseContext context)
+        {
+           _context= context;
+        }
+        public async Task CreatePhase(StandardPhase standardPhase)
+        {
+            var result = _context.StandardPhases.Add (standardPhase);
+            await _context.SaveChangesAsync();
+            
+        }
+    }
+}
