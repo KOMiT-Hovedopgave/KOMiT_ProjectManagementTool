@@ -22,6 +22,11 @@ namespace KOMiT.App.Service.Implementations
             await _currentSubGoalRepository.CreateCurrentSubGoal(currentSubGoal);
         }
 
+        public async Task DeleteCurrentSubGoal(int id)
+        {
+            await _currentSubGoalRepository.DeleteCurrentSubGoal(id);
+        }
+
         public async Task FinishCurrentSubGoal(CurrentSubGoal currentSubGoal)
         {
             await _currentSubGoalRepository.FinishCurrentSubGoal(currentSubGoal);

@@ -9,7 +9,7 @@ public class ProjectMember
 
     public ICollection<CurrentPhase>? CurrentPhases { get; set; } = new List<CurrentPhase>();
 
-    public ICollection<CurrentTask>? CurrentTasks { get; set; } = new List<CurrentTask>();
+    public ICollection<CurrentTask>? CurrentTasks { get; } 
 
     public ICollection<Employee>? Employees { get; set; } = new List<Employee>();
 

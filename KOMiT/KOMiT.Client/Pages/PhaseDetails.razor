@@ -3,6 +3,7 @@
 @using KOMiT.Core.Model;
 @using KOMiT.Client.Components;
 @inject HttpClient _httpClient
+@inject NavigationManager navigationManager
 
 @if (_currentPhase == null && _estimatedAndRealizedDaysDTO == null)
 {
@@ -20,7 +21,7 @@ else
         </Modal>
         <Modal @ref="modalFinishCurrentSubGoal">
             <BodyTemplate>
-                <FinishCurrentSubGoal ID="ID" CurrentSubGoal="_selectedCurrentSubGoal" OnClick="OnHideModalFinishCurrentSubGoalClick"></FinishCurrentSubGoal>
+                <FinishCurrentSubGoal ID="ID" CurrentSubGoal="_selectedCurrentSubGoal" ProjectMember="_selectedProjectMember" OnClick="OnHideModalFinishCurrentSubGoalClick"></FinishCurrentSubGoal>
             </BodyTemplate>
         </Modal>
 </div>
@@ -123,6 +124,14 @@ else
                                     <Icon Name="IconName.InfoCircleFill" Color="IconColor.Primary" />
                                 </Tooltip>
                             </div>
+                            @if(currentSubGoal.Comment != null)
+                            {
+                                <div style="display: inline-block; padding-left:12px;">
+                                <Tooltip Title="@currentSubGoal.Comment">
+                                    <Icon Name="IconName.ChatLeftFill" Color="IconColor.Primary" />
+                                </Tooltip>
+                                 </div>
+                            }
                             <div style="display: inline-block;">
                                 <Dropdown AutoClose="true">
                                     <DropdownToggleButton Color="ButtonColor.None" Style="margin-bottom: 5px;">
@@ -138,7 +147,7 @@ else
                                         <DropdownItem To="#" Type="ButtonType.Link">
                                             <Icon Name="IconName.PencilSquare" Color="IconColor.Primary" /> Rediger
                                         </DropdownItem>
-                                        <DropdownItem To="#" Type="ButtonType.Link">
+                                        <DropdownItem @onclick="@(async () => await DeleteCurrentSubGoal(currentSubGoal.Id))" Type="ButtonType.Link">
                                             <Icon Name="IconName.Trash3Fill" Color="IconColor.Primary" /> Slet
                                         </DropdownItem>
                                     </DropdownMenu>
@@ -191,6 +200,8 @@ else
             <p style="background-color:#6C6C6C; color:#ffffff; margin:0;">Projektdeltagere</p>
             @foreach (var projectMember in _currentPhase.ProjectMembers)
             {
+                _selectedProjectMember = projectMember;
+
             <div style="float: left;">
                 <div style="width: 180px; height: 150px; background-color: #DBE5FF; border: 1px solid #808080;">
                         <div style="display: inline-block;">
@@ -282,6 +293,7 @@ else
     private Modal modal;
     private Modal modalFinishCurrentSubGoal;
     private CurrentSubGoal _selectedCurrentSubGoal;
+    private ProjectMember _selectedProjectMember;
 
     protected override async Task OnInitializedAsync()
     {
@@ -289,6 +301,15 @@ else
         _estimatedAndRealizedDaysDTO = await _httpClient.GetFromJsonAsync<EstimatedAndRealizedDaysDTO>($"https://localhost:7282/api/currentphase/GetCalculatedDays/{ID}");
         await RenderBarChartCurrentSubGoals();
         await RenderBarChartCurrentTasks();
+    }
+
+    private async Task DeleteCurrentSubGoal(int id)
+    {
+        var response = await _httpClient.DeleteAsync($"https://localhost:7282/api/currentsubgoal/DeleteCurrentSubGoal/{id}");
+         if (response.IsSuccessStatusCode)
+            {
+                navigationManager.NavigateTo($"/phasedetails/{ID}", true);
+            }
     }
 
 

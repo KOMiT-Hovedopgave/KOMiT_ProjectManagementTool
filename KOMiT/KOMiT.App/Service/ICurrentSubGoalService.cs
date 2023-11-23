@@ -11,5 +11,6 @@ namespace KOMiT.App.Service
     {
         Task CreateCurrentSubGoal(CurrentSubGoal currentSubGoal);
         Task FinishCurrentSubGoal(CurrentSubGoal currentSubGoal);
+        Task DeleteCurrentSubGoal(int id);
     }
 }

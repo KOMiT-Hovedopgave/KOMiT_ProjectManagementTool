@@ -22,6 +22,14 @@ namespace KOMiT.DataAccess.Repositories.Implementations
             await _context.SaveChangesAsync();
         }
 
+        public async Task DeleteCurrentSubGoal(int id)
+        {
+            var currentSubGoal = await _context.CurrentSubGoals.FindAsync(id);
+            _context.CurrentSubGoals.Remove(currentSubGoal);
+            await _context.SaveChangesAsync();
+        }
+
+
         public async Task FinishCurrentSubGoal(CurrentSubGoal currentSubGoal)
         {
             _context.CurrentSubGoals.Update(currentSubGoal);

@@ -43,5 +43,20 @@ namespace KOMiT.API.Controllers
             }
         }
 
+        [HttpDelete("DeleteCurrentSubGoal/{id}")]
+        public async Task<ActionResult> FinishCurrentSubGoal(int id)
+        {
+            try
+            {
+                await _currentSubGoalService.DeleteCurrentSubGoal(id);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return Conflict(e.Message);
+            }
+
+        }
+
     }
 }
