@@ -19,16 +19,30 @@ namespace KOMiT.API.Controllers
         [HttpGet("GetDetailsById/{id}")]
         public async Task<ActionResult<CurrentPhase>> GetDetailsById(int id)
         {
-            var result = await _currentPhaseService.GetDetailsById(id);
-            return Ok(result);
+            try
+            {
+                var result = await _currentPhaseService.GetDetailsById(id);
+                return Ok(result);
+            }
+            catch (Exception e)
+            {
+                return Conflict(e.Message);
+            }
         }
 
 
         [HttpGet("GetCalculatedDays/{id}")]
         public async Task<ActionResult<EstimatedAndRealizedDaysDTO>> GetCalculatedDays(int id)
         {
-            var result = await _currentPhaseService.CalculatorEstimatedAndRealizedDaysDTO(id);
-            return Ok(result);
+            try
+            {
+                var result = await _currentPhaseService.CalculatorEstimatedAndRealizedDaysDTO(id);
+                return Ok(result);
+            }
+              catch (Exception e)
+            {
+                return Conflict(e.Message);
+            }
         }
     }
 }
