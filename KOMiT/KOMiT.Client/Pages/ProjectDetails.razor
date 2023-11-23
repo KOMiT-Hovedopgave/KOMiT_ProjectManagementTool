@@ -1,6 +1,7 @@
 ﻿@page "/projectdetails/{ID:int}"
 @using KOMiT.Core.Model;
 @inject HttpClient _httpClient
+@inject NavigationManager navigationManager
 
 
 <div class="parent">
@@ -32,13 +33,12 @@
         <tbody>
             <tr>
                 <td> </td>
-                @*Indsæt href for at navigere til anden side fx <td><a href="#" class="is-link">Opstartsfase</a></td>*@
-                <td><a class="is-link">Opstartsfase</a></td>
-                <td><a class="is-link">Kravindsamling</a></td>
-                <td><a class="is-link">High-level design</a></td>
-                <td><a class="is-link">Low-level design</a></td>
-                <td><a class="is-link">Programmering</a></td>
-                <td><a class="is-link">Testing</a></td>
+                <td><a class="is-link" style="cursor: pointer;">Opstartsfase</a></td>
+                <td><a class="is-link" style="cursor: pointer;">Kravindsamling</a></td>
+                <td><a class="is-link" style="cursor: pointer;">High-level design</a></td>
+                <td><a class="is-link" style="cursor: pointer;">Low-level design</a></td>
+                <td><a class="is-link" style="cursor: pointer;">Programmering</a></td>
+                <td><a @onclick="() => PhaseDetails(ID)" class="is-link" style="cursor: pointer;">Testing</a></td>
             </tr>
             <tr>
                 <td class="bold-text">Status:</td>
@@ -110,6 +110,11 @@
 
 
 @code {
+
+    private void PhaseDetails(int ID)
+    {
+        navigationManager.NavigateTo($"/phasedetails/{ID}");
+    }
 
     [Parameter]
     public int ID { get; set; }
