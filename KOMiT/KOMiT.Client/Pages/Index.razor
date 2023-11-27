@@ -15,11 +15,10 @@ else
         <Button Color="ButtonColor.Primary" @onclick="OnShowModalClick">Opret standardfase  </Button>
         <Modal @ref="modal" Title="Opret standardfase">
             <BodyTemplate>
-                <CreateStandardPhase>
+                <CreateStandardPhase OnClick="OnHideModalClick">
                 </CreateStandardPhase>
             </BodyTemplate>
             <FooterTemplate>
-                <Button Color="ButtonColor.Secondary" @onclick="OnHideModalClick">Close</Button>
             </FooterTemplate>
         </Modal>
 

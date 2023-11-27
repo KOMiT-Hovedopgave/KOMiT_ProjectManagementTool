@@ -4,26 +4,27 @@
 @inject ConfirmationService confirmationService
 
 
-<div class="row">
-    <div class="col-md-4">
-        <EditForm class="container" Model="standardPhase">
-            <DataAnnotationsValidator />
-            <ValidationSummary />
 
-            <div class="form-group">
-                <label>navn</label>
-                <input @bind-value="standardPhase.Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label>Beskrivelse</label>
-                <input @bind-value="standardPhase.Description" class="form-control" />
-                <span asp-validation-for="Beskrivelse" class="text-danger"></span>
-            </div>
-            <button class="btn btn-primary" @onclick="Create"> Opret </button>
-        </EditForm>
+<EditForm class="container" Model="standardPhase" OnValidSubmit="@Create">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="form-group">
+        <label>Navn</label>
+        <input @bind-value="standardPhase.Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
     </div>
-</div>
+    <div class="form-group">
+        <label>Beskrivelse</label>
+        <input @bind-value="standardPhase.Description" class="form-control" />
+        <span asp-validation-for="Beskrivelse" class="text-danger"></span>
+    </div>
+    <div style="margin-top:10px;">
+        <Button Color="ButtonColor.Secondary" @onclick="OnClick">Luk</Button>
+        <Button Color="ButtonColor.Primary" @onclick="async () => await Create()"> Opret</Button>
+    </div>
+</EditForm>
+
 
 
 @if (!string.IsNullOrEmpty(confirmationService.SuccessMessage))
@@ -41,7 +42,10 @@
 }
 
 @code {
-    public StandardPhase standardPhase = new StandardPhase();
+    private StandardPhase standardPhase = new StandardPhase();
+
+    [Parameter]
+    public EventCallback<MouseEventArgs> OnClick { get; set; }
 
     private async Task Create()
     {
@@ -49,14 +53,19 @@
 
         if (response.IsSuccessStatusCode)
         {
-            confirmationService.SetSuccessMessage("Standardphase oprettet succesfuldt!");
-            navManger.NavigateTo("/");
+            confirmationService.SetSuccessMessage("Standardfase er oprettet succesfuldt!");
+            await Task.Run(async () =>
+      {
+          await Task.Delay(5000);
+      });
+            navManger.NavigateTo("/", true);
 
         }
         else
         {
-            confirmationService.SetWarningMessage("Fejl ved oprettelse af standardphase. Prøv igen.");
+            confirmationService.SetWarningMessage("Fejl ved oprettelse af standardfase. Prøv igen.");
         }
     }
 
 }
+
