@@ -42,11 +42,7 @@
         CurrentSubGoal.CurrentPhaseId = ID;
         foreach (var currentTask in CurrentSubGoal.CurrentTasks)
         {
-            currentTask.CurrentSubGoalId = CurrentSubGoal.Id;
-            foreach (var projectMember in currentTask.ProjectMembers)
-            {
-                projectMember.ProjectRole = ProjectMember.ProjectRole;
-            }
+            currentTask.Status = Core.Model.Enum.Status.Færdiggjort;
         }
     }
 

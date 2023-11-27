@@ -29,6 +29,20 @@ namespace KOMiT.API.Controllers
             }
         }
 
+        [HttpPut("UpdateCurrentSubGoal")]
+        public async Task<ActionResult> UpdateCurrentSubGoal([FromBody] CurrentSubGoal currentSubGoal)
+        {
+            try
+            {
+                await _currentSubGoalService.UpdateCurrentSubGoal(currentSubGoal);
+                return Ok(currentSubGoal);
+            }
+            catch (Exception e)
+            {
+                return Conflict(e.Message);
+            }
+        }
+
         [HttpPut("FinishCurrentSubGoal")]
         public async Task<ActionResult> FinishCurrentSubGoal([FromBody] CurrentSubGoal currentSubGoal)
         {
@@ -55,7 +69,6 @@ namespace KOMiT.API.Controllers
             {
                 return Conflict(e.Message);
             }
-
         }
 
     }

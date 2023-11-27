@@ -21,7 +21,12 @@ else
         </Modal>
         <Modal @ref="modalFinishCurrentSubGoal">
             <BodyTemplate>
-                <FinishCurrentSubGoal ID="ID" CurrentSubGoal="_selectedCurrentSubGoal" ProjectMember="_selectedProjectMember" OnClick="OnHideModalFinishCurrentSubGoalClick"></FinishCurrentSubGoal>
+                <FinishCurrentSubGoal ID="ID" CurrentSubGoal="_selectedCurrentSubGoal" OnClick="OnHideModalFinishCurrentSubGoalClick"></FinishCurrentSubGoal>
+            </BodyTemplate>
+        </Modal>
+        <Modal @ref="modalUpdateCurrentSubGoal">
+            <BodyTemplate>
+                <UpdateCurrentSubGoal ID="ID" CurrentSubGoal="_selectedCurrentSubGoal" OnClick="OnHideModalUpdateCurrentSubGoalClick"></UpdateCurrentSubGoal>
             </BodyTemplate>
         </Modal>
 </div>
@@ -99,9 +104,6 @@ else
             {
                 <div style="float: left;">
                     <div style="width: 150px; height: 130px; background-color: #DBE5FF; border: 1px solid #808080;">
-                        @{
-                            _selectedCurrentSubGoal = currentSubGoal;
-                        }
                         <div style="text-align:center"><b>@currentSubGoal.Name</b></div>
                         <div style="text-align:center">@currentSubGoal.EstimatedEndDate.ToShortDateString()</div>
                         <div style="text-align:center">Status: @currentSubGoal.Status.ToString()
@@ -141,10 +143,10 @@ else
                                         <DropdownItem To="#" Type="ButtonType.Link">
                                             <Icon Name="IconName.PlusCircleDotted" Color="IconColor.Primary" /> Opret opgave
                                         </DropdownItem>
-                                        <DropdownItem @onclick="OnShowModalFinishCurrentSubGoalClick" Type="ButtonType.Link">
+                                        <DropdownItem @onclick="async () => await OnShowModalFinishCurrentSubGoalClick(currentSubGoal)" Type="ButtonType.Link">
                                             <Icon Name="IconName.CheckSquareFill" Color="IconColor.Primary" /> Afslut
                                         </DropdownItem>
-                                        <DropdownItem To="#" Type="ButtonType.Link">
+                                        <DropdownItem @onclick="async () => await OnShowModalUpdateCurrentSubGoalClick(currentSubGoal)" Type="ButtonType.Link">
                                             <Icon Name="IconName.PencilSquare" Color="IconColor.Primary" /> Rediger
                                         </DropdownItem>
                                         <DropdownItem @onclick="@(async () => await DeleteCurrentSubGoal(currentSubGoal.Id))" Type="ButtonType.Link">
@@ -157,15 +159,40 @@ else
                     </div>
                     @foreach (var currentTask in currentSubGoal.CurrentTasks)
                     {
-                        <div style="width: 150px; height: 160px; background-color: #E1F3E9; border: 1px solid #808080;">
+                        <div style="width: 150px; height: 200px; background-color: #E1F3E9; border: 1px solid #808080;">
                             <div><b>@currentTask.Title</b></div>
                             <div>
                                 Estimeret: @_estimatedAndRealizedDaysDTO.CurrentTaskDaysDTOs.Where(x => x.Title == currentTask.Title).Select(x => x.EstimatedCurrentTaksDays).FirstOrDefault() dage
                             </div>
-                            <div>Status: @currentTask.Status.ToString()</div>
+                            <div>
+                                Status: @currentTask.Status.ToString()
+                                @if (currentTask.Status == Core.Model.Enum.Status.Aktiv)
+                                {
+                                    <Icon Name="IconName.CircleFill" Color="IconColor.Warning" />
+                                }
+                                else if (currentTask.Status == Core.Model.Enum.Status.Inaktiv)
+                                {
+                                    <Icon Name="IconName.CircleFill" Color="IconColor.Danger" />
+                                }
+                                else
+                                {
+                                    <Icon Name="IconName.CircleFill" Color="IconColor.Success" />
+                                }
+                            
+                            </div>
+                            
                             <div>
                                 Realiseret: @_estimatedAndRealizedDaysDTO.CurrentTaskDaysDTOs.Where(x => x.Title == currentTask.Title).Select(x => x.RealizedCurrentTaksDays).FirstOrDefault() dage
                             </div>
+                            @foreach (var projectMember in currentTask.ProjectMembers)
+                            {
+                                <div>
+                                    <Icon Name="IconName.PersonFillAdd" Color="IconColor.Success" /> @projectMember.Employees.Select(e => e.Name).FirstOrDefault()
+                                </div>
+                                <div>
+                                    @projectMember.ProjectRole
+                                </div>
+                            }
                             <div style="text-align: center;">
                                 <div style="display: inline-block;">
                                     <Tooltip Title="@currentTask.Description">
@@ -200,8 +227,6 @@ else
             <p style="background-color:#6C6C6C; color:#ffffff; margin:0;">Projektdeltagere</p>
             @foreach (var projectMember in _currentPhase.ProjectMembers)
             {
-                _selectedProjectMember = projectMember;
-
             <div style="float: left;">
                 <div style="width: 180px; height: 150px; background-color: #DBE5FF; border: 1px solid #808080;">
                         <div style="display: inline-block;">
@@ -286,14 +311,14 @@ else
     [Parameter]
     public int ID { get; set; }
 
-    private BarChart barChartCurrentSubGoals;
-    private BarChart barChartCurrentTasks;
+    private BarChart? barChartCurrentSubGoals;
+    private BarChart? barChartCurrentTasks;
     private CurrentPhase? _currentPhase;
     private EstimatedAndRealizedDaysDTO? _estimatedAndRealizedDaysDTO;
-    private Modal modal;
-    private Modal modalFinishCurrentSubGoal;
-    private CurrentSubGoal _selectedCurrentSubGoal;
-    private ProjectMember _selectedProjectMember;
+    private Modal? modal;
+    private Modal? modalFinishCurrentSubGoal;
+    private Modal? modalUpdateCurrentSubGoal;
+    private CurrentSubGoal? _selectedCurrentSubGoal;
 
     protected override async Task OnInitializedAsync()
     {
@@ -306,10 +331,10 @@ else
     private async Task DeleteCurrentSubGoal(int id)
     {
         var response = await _httpClient.DeleteAsync($"https://localhost:7282/api/currentsubgoal/DeleteCurrentSubGoal/{id}");
-         if (response.IsSuccessStatusCode)
-            {
-                navigationManager.NavigateTo($"/phasedetails/{ID}", true);
-            }
+        if (response.IsSuccessStatusCode)
+        {
+            navigationManager.NavigateTo($"/phasedetails/{ID}", true);
+        }
     }
 
 
@@ -471,6 +496,11 @@ else
         return LabelsList;
     }
 
+    private void SelectedCurrentSubGoal(CurrentSubGoal currentSubGoal)
+    {
+        _selectedCurrentSubGoal = currentSubGoal;
+    }
+
     private async Task OnShowModalClick()
     {
         await modal?.ShowAsync();
@@ -481,8 +511,9 @@ else
         await modal?.HideAsync();
     }
 
-     private async Task OnShowModalFinishCurrentSubGoalClick()
+    private async Task OnShowModalFinishCurrentSubGoalClick(CurrentSubGoal currentSubGoal)
     {
+        SelectedCurrentSubGoal(currentSubGoal);
         await modalFinishCurrentSubGoal?.ShowAsync();
     }
 
@@ -490,6 +521,18 @@ else
     {
         await modalFinishCurrentSubGoal?.HideAsync();
     }
+
+    private async Task OnShowModalUpdateCurrentSubGoalClick(CurrentSubGoal currentSubGoal)
+    {
+        SelectedCurrentSubGoal(currentSubGoal);
+        await modalUpdateCurrentSubGoal?.ShowAsync();
+    }
+
+    private async Task OnHideModalUpdateCurrentSubGoalClick()
+    {
+        await modalUpdateCurrentSubGoal?.HideAsync();
+    }
+    
 }
 
    

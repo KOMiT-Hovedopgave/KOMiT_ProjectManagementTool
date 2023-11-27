@@ -9,7 +9,7 @@ public class ProjectMember
 
     public ICollection<CurrentPhase>? CurrentPhases { get; set; } = new List<CurrentPhase>();
 
-    public ICollection<CurrentTask>? CurrentTasks { get; } 
+    public ICollection<CurrentTask>? CurrentTasks { get; set; } = new List<CurrentTask>();
 
     public ICollection<Employee>? Employees { get; set; } = new List<Employee>();
 
@@ -17,13 +17,9 @@ public class ProjectMember
     {
 
     }
-    
-    public ProjectMember(int id)
+    public ProjectMember(int id, string projectRole, ProjectMemberStatus projectMemberStatus, ICollection<Employee>? employees) 
     {
         Id = id;
-    }
-    public ProjectMember(int id, string projectRole, ProjectMemberStatus projectMemberStatus, ICollection<Employee>? employees) : this(id)
-    {
         ProjectRole = projectRole;
         ProjectMemberStatus = projectMemberStatus;
         Employees = employees;

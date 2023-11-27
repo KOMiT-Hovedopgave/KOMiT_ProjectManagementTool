@@ -11,6 +11,7 @@ namespace KOMiT.DataAccess.Repositories
     {
         Task CreateCurrentSubGoal(CurrentSubGoal currentSubGoal);
         Task FinishCurrentSubGoal(CurrentSubGoal currentSubGoal);
+        Task UpdateCurrentSubGoal(CurrentSubGoal currentSubGoal);
         Task DeleteCurrentSubGoal(int id);
     }
 }
