@@ -33,7 +33,7 @@ public class DatabaseContext : DbContext
                 Priority = Core.Model.Enum.Priority.Høj,
                 EstimatedStartDate = new DateTime(2023, 11, 09),
                 EstimatedEndDate = new DateTime(2024, 12, 09),
-                Status = Core.Model.Enum.Status.Færdiggjort
+                Status = Core.Model.Enum.Status.Aktiv
             },
             new Project
             {
@@ -185,7 +185,7 @@ public class DatabaseContext : DbContext
             {
                 ProjectId = 1,
                 Id = 1,
-                Status = Core.Model.Enum.Status.Færdiggjort,
+                Status = Core.Model.Enum.Status.Aktiv,
                 EstimatedStartDate = new DateTime(2023, 11, 09),
                 EstimatedEndDate = new DateTime(2023, 12, 24),
                 StandardPhaseId = 1,
