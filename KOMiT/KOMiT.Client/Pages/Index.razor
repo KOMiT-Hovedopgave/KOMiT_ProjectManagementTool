@@ -112,7 +112,7 @@ else
     </Grid>
 
 
-@code {
+    @code {
     private ICollection<Project>? Projects { get; set; }
     private Modal modal;
 
@@ -146,4 +146,6 @@ else
     private async Task OnHideModalClick()
     {
         await modal?.HideAsync();
+    }
+    }
 }
