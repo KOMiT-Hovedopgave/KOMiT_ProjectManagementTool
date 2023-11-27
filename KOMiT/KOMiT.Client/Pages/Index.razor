@@ -12,7 +12,7 @@ else
 {
     <div style="margin:5px">
         <Button Color="ButtonColor.Primary">Opret projekt</Button>
-        <Button Color="ButtonColor.Primary" @onclick="OnShowModalClick">Opret standardfase </Button>
+        <Button Color="ButtonColor.Primary" @onclick="OnShowModalClick">Opret standardfase  </Button>
         <Modal @ref="modal" Title="Opret standardfase">
             <BodyTemplate>
                 <CreateStandardPhase>
@@ -20,7 +20,6 @@ else
             </BodyTemplate>
             <FooterTemplate>
                 <Button Color="ButtonColor.Secondary" @onclick="OnHideModalClick">Close</Button>
-
             </FooterTemplate>
         </Modal>
 
@@ -112,9 +111,6 @@ else
         </GridColumn>
     </Grid>
 
-}
-
-
 
 @code {
     private ICollection<Project>? Projects { get; set; }
@@ -150,5 +146,4 @@ else
     private async Task OnHideModalClick()
     {
         await modal?.HideAsync();
-    }
 }
