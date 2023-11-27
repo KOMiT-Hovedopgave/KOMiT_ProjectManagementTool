@@ -20,6 +20,7 @@
                 <input @bind-value="standardPhase.Description" class="form-control" />
                 <span asp-validation-for="Beskrivelse" class="text-danger"></span>
             </div>
+            <button class="btn btn-primary" @onclick="Create"> Opret </button>
         </EditForm>
     </div>
 </div>
@@ -38,7 +39,6 @@
         <b>@confirmationService.WarningMessage</b>
     </div>
 }
-<button class="btn btn-primary" @onclick="Create"> Opret </button>
 
 @code {
     public StandardPhase standardPhase = new StandardPhase();
@@ -51,7 +51,7 @@
         {
             confirmationService.SetSuccessMessage("Standardphase oprettet succesfuldt!");
             navManger.NavigateTo("/");
-            
+
         }
         else
         {
