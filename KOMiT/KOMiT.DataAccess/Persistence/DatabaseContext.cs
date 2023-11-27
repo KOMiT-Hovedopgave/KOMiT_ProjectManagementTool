@@ -91,7 +91,7 @@ public class DatabaseContext : DbContext
                 Status = Core.Model.Enum.Status.Aktiv
             },
             new Project
-                {
+            {
                 Id = 7,
                 Name = "LæringsplatformPro",
                 Description = "Dette projekt fokuserer på udviklingen af en avanceret læringsplatform, der integrerer diverse undervisningsressourcer og muliggør effektiv kommunikation mellem elever og lærere. Med en prioritet på 'Høj' og planlagt start den 1. februar 2024 og forventet afslutning den 1. august 2025, sigter projektet mod at forbedre undervisningsoplevelsen og styrke samarbejdet i skolemiljøet.",
@@ -100,9 +100,9 @@ public class DatabaseContext : DbContext
                 EstimatedStartDate = new DateTime(2024, 02, 01),
                 EstimatedEndDate = new DateTime(2025, 08, 01),
                 Status = Core.Model.Enum.Status.Aktiv
-                },
+            },
             new Project
-                {
+            {
                 Id = 8,
                 Name = "IT-SikkerhedPro",
                 Description = "Dette projekt fokuserer på at styrke IT-sikkerheden i skolemiljøet ved implementering af avancerede sikkerhedsforanstaltninger og trusselsbeskyttelse. Med en prioritet på 'Mellem' og planlagt start den 1. april 2024 og forventet afslutning den 1. juni 2024, sigter projektet mod at skabe en tryggere digital læringsmiljø.",
@@ -111,7 +111,7 @@ public class DatabaseContext : DbContext
                 EstimatedStartDate = new DateTime(2024, 04, 01),
                 EstimatedEndDate = new DateTime(2024, 06, 01),
                 Status = Core.Model.Enum.Status.Aktiv
-                },
+            },
              new Project
              {
                  Id = 9,
@@ -188,7 +188,7 @@ public class DatabaseContext : DbContext
                 Status = Core.Model.Enum.Status.Færdiggjort,
                 EstimatedStartDate = new DateTime(2023, 11, 09),
                 EstimatedEndDate = new DateTime(2023, 12, 24),
-                StandardPhaseId= 1,
+                StandardPhaseId = 1,
                 RealizedDate = new DateTime(2023, 12, 10),
                 Comment = "Dette er en realiseret kommentar"
             },
@@ -199,7 +199,7 @@ public class DatabaseContext : DbContext
                 Status = Core.Model.Enum.Status.Inaktiv,
                 EstimatedStartDate = new DateTime(2024, 11, 09),
                 EstimatedEndDate = new DateTime(2024, 12, 24),
-                StandardPhaseId= 2,
+                StandardPhaseId = 2,
             },
             new CurrentPhase
             {
@@ -238,23 +238,23 @@ public class DatabaseContext : DbContext
                 StandardPhaseId = 3,
             },
               new CurrentPhase
-            {
-                ProjectId = 7,
-                Id = 7,
-                Status = Core.Model.Enum.Status.Aktiv,
-                EstimatedStartDate = new DateTime(2024, 02, 01),
-                EstimatedEndDate = new DateTime(2024, 05, 15),
-                StandardPhaseId = 2,
-            },
+              {
+                  ProjectId = 7,
+                  Id = 7,
+                  Status = Core.Model.Enum.Status.Aktiv,
+                  EstimatedStartDate = new DateTime(2024, 02, 01),
+                  EstimatedEndDate = new DateTime(2024, 05, 15),
+                  StandardPhaseId = 2,
+              },
               new CurrentPhase
-                 {
-                ProjectId = 8,
-                Id = 8,
-                Status = Core.Model.Enum.Status.Aktiv,
-                EstimatedStartDate = new DateTime(2024, 04, 01),
-                EstimatedEndDate = new DateTime(2024, 05, 15),
-                StandardPhaseId = 2,
-            },
+              {
+                  ProjectId = 8,
+                  Id = 8,
+                  Status = Core.Model.Enum.Status.Aktiv,
+                  EstimatedStartDate = new DateTime(2024, 04, 01),
+                  EstimatedEndDate = new DateTime(2024, 05, 15),
+                  StandardPhaseId = 2,
+              },
             new CurrentPhase
             {
                 ProjectId = 9,
@@ -510,7 +510,7 @@ public class DatabaseContext : DbContext
                 Description = "Denne opgave...",
                 Status = Core.Model.Enum.Status.Aktiv,
                 EstimatedNumberOfDays = new DateTime(2023, 11, 10),
-                CurrentSubGoalId= 1
+                CurrentSubGoalId = 1
             },
             new CurrentTask
             {

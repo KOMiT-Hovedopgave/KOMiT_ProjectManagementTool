@@ -50,7 +50,7 @@ namespace KOMiT.App.Service.Implementations
             {
                 if (currentSubGoal.RealizedDate.HasValue)
                 {
-                    var subGoalsDays = CalculateDateDays(currentSubGoal.RealizedDate.Value, result.EstimatedStartDate);
+                    var subGoalsDays = CalculateDateDays(currentSubGoal.RealizedDate.Value, currentSubGoal.EstimatedEndDate);
                     realizedCurrentSubGoalsDays.Add(subGoalsDays);
                 }
             }
@@ -60,7 +60,7 @@ namespace KOMiT.App.Service.Implementations
             {
                 foreach (var currentTasks in currentSubGoal.CurrentTasks)
                 {
-                    var currentTasksDays = CalculateDateDays(currentTasks.EstimatedNumberOfDays, result.EstimatedStartDate);
+                    var currentTasksDays = CalculateDateDays(currentSubGoal.EstimatedEndDate, currentTasks.EstimatedNumberOfDays);
                     estimatedCurrentTasksDays.Add(currentTasksDays);
                 }
             }
@@ -72,7 +72,7 @@ namespace KOMiT.App.Service.Implementations
                 {
                     if(currentTasks.RealizedDate.HasValue)
                     {
-                        var currentTasksDays = CalculateDateDays(currentTasks.RealizedDate.Value, result.EstimatedStartDate);
+                        var currentTasksDays = CalculateDateDays(currentSubGoal.EstimatedEndDate, currentTasks.RealizedDate.Value);
                         realizedCurrentTasksDays.Add(currentTasksDays);
                     }
                 }
@@ -85,7 +85,7 @@ namespace KOMiT.App.Service.Implementations
                 {
                     currentSubGoalsDaysDTOs.Add(new CurrentSubGoalsDaysDTO
                     { Name = currentSubGoal.Name, EstimatedCurrentSubGoalsDays = CalculateDateDays(currentSubGoal.EstimatedEndDate, result.EstimatedStartDate),
-                      RealizedCurrentSubGoalsDays = CalculateDateDays(currentSubGoal.RealizedDate.Value, result.EstimatedStartDate)});
+                      RealizedCurrentSubGoalsDays = CalculateDateDays(currentSubGoal.RealizedDate.Value, currentSubGoal.EstimatedEndDate)});
                 }
                 else
                 {
@@ -108,8 +108,8 @@ namespace KOMiT.App.Service.Implementations
                         currentTasksDaysDTO.Add(new CurrentTaskDaysDTO
                         {
                             Title = currenTask.Title,
-                            EstimatedCurrentTaksDays = CalculateDateDays(currenTask.EstimatedNumberOfDays, result.EstimatedStartDate),
-                            RealizedCurrentTaksDays = CalculateDateDays(currenTask.RealizedDate.Value, result.EstimatedStartDate)
+                            EstimatedCurrentTaksDays = CalculateDateDays(currentSubGoal.EstimatedEndDate, currenTask.EstimatedNumberOfDays),
+                            RealizedCurrentTaksDays = CalculateDateDays(currenTask.RealizedDate.Value, currentSubGoal.EstimatedEndDate)
                         });
                     }
                     else
@@ -117,7 +117,7 @@ namespace KOMiT.App.Service.Implementations
                         currentTasksDaysDTO.Add(new CurrentTaskDaysDTO
                         {
                             Title = currenTask.Title,
-                            EstimatedCurrentTaksDays = CalculateDateDays(currenTask.EstimatedNumberOfDays, result.EstimatedStartDate),
+                            EstimatedCurrentTaksDays = CalculateDateDays(currentSubGoal.EstimatedEndDate, currenTask.EstimatedNumberOfDays),
                             RealizedCurrentTaksDays = 0
                         });
                     }

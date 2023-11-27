@@ -17,7 +17,7 @@ namespace KOMiT.Core.Model;
 
         public CurrentTask() { }
 
-        public CurrentTask(int id, string title, string description, Status status, DateTime estimatedNumberofDays, string? comment, DateTime? realizedDate, ICollection<ProjectMember> projektMembers)
+        public CurrentTask(int id, string title, string description, Status status, DateTime estimatedNumberofDays, string? comment, DateTime? realizedDate, int? currentSubGoalId, ICollection<ProjectMember> projektMembers)
         {
             Id = id;
             Title = title; 
@@ -26,6 +26,7 @@ namespace KOMiT.Core.Model;
             EstimatedNumberOfDays= estimatedNumberofDays;
             Comment = comment;
             RealizedDate = realizedDate;
+            CurrentSubGoalId = currentSubGoalId;
             ProjectMembers = projektMembers;
     }
 

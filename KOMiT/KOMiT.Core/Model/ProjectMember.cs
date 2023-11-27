@@ -17,13 +17,9 @@ public class ProjectMember
     {
 
     }
-    
-    public ProjectMember(int id)
+    public ProjectMember(int id, string projectRole, ProjectMemberStatus projectMemberStatus, ICollection<Employee>? employees) 
     {
         Id = id;
-    }
-    public ProjectMember(int id, string projectRole, ProjectMemberStatus projectMemberStatus, ICollection<Employee>? employees) : this(id)
-    {
         ProjectRole = projectRole;
         ProjectMemberStatus = projectMemberStatus;
         Employees = employees;

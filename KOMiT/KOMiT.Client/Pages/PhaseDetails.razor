@@ -1,7 +1,9 @@
 ﻿@page "/phasedetails/{ID:int}"
 @using KOMiT.Core.DTO_s;
 @using KOMiT.Core.Model;
+@using KOMiT.Client.Components;
 @inject HttpClient _httpClient
+@inject NavigationManager navigationManager
 
 @if (_currentPhase == null && _estimatedAndRealizedDaysDTO == null)
 {
@@ -10,8 +12,23 @@
 else
 {
 <div style="margin:5px">
-    <Button Color="ButtonColor.Primary">Tilføj delmål</Button>
+    <Button @onclick="OnShowModalClick" Color="ButtonColor.Primary">Tilføj delmål</Button>
     <Button Color="ButtonColor.Primary">Tilføj projektdeltagere</Button>
+        <Modal @ref="modal" Title="Opret delmål">
+            <BodyTemplate>
+                <CreateCurrentSubGoal ID="ID" OnClick="OnHideModalClick"></CreateCurrentSubGoal>
+            </BodyTemplate>
+        </Modal>
+        <Modal @ref="modalFinishCurrentSubGoal">
+            <BodyTemplate>
+                <FinishCurrentSubGoal ID="ID" CurrentSubGoal="_selectedCurrentSubGoal" OnClick="OnHideModalFinishCurrentSubGoalClick"></FinishCurrentSubGoal>
+            </BodyTemplate>
+        </Modal>
+        <Modal @ref="modalUpdateCurrentSubGoal">
+            <BodyTemplate>
+                <UpdateCurrentSubGoal ID="ID" CurrentSubGoal="_selectedCurrentSubGoal" OnClick="OnHideModalUpdateCurrentSubGoalClick"></UpdateCurrentSubGoal>
+            </BodyTemplate>
+        </Modal>
 </div>
 
 <div class="parent">
@@ -86,7 +103,7 @@ else
             @foreach (var currentSubGoal in _currentPhase.CurrentSubGoals)
             {
                 <div style="float: left;">
-                    <div style="width: 150px; height: 110px; background-color: #DBE5FF; border: 1px solid #808080;">
+                    <div style="width: 150px; height: 130px; background-color: #DBE5FF; border: 1px solid #808080;">
                         <div style="text-align:center"><b>@currentSubGoal.Name</b></div>
                         <div style="text-align:center">@currentSubGoal.EstimatedEndDate.ToShortDateString()</div>
                         <div style="text-align:center">Status: @currentSubGoal.Status.ToString()
@@ -109,6 +126,14 @@ else
                                     <Icon Name="IconName.InfoCircleFill" Color="IconColor.Primary" />
                                 </Tooltip>
                             </div>
+                            @if(currentSubGoal.Comment != null)
+                            {
+                                <div style="display: inline-block; padding-left:12px;">
+                                <Tooltip Title="@currentSubGoal.Comment">
+                                    <Icon Name="IconName.ChatLeftFill" Color="IconColor.Primary" />
+                                </Tooltip>
+                                 </div>
+                            }
                             <div style="display: inline-block;">
                                 <Dropdown AutoClose="true">
                                     <DropdownToggleButton Color="ButtonColor.None" Style="margin-bottom: 5px;">
@@ -118,13 +143,13 @@ else
                                         <DropdownItem To="#" Type="ButtonType.Link">
                                             <Icon Name="IconName.PlusCircleDotted" Color="IconColor.Primary" /> Opret opgave
                                         </DropdownItem>
-                                        <DropdownItem To="#" Type="ButtonType.Link">
+                                        <DropdownItem @onclick="async () => await OnShowModalFinishCurrentSubGoalClick(currentSubGoal)" Type="ButtonType.Link">
                                             <Icon Name="IconName.CheckSquareFill" Color="IconColor.Primary" /> Afslut
                                         </DropdownItem>
-                                        <DropdownItem To="#" Type="ButtonType.Link">
+                                        <DropdownItem @onclick="async () => await OnShowModalUpdateCurrentSubGoalClick(currentSubGoal)" Type="ButtonType.Link">
                                             <Icon Name="IconName.PencilSquare" Color="IconColor.Primary" /> Rediger
                                         </DropdownItem>
-                                        <DropdownItem To="#" Type="ButtonType.Link">
+                                        <DropdownItem @onclick="@(async () => await DeleteCurrentSubGoal(currentSubGoal.Id))" Type="ButtonType.Link">
                                             <Icon Name="IconName.Trash3Fill" Color="IconColor.Primary" /> Slet
                                         </DropdownItem>
                                     </DropdownMenu>
@@ -134,15 +159,40 @@ else
                     </div>
                     @foreach (var currentTask in currentSubGoal.CurrentTasks)
                     {
-                        <div style="width: 150px; height: 160px; background-color: #E1F3E9; border: 1px solid #808080;">
+                        <div style="width: 150px; height: 200px; background-color: #E1F3E9; border: 1px solid #808080;">
                             <div><b>@currentTask.Title</b></div>
                             <div>
                                 Estimeret: @_estimatedAndRealizedDaysDTO.CurrentTaskDaysDTOs.Where(x => x.Title == currentTask.Title).Select(x => x.EstimatedCurrentTaksDays).FirstOrDefault() dage
                             </div>
-                            <div>Status: @currentTask.Status.ToString()</div>
+                            <div>
+                                Status: @currentTask.Status.ToString()
+                                @if (currentTask.Status == Core.Model.Enum.Status.Aktiv)
+                                {
+                                    <Icon Name="IconName.CircleFill" Color="IconColor.Warning" />
+                                }
+                                else if (currentTask.Status == Core.Model.Enum.Status.Inaktiv)
+                                {
+                                    <Icon Name="IconName.CircleFill" Color="IconColor.Danger" />
+                                }
+                                else
+                                {
+                                    <Icon Name="IconName.CircleFill" Color="IconColor.Success" />
+                                }
+                            
+                            </div>
+                            
                             <div>
                                 Realiseret: @_estimatedAndRealizedDaysDTO.CurrentTaskDaysDTOs.Where(x => x.Title == currentTask.Title).Select(x => x.RealizedCurrentTaksDays).FirstOrDefault() dage
                             </div>
+                            @foreach (var projectMember in currentTask.ProjectMembers)
+                            {
+                                <div>
+                                    <Icon Name="IconName.PersonFillAdd" Color="IconColor.Success" /> @projectMember.Employees.Select(e => e.Name).FirstOrDefault()
+                                </div>
+                                <div>
+                                    @projectMember.ProjectRole
+                                </div>
+                            }
                             <div style="text-align: center;">
                                 <div style="display: inline-block;">
                                     <Tooltip Title="@currentTask.Description">
@@ -261,11 +311,14 @@ else
     [Parameter]
     public int ID { get; set; }
 
-    private BarChart barChartCurrentSubGoals;
-    private BarChart barChartCurrentTasks;
-
+    private BarChart? barChartCurrentSubGoals;
+    private BarChart? barChartCurrentTasks;
     private CurrentPhase? _currentPhase;
     private EstimatedAndRealizedDaysDTO? _estimatedAndRealizedDaysDTO;
+    private Modal? modal;
+    private Modal? modalFinishCurrentSubGoal;
+    private Modal? modalUpdateCurrentSubGoal;
+    private CurrentSubGoal? _selectedCurrentSubGoal;
 
     protected override async Task OnInitializedAsync()
     {
@@ -273,6 +326,15 @@ else
         _estimatedAndRealizedDaysDTO = await _httpClient.GetFromJsonAsync<EstimatedAndRealizedDaysDTO>($"https://localhost:7282/api/currentphase/GetCalculatedDays/{ID}");
         await RenderBarChartCurrentSubGoals();
         await RenderBarChartCurrentTasks();
+    }
+
+    private async Task DeleteCurrentSubGoal(int id)
+    {
+        var response = await _httpClient.DeleteAsync($"https://localhost:7282/api/currentsubgoal/DeleteCurrentSubGoal/{id}");
+        if (response.IsSuccessStatusCode)
+        {
+            navigationManager.NavigateTo($"/phasedetails/{ID}", true);
+        }
     }
 
 
@@ -434,7 +496,43 @@ else
         return LabelsList;
     }
 
+    private void SelectedCurrentSubGoal(CurrentSubGoal currentSubGoal)
+    {
+        _selectedCurrentSubGoal = currentSubGoal;
+    }
 
+    private async Task OnShowModalClick()
+    {
+        await modal?.ShowAsync();
+    }
+
+    private async Task OnHideModalClick()
+    {
+        await modal?.HideAsync();
+    }
+
+    private async Task OnShowModalFinishCurrentSubGoalClick(CurrentSubGoal currentSubGoal)
+    {
+        SelectedCurrentSubGoal(currentSubGoal);
+        await modalFinishCurrentSubGoal?.ShowAsync();
+    }
+
+    private async Task OnHideModalFinishCurrentSubGoalClick()
+    {
+        await modalFinishCurrentSubGoal?.HideAsync();
+    }
+
+    private async Task OnShowModalUpdateCurrentSubGoalClick(CurrentSubGoal currentSubGoal)
+    {
+        SelectedCurrentSubGoal(currentSubGoal);
+        await modalUpdateCurrentSubGoal?.ShowAsync();
+    }
+
+    private async Task OnHideModalUpdateCurrentSubGoalClick()
+    {
+        await modalUpdateCurrentSubGoal?.HideAsync();
+    }
+    
 }
 
    

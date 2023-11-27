@@ -55,7 +55,24 @@ namespace KOMiT.DataAccess.Repositories.Implementations
                     ct.EstimatedNumberOfDays,
                     ct.Comment,
                     ct.RealizedDate,
-                    ct.ProjectMembers.Select(pm => new ProjectMember(pm.Id)).ToList()
+                    ct.CurrentSubGoalId,
+                    ct.ProjectMembers.Select(pm => new ProjectMember(
+                    pm.Id,
+                    pm.ProjectRole,
+                    pm.ProjectMemberStatus,
+                    pm.Employees.Select(e => new Employee(
+                        e.Id,
+                        e.Name,
+                        e.JobPosition,
+                        e.Email,
+                        e.Competences.Select(c => new Competence(
+                            c.Id,
+                            c.Title,
+                            c.Description,
+                            c.Experience
+                        )).ToList()
+                    )).ToList()
+                )).ToList()
                 )).ToList()
               )).ToList()
             .ToList(),

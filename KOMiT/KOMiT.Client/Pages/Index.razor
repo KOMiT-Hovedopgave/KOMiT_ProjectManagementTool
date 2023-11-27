@@ -1,6 +1,6 @@
 ﻿@page "/"
 @inject HttpClient _httpClient
-@inject NavigationManager NavigationManager
+@inject NavigationManager navigationManager
 
 
 
@@ -111,7 +111,6 @@ else
         </GridColumn>
     </Grid>
 
-}
 
 @code {
     private ICollection<Project>? Projects { get; set; }
@@ -130,12 +129,12 @@ else
 
     private void PhaseDetails(int ID)
     {
-        NavigationManager.NavigateTo($"/phasedetails/{ID}");
+        navigationManager.NavigateTo($"/phasedetails/{ID}");
     }
 
     private void ProjectDetails(int ID)
     {
-        NavigationManager.NavigateTo($"/projectdetails/{ID}");
+        navigationManager.NavigateTo($"/projectdetails/{ID}");
 
     }
 
@@ -147,7 +146,4 @@ else
     private async Task OnHideModalClick()
     {
         await modal?.HideAsync();
-
-    }
-
 }
