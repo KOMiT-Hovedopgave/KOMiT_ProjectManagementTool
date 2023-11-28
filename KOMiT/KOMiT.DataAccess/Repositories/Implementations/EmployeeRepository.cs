@@ -36,26 +36,12 @@ public class EmployeeRepository : IEmployeeRepository
         return await result.ToListAsync();
     }
 
-    //public async Task<Employee> GetDetailsById(int id)
-    //{
-    //    var result = _context.Employees
-    //        .Where(x => x.Id == id)
-    //        .Select(e => new Employee
-    //        (e.Id,
-    //         e.Name,
-    //         e.JobPosition,
-    //         e.Email,
-    //         e.Competences.Select(c => new Competence(
-    //          c.Id,
-    //          c.Title,
-    //          c.Description,
-    //          c.Experience
-    //        )
-    //      ).ToList()
-    //  ));
+    public async Task CreateEmployee(Employee employee)
+    {
+        var result = _context.Employees.Add(employee);
+        await _context.SaveChangesAsync();
 
-    //    return await result.SingleOrDefaultAsync();
-    //}
+    }
 }
 
 

@@ -10,7 +10,15 @@
 else
 {
     <div style="margin:5px">
-        <Button Color="ButtonColor.Primary">Opret ansat</Button>
+        <Button Color="ButtonColor.Primary" @onclick="OnShowModalClick">Opret ansat  </Button>
+        <Modal @ref="modal" Title="Opret ansat">
+            <BodyTemplate>
+                <CreateEmployee OnClick="OnHideModalClick">
+                </CreateEmployee>
+            </BodyTemplate>
+            <FooterTemplate>
+            </FooterTemplate>
+        </Modal>
         <Button Color="ButtonColor.Primary">Alle kompetencer</Button>
     </div>
 
@@ -59,5 +67,15 @@ else
     private async Task<GridDataProviderResult<Employee>> EmployeeDataProvider(GridDataProviderRequest<Employee> request)
     {
         return await Task.FromResult(request.ApplyTo(Employees));
+    }
+
+    private async Task OnShowModalClick()
+    {
+        await modal?.ShowAsync();
+    }
+
+    private async Task OnHideModalClick()
+    {
+        await modal?.HideAsync();
     }
 }

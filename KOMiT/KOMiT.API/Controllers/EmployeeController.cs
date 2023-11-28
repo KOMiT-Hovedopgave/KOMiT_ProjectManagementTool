@@ -1,4 +1,5 @@
 ﻿using KOMiT.App.Service;
+using KOMiT.App.Service.Implementations;
 using KOMiT.Core.Model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -21,6 +22,14 @@ namespace KOMiT.API.Controllers
         {
             var result = await _employeeService.GetAll();
             return Ok(result);
+        }
+
+        [HttpPost("CreateEmployee")]
+        public async Task<ActionResult> CreateEmployee([FromBody] Employee employee)
+        {
+            await _employeeService.CreateEmployee(employee);
+            return Ok(employee);
+
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using KOMiT.Core.Model;
 using KOMiT.DataAccess.Repositories;
+using KOMiT.DataAccess.Repositories.Implementations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +21,11 @@ namespace KOMiT.App.Service.Implementations
         public async Task<ICollection<Employee>> GetAll()
         {
             return await _employeeRepository.GetAll();
+        }
+
+        public async Task CreateEmployee(Employee employee)
+        {
+            await _employeeRepository.CreateEmployee(employee);
         }
     }
 }
