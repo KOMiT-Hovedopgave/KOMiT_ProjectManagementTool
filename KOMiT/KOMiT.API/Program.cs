@@ -21,6 +21,8 @@ builder.Services.AddScoped<IStandardPhaseService, StandardPhaseService>();
 builder.Services.AddScoped<IStandardPhaseRepository, StandardPhaseRepository>();
 builder.Services.AddScoped<ICurrentSubGoalService, CurrentSubGoalService>();
 builder.Services.AddScoped<ICurrentSubGoalRepository, CurrentSubGoalRepository>();
+builder.Services.AddScoped<IEmployeeService, EmployeeService>();
+builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 builder.Services.AddScoped<IProjectMemberService, ProjectMemberService>();
 builder.Services.AddScoped<IProjectMemberRepository, ProjectMemberRepository>();
 
