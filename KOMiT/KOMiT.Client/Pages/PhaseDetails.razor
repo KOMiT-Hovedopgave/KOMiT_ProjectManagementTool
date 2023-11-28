@@ -13,10 +13,15 @@ else
 {
 <div style="margin:5px">
     <Button @onclick="OnShowModalClick" Color="ButtonColor.Primary">Tilføj delmål</Button>
-    <Button Color="ButtonColor.Primary">Tilføj projektdeltagere</Button>
+    <Button @onclick="OnShowModalAddProjectMemberToCurrentPhaseClick" Color="ButtonColor.Primary">Tilføj projektdeltagere</Button>
         <Modal @ref="modal" Title="Opret delmål">
             <BodyTemplate>
                 <CreateCurrentSubGoal ID="ID" OnClick="OnHideModalClick"></CreateCurrentSubGoal>
+            </BodyTemplate>
+        </Modal>
+        <Modal @ref="modalAddProjectMemberToCurrentPhase" Title="Tilføj projektdeltager">
+            <BodyTemplate>
+                <AddProjectMemberToCurrentPhase ID="ID" OnClick="OnHideModalUAddProjectMemberToCurrentPhaseClick"></AddProjectMemberToCurrentPhase>
             </BodyTemplate>
         </Modal>
         <Modal @ref="modalFinishCurrentSubGoal">
@@ -249,7 +254,7 @@ else
                         </div>
                         <div>@projectMember.Employees.Select(e => e.Name).FirstOrDefault()</div>
                     <div>Stilling: @projectMember.Employees.Select(e => e.JobPosition).FirstOrDefault()</div>
-                    <div>Rolle: @projectMember.ProjectRole</div>
+                    <div>Rolle: @projectMember.ProjectRole.ToString()</div>
                     <div>Status: @projectMember.ProjectMemberStatus.ToString()</div>
                 </div>
                 @foreach (var employee in projectMember.Employees)
@@ -318,6 +323,7 @@ else
     private Modal? modal;
     private Modal? modalFinishCurrentSubGoal;
     private Modal? modalUpdateCurrentSubGoal;
+    private Modal? modalAddProjectMemberToCurrentPhase;
     private CurrentSubGoal? _selectedCurrentSubGoal;
 
     protected override async Task OnInitializedAsync()
@@ -531,6 +537,16 @@ else
     private async Task OnHideModalUpdateCurrentSubGoalClick()
     {
         await modalUpdateCurrentSubGoal?.HideAsync();
+    }
+
+    private async Task OnShowModalAddProjectMemberToCurrentPhaseClick()
+    {
+        await modalAddProjectMemberToCurrentPhase?.ShowAsync();
+    }
+
+    private async Task OnHideModalUAddProjectMemberToCurrentPhaseClick()
+    {
+        await modalAddProjectMemberToCurrentPhase?.HideAsync();
     }
     
 }

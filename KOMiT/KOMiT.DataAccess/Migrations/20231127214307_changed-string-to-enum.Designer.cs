@@ -4,6 +4,7 @@ using KOMiT.DataAccess.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KOMiT.DataAccess.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20231127214307_changed-string-to-enum")]
+    partial class changedstringtoenum
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -34,7 +37,7 @@ namespace KOMiT.DataAccess.Migrations
 
                     b.HasIndex("ProjectMembersId");
 
-                    b.ToTable("CurrentPhaseProjectMember", (string)null);
+                    b.ToTable("CurrentPhaseProjectMember");
 
                     b.HasData(
                         new
@@ -61,7 +64,7 @@ namespace KOMiT.DataAccess.Migrations
 
                     b.HasIndex("ProjectMembersId");
 
-                    b.ToTable("CurrentTaskProjectMember", (string)null);
+                    b.ToTable("CurrentTaskProjectMember");
 
                     b.HasData(
                         new
@@ -88,7 +91,7 @@ namespace KOMiT.DataAccess.Migrations
 
                     b.HasIndex("ProjectMembersId");
 
-                    b.ToTable("EmployeeProjectMember", (string)null);
+                    b.ToTable("EmployeeProjectMember");
 
                     b.HasData(
                         new
@@ -130,7 +133,7 @@ namespace KOMiT.DataAccess.Migrations
 
                     b.HasIndex("EmployeeId");
 
-                    b.ToTable("Competence", (string)null);
+                    b.ToTable("Competence");
 
                     b.HasData(
                         new
@@ -202,7 +205,7 @@ namespace KOMiT.DataAccess.Migrations
 
                     b.HasIndex("StandardPhaseId");
 
-                    b.ToTable("CurrentPhases", (string)null);
+                    b.ToTable("CurrentPhases");
 
                     b.HasData(
                         new
@@ -371,7 +374,7 @@ namespace KOMiT.DataAccess.Migrations
 
                     b.HasIndex("CurrentPhaseId");
 
-                    b.ToTable("CurrentSubGoals", (string)null);
+                    b.ToTable("CurrentSubGoals");
 
                     b.HasData(
                         new
@@ -429,7 +432,7 @@ namespace KOMiT.DataAccess.Migrations
 
                     b.HasIndex("CurrentSubGoalId");
 
-                    b.ToTable("CurrentTasks", (string)null);
+                    b.ToTable("CurrentTasks");
 
                     b.HasData(
                         new
@@ -474,7 +477,7 @@ namespace KOMiT.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Employees", (string)null);
+                    b.ToTable("Employees");
 
                     b.HasData(
                         new
@@ -532,7 +535,7 @@ namespace KOMiT.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Projects", (string)null);
+                    b.ToTable("Projects");
 
                     b.HasData(
                         new
@@ -707,7 +710,7 @@ namespace KOMiT.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("ProjectMembers", (string)null);
+                    b.ToTable("ProjectMembers");
 
                     b.HasData(
                         new
@@ -742,7 +745,7 @@ namespace KOMiT.DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("StandardPhases", (string)null);
+                    b.ToTable("StandardPhases");
 
                     b.HasData(
                         new
@@ -794,7 +797,7 @@ namespace KOMiT.DataAccess.Migrations
 
                     b.HasIndex("StandardPhaseId");
 
-                    b.ToTable("StandardSubGoals", (string)null);
+                    b.ToTable("StandardSubGoals");
 
                     b.HasData(
                         new
@@ -843,7 +846,7 @@ namespace KOMiT.DataAccess.Migrations
 
                     b.HasIndex("StandardSubGoalId");
 
-                    b.ToTable("StandardTasks", (string)null);
+                    b.ToTable("StandardTasks");
 
                     b.HasData(
                         new

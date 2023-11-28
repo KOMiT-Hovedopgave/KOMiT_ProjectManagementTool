@@ -14,7 +14,7 @@ public class Employee
     public string JobPosition { get; set; }
     public string Email { get; set; }
 
-    public ICollection<ProjectMember>? ProjectMembers { get; } = new List<ProjectMember>();
+    public ICollection<ProjectMember>? ProjectMembers { get; set; } = new List<ProjectMember>();
 
     public ICollection<Competence>? Competences { get; set; }
 

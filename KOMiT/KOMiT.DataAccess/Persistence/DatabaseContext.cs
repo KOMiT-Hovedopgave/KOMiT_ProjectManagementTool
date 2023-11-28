@@ -451,13 +451,13 @@ public class DatabaseContext : DbContext
             new ProjectMember
             {
                 Id = 1,
-                ProjectRole = "Udvikler",
+                ProjectRole = Core.Model.Enum.ProjectRole.Udvikler,
                 ProjectMemberStatus = Core.Model.Enum.ProjectMemberStatus.Aktiv,
             },
             new ProjectMember
             {
                 Id = 2,
-                ProjectRole = "Projektleder",
+                ProjectRole = Core.Model.Enum.ProjectRole.Projektleder,
                 ProjectMemberStatus = Core.Model.Enum.ProjectMemberStatus.Aktiv,
             }
             );
