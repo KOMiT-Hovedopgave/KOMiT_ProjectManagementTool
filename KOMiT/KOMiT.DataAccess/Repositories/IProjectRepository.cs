@@ -11,5 +11,6 @@ namespace KOMiT.DataAccess.Repositories
     {
         Task<ICollection<Project>> GetAll();
         Task<Project> GetDetailsById(int id);
+        Task CreateProject(Project project);
     }
 }

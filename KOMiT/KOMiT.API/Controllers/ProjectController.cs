@@ -29,5 +29,12 @@ namespace KOMiT.API.Controllers
             var result = await _projectService.GetDetailsById(id);
             return Ok(result);
         }
+
+        [HttpPost("CreateProject")]
+        public async Task<ActionResult> CreateProject([FromBody] Project project)
+        {
+            await _projectService.CreateProject(project);
+            return Ok(project);
+        }
     }
 }

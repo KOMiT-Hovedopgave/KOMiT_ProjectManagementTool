@@ -27,5 +27,12 @@ namespace KOMiT.App.Service.Implementations
             return await _projectRepository.GetDetailsById(id);
 
         }
+        
+           
+            public async Task CreateProject(Project project)
+            {
+                await _projectRepository.CreateProject(project);
+            }
+        
     }
 }

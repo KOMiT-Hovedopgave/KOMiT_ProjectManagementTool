@@ -49,13 +49,12 @@
 
         if (response.IsSuccessStatusCode)
         {
-            confirmationService.SetSuccessMessage("Standardphase oprettet succesfuldt!");
+            confirmationService.SetSuccessMessage("Standardfase er oprettet succesfuldt!");
             navManger.NavigateTo("/");
-
         }
         else
         {
-            confirmationService.SetWarningMessage("Fejl ved oprettelse af standardphase. Prøv igen.");
+            confirmationService.SetWarningMessage("Fejl ved oprettelse af standardfase. Prøv igen.");
         }
     }
 

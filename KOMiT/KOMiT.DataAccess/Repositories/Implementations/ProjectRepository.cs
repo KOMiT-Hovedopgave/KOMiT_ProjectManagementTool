@@ -4,6 +4,7 @@ using KOMiT.DataAccess.Persistence;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,9 +14,17 @@ namespace KOMiT.DataAccess.Repositories.Implementations;
 public class ProjectRepository : IProjectRepository
 {
     private DatabaseContext _context;
+
+
     public ProjectRepository(DatabaseContext context)
     {
         _context = context;
+    }
+
+    public async Task CreateProject(Project project)
+    {
+       var result = _context.Projects.Add(project);
+        await _context.SaveChangesAsync();
     }
 
     public async Task<ICollection<Project>> GetAll()

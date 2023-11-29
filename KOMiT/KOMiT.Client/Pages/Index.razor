@@ -1,4 +1,5 @@
 ﻿@page "/"
+@using KOMiT.Core.Model;
 @inject HttpClient _httpClient
 @inject NavigationManager navigationManager
 
@@ -11,8 +12,15 @@
 else
 {
     <div style="margin:5px">
-        <Button Color="ButtonColor.Primary">Opret projekt</Button>
-        <Button Color="ButtonColor.Primary" @onclick="OnShowModalClick">Opret standardfase  </Button>
+        <Button Color="ButtonColor.Primary" @onclick="OnShowModalClick">Opret Projekt  </Button>
+        <Modal @ref="modal" Title="Opret Projekt">
+            <BodyTemplate>
+                <CreateProject OnClick="OnHideModalClick">
+                </CreateProject>
+            </BodyTemplate>
+            
+        </Modal>
+
         <Modal @ref="modal" Title="Opret standardfase">
             <BodyTemplate>
                 <CreateStandardPhase>
