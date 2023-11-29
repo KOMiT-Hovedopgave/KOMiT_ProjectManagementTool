@@ -4,6 +4,7 @@ using KOMiT.DataAccess.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KOMiT.DataAccess.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20231128173439_updatedMoreSeedData3")]
+    partial class updatedMoreSeedData3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -244,54 +247,6 @@ namespace KOMiT.DataAccess.Migrations
                             EmployeeId = 7,
                             Experience = "10 år",
                             Title = "Scripting"
-                        },
-                        new
-                        {
-                            Id = 15,
-                            Description = "Jeg føler mig stærk i...",
-                            EmployeeId = 8,
-                            Experience = "7 år",
-                            Title = "C#"
-                        },
-                        new
-                        {
-                            Id = 16,
-                            Description = "Jeg føler mig stærk i...",
-                            EmployeeId = 8,
-                            Experience = "2 år",
-                            Title = "Blazor"
-                        },
-                        new
-                        {
-                            Id = 17,
-                            Description = "Jeg føler mig stærk i...",
-                            EmployeeId = 9,
-                            Experience = "2 år",
-                            Title = "HTML"
-                        },
-                        new
-                        {
-                            Id = 18,
-                            Description = "Jeg føler mig stærk i...",
-                            EmployeeId = 9,
-                            Experience = "2 år",
-                            Title = "CSS"
-                        },
-                        new
-                        {
-                            Id = 19,
-                            Description = "Jeg føler mig stærk i...",
-                            EmployeeId = 10,
-                            Experience = "5 år",
-                            Title = "JavaScript"
-                        },
-                        new
-                        {
-                            Id = 20,
-                            Description = "Jeg føler mig stærk i...",
-                            EmployeeId = 11,
-                            Experience = "8 år",
-                            Title = "Python"
                         });
                 });
 
@@ -653,34 +608,6 @@ namespace KOMiT.DataAccess.Migrations
                             Email = "mikkel@komit.dk",
                             JobPosition = "Systemadministrator",
                             Name = "Mikkel Andersen"
-                        },
-                        new
-                        {
-                            Id = 8,
-                            Email = "kurt@komit.dk",
-                            JobPosition = "Udvikler",
-                            Name = "Kurt Jakobsen"
-                        },
-                        new
-                        {
-                            Id = 9,
-                            Email = "kevin@komit.dk",
-                            JobPosition = "Udvikler",
-                            Name = "Kevin Poulsen"
-                        },
-                        new
-                        {
-                            Id = 10,
-                            Email = "signe@komit.dk",
-                            JobPosition = "Udvikler",
-                            Name = "Signe Sørensen"
-                        },
-                        new
-                        {
-                            Id = 11,
-                            Email = "julie@komit.dk",
-                            JobPosition = "Udvikler",
-                            Name = "Julie M. Frederiksen"
                         });
                 });
 

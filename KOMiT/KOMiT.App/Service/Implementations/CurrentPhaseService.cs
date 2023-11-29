@@ -27,69 +27,218 @@ namespace KOMiT.App.Service.Implementations
 
         }
 
+        //public async Task<EstimatedAndRealizedDaysDTO> CalculatorEstimatedAndRealizedDaysDTO(int id)
+        //{
+        //    var result = await _currentPhaseRepository.GetEstimatedAndRealizedData(id);
+        //    double estimatedSubProjectDays = CalculateDateDays(result.EstimatedEndDate, result.EstimatedStartDate);
+        //    double realizedSubProjectsDays = 0;
+
+        //    if (result.RealizedDate.HasValue)
+        //    {
+        //        realizedSubProjectsDays = CalculateDateDays(result.RealizedDate.Value, result.EstimatedStartDate);
+        //    }
+
+        //    List<double> estimatedCurrentSubGoalsDays = new List<double>();
+        //    foreach (var currentSubGoal in result.CurrentSubGoals)
+        //    {
+        //        var subGoalsDays = CalculateDateDays(currentSubGoal.EstimatedEndDate, result.EstimatedStartDate);
+        //        estimatedCurrentSubGoalsDays.Add(subGoalsDays);
+        //    }
+
+        //    List<double> realizedCurrentSubGoalsDays = new List<double>();
+        //    foreach (var currentSubGoal in result.CurrentSubGoals)
+        //    {
+        //        if (currentSubGoal.RealizedDate.HasValue)
+        //        {
+        //            var subGoalsDays = CalculateDateDays(currentSubGoal.RealizedDate.Value, currentSubGoal.EstimatedEndDate);
+        //            realizedCurrentSubGoalsDays.Add(subGoalsDays);
+        //        }
+        //    }
+
+        //    List<double> estimatedCurrentTasksDays = new List<double>();
+        //    foreach (var currentSubGoal in result.CurrentSubGoals)
+        //    {
+        //        foreach (var currentTasks in currentSubGoal.CurrentTasks)
+        //        {
+        //            var currentTasksDays = CalculateDateDays(currentSubGoal.EstimatedEndDate, currentTasks.EstimatedNumberOfDays);
+        //            estimatedCurrentTasksDays.Add(currentTasksDays);
+        //        }
+        //    }
+
+        //    List<double> realizedCurrentTasksDays = new List<double>();
+        //    foreach (var currentSubGoal in result.CurrentSubGoals)
+        //    {
+        //        foreach (var currentTasks in currentSubGoal.CurrentTasks)
+        //        {
+        //            if (currentTasks.RealizedDate.HasValue)
+        //            {
+        //                var currentTasksDays = CalculateDateDays(currentSubGoal.EstimatedEndDate, currentTasks.RealizedDate.Value);
+        //                realizedCurrentTasksDays.Add(currentTasksDays);
+        //            }
+        //        }
+        //    }
+
+        //    List<CurrentSubGoalsDaysDTO> currentSubGoalsDaysDTOs = new List<CurrentSubGoalsDaysDTO>();
+        //    foreach (var currentSubGoal in result.CurrentSubGoals)
+        //    {
+        //        if (currentSubGoal.RealizedDate.HasValue)
+        //        {
+        //            currentSubGoalsDaysDTOs.Add(new CurrentSubGoalsDaysDTO
+        //            {
+        //                Name = currentSubGoal.Name,
+        //                EstimatedCurrentSubGoalsDays = CalculateDateDays(currentSubGoal.EstimatedEndDate, result.EstimatedStartDate),
+        //                RealizedCurrentSubGoalsDays = CalculateDateDays(currentSubGoal.RealizedDate.Value, currentSubGoal.EstimatedEndDate)
+        //            });
+        //        }
+        //        else
+        //        {
+        //            currentSubGoalsDaysDTOs.Add(new CurrentSubGoalsDaysDTO
+        //            {
+        //                Name = currentSubGoal.Name,
+        //                EstimatedCurrentSubGoalsDays = CalculateDateDays(currentSubGoal.EstimatedEndDate, result.EstimatedStartDate),
+        //                RealizedCurrentSubGoalsDays = 0
+        //            });
+        //        }
+        //    }
+
+        //    List<CurrentTaskDaysDTO> currentTasksDaysDTO = new List<CurrentTaskDaysDTO>();
+        //    foreach (var currentSubGoal in result.CurrentSubGoals)
+        //    {
+        //        foreach (var currenTask in currentSubGoal.CurrentTasks)
+        //        {
+        //            if (currenTask.RealizedDate.HasValue)
+        //            {
+        //                currentTasksDaysDTO.Add(new CurrentTaskDaysDTO
+        //                {
+        //                    Title = currenTask.Title,
+        //                    EstimatedCurrentTaksDays = CalculateDateDays(currentSubGoal.EstimatedEndDate, currenTask.EstimatedNumberOfDays),
+        //                    RealizedCurrentTaksDays = CalculateDateDays(currenTask.RealizedDate.Value, currentSubGoal.EstimatedEndDate)
+        //                });
+        //            }
+        //            else
+        //            {
+        //                currentTasksDaysDTO.Add(new CurrentTaskDaysDTO
+        //                {
+        //                    Title = currenTask.Title,
+        //                    EstimatedCurrentTaksDays = CalculateDateDays(currentSubGoal.EstimatedEndDate, currenTask.EstimatedNumberOfDays),
+        //                    RealizedCurrentTaksDays = 0
+        //                });
+        //            }
+        //        }
+        //    }
+        //    return _estimatedAndRealizedDaysDTO = new EstimatedAndRealizedDaysDTO(estimatedSubProjectDays, realizedSubProjectsDays, estimatedCurrentSubGoalsDays.Sum(), realizedCurrentSubGoalsDays.Sum(), estimatedCurrentTasksDays.Sum(), realizedCurrentTasksDays.Sum(), currentSubGoalsDaysDTOs, currentTasksDaysDTO);
+        //}
+
         public async Task<EstimatedAndRealizedDaysDTO> CalculatorEstimatedAndRealizedDaysDTO(int id)
         {
             var result = await _currentPhaseRepository.GetEstimatedAndRealizedData(id);
+
             double estimatedSubProjectDays = CalculateDateDays(result.EstimatedEndDate, result.EstimatedStartDate);
-            double realizedSubProjectsDays = 0;
+            double realizedSubProjectsDays = CalculateRealizedSubProjectsDays(result);
 
-            if (result.RealizedDate.HasValue)
-            {
-                realizedSubProjectsDays = CalculateDateDays(result.RealizedDate.Value, result.EstimatedStartDate);
-            }
+            List<double> estimatedCurrentSubGoalsDays = CalculateEstimatedSubGoalsDays(result);
+            List<double> realizedCurrentSubGoalsDays = CalculateRealizedCurrentSubGoalsDays(result);
+            List<double> estimatedCurrentTasksDays = CalculateEstimatedCurrentTasksDays(result);
+            List<double> realizedCurrentTasksDays = CalculateRealizedCurrentTasksDays(result);
 
-            List<double> estimatedCurrentSubGoalsDays = new List<double>();
+            List<CurrentSubGoalsDaysDTO> currentSubGoalsDaysDTOs = CalculateCurrentSubGoalsDTOs(result);
+            List<CurrentTaskDaysDTO> currentTasksDaysDTO = CalculateCurrentTasksDTO(result);
+
+            return new EstimatedAndRealizedDaysDTO(
+                estimatedSubProjectDays,
+                realizedSubProjectsDays,
+                estimatedCurrentSubGoalsDays.Sum(),
+                realizedCurrentSubGoalsDays.Sum(),
+                estimatedCurrentTasksDays.Sum(),
+                realizedCurrentTasksDays.Sum(),
+                currentSubGoalsDaysDTOs,
+                currentTasksDaysDTO
+            );
+        }
+
+        private double CalculateRealizedSubProjectsDays(CurrentPhase result)
+        {
+            return result.RealizedDate.HasValue ? CalculateDateDays(result.RealizedDate.Value, result.EstimatedStartDate) : 0;
+        }
+
+        private List<double> CalculateEstimatedSubGoalsDays(CurrentPhase result)
+        {
+            var estimatedDays = new List<double>();
+
             foreach (var currentSubGoal in result.CurrentSubGoals)
             {
-                var subGoalsDays = CalculateDateDays(currentSubGoal.EstimatedEndDate, result.EstimatedStartDate);
-                estimatedCurrentSubGoalsDays.Add(subGoalsDays);
+                estimatedDays.Add(CalculateDateDays(currentSubGoal.EstimatedEndDate, result.EstimatedStartDate));
             }
 
-            List<double> realizedCurrentSubGoalsDays = new List<double>();
+            return estimatedDays;
+        }
+
+        private List<double> CalculateRealizedCurrentSubGoalsDays(CurrentPhase result)
+        {
+            var realizedDays = new List<double>();
+
             foreach (var currentSubGoal in result.CurrentSubGoals)
             {
                 if (currentSubGoal.RealizedDate.HasValue)
                 {
-                    var subGoalsDays = CalculateDateDays(currentSubGoal.RealizedDate.Value, currentSubGoal.EstimatedEndDate);
-                    realizedCurrentSubGoalsDays.Add(subGoalsDays);
+                    realizedDays.Add(CalculateDateDays(currentSubGoal.RealizedDate.Value, result.EstimatedStartDate));
                 }
             }
 
-            List<double> estimatedCurrentTasksDays = new List<double>();
+            return realizedDays;
+        }
+
+        private List<double> CalculateEstimatedCurrentTasksDays(CurrentPhase result)
+        {
+            var estimatedDays = new List<double>();
+
             foreach (var currentSubGoal in result.CurrentSubGoals)
             {
-                foreach (var currentTasks in currentSubGoal.CurrentTasks)
+                foreach (var currentTask in currentSubGoal.CurrentTasks)
                 {
-                    var currentTasksDays = CalculateDateDays(currentSubGoal.EstimatedEndDate, currentTasks.EstimatedNumberOfDays);
-                    estimatedCurrentTasksDays.Add(currentTasksDays);
+                    estimatedDays.Add(CalculateDateDays(currentTask.EstimatedNumberOfDays, result.EstimatedStartDate));
                 }
             }
 
-            List<double> realizedCurrentTasksDays = new List<double>();
+            return estimatedDays;
+        }
+
+        private List<double> CalculateRealizedCurrentTasksDays(CurrentPhase result)
+        {
+            var realizedDays = new List<double>();
+
             foreach (var currentSubGoal in result.CurrentSubGoals)
             {
-                foreach (var currentTasks in currentSubGoal.CurrentTasks)
+                foreach (var currentTask in currentSubGoal.CurrentTasks)
                 {
-                    if(currentTasks.RealizedDate.HasValue)
+                    if (currentTask.RealizedDate.HasValue)
                     {
-                        var currentTasksDays = CalculateDateDays(currentSubGoal.EstimatedEndDate, currentTasks.RealizedDate.Value);
-                        realizedCurrentTasksDays.Add(currentTasksDays);
+                        realizedDays.Add(CalculateDateDays(currentTask.RealizedDate.Value, result.EstimatedStartDate));
                     }
                 }
             }
 
-            List<CurrentSubGoalsDaysDTO> currentSubGoalsDaysDTOs = new List<CurrentSubGoalsDaysDTO>();
+            return realizedDays;
+        }
+
+        private List<CurrentSubGoalsDaysDTO> CalculateCurrentSubGoalsDTOs(CurrentPhase result)
+        {
+            var dtos = new List<CurrentSubGoalsDaysDTO>();
+
             foreach (var currentSubGoal in result.CurrentSubGoals)
             {
                 if (currentSubGoal.RealizedDate.HasValue)
                 {
-                    currentSubGoalsDaysDTOs.Add(new CurrentSubGoalsDaysDTO
-                    { Name = currentSubGoal.Name, EstimatedCurrentSubGoalsDays = CalculateDateDays(currentSubGoal.EstimatedEndDate, result.EstimatedStartDate),
-                      RealizedCurrentSubGoalsDays = CalculateDateDays(currentSubGoal.RealizedDate.Value, currentSubGoal.EstimatedEndDate)});
+                    dtos.Add(new CurrentSubGoalsDaysDTO
+                    {
+                        Name = currentSubGoal.Name,
+                        EstimatedCurrentSubGoalsDays = CalculateDateDays(currentSubGoal.EstimatedEndDate, result.EstimatedStartDate),
+                        RealizedCurrentSubGoalsDays = CalculateDateDays(currentSubGoal.RealizedDate.Value, result.EstimatedStartDate)
+                    });
                 }
                 else
                 {
-                    currentSubGoalsDaysDTOs.Add(new CurrentSubGoalsDaysDTO
+                    dtos.Add(new CurrentSubGoalsDaysDTO
                     {
                         Name = currentSubGoal.Name,
                         EstimatedCurrentSubGoalsDays = CalculateDateDays(currentSubGoal.EstimatedEndDate, result.EstimatedStartDate),
@@ -98,38 +247,40 @@ namespace KOMiT.App.Service.Implementations
                 }
             }
 
-            List<CurrentTaskDaysDTO> currentTasksDaysDTO = new List<CurrentTaskDaysDTO>();
+            return dtos;
+        }
+
+        private List<CurrentTaskDaysDTO> CalculateCurrentTasksDTO(CurrentPhase result)
+        {
+            var dtos = new List<CurrentTaskDaysDTO>();
+
             foreach (var currentSubGoal in result.CurrentSubGoals)
             {
-                foreach(var currenTask in currentSubGoal.CurrentTasks)
+                foreach (var currentTask in currentSubGoal.CurrentTasks)
                 {
-                    if (currenTask.RealizedDate.HasValue)
+                    if (currentTask.RealizedDate.HasValue)
                     {
-                        currentTasksDaysDTO.Add(new CurrentTaskDaysDTO
+                        dtos.Add(new CurrentTaskDaysDTO
                         {
-                            Title = currenTask.Title,
-                            EstimatedCurrentTaksDays = CalculateDateDays(currentSubGoal.EstimatedEndDate, currenTask.EstimatedNumberOfDays),
-                            RealizedCurrentTaksDays = CalculateDateDays(currenTask.RealizedDate.Value, currentSubGoal.EstimatedEndDate)
+                            Title = currentTask.Title,
+                            EstimatedCurrentTaksDays = CalculateDateDays(currentTask.EstimatedNumberOfDays, result.EstimatedStartDate),
+                            RealizedCurrentTaksDays = CalculateDateDays(currentTask.RealizedDate.Value, result.EstimatedStartDate)
                         });
                     }
                     else
                     {
-                        currentTasksDaysDTO.Add(new CurrentTaskDaysDTO
+                        dtos.Add(new CurrentTaskDaysDTO
                         {
-                            Title = currenTask.Title,
-                            EstimatedCurrentTaksDays = CalculateDateDays(currentSubGoal.EstimatedEndDate, currenTask.EstimatedNumberOfDays),
+                            Title = currentTask.Title,
+                            EstimatedCurrentTaksDays = CalculateDateDays(currentTask.EstimatedNumberOfDays, result.EstimatedStartDate),
                             RealizedCurrentTaksDays = 0
                         });
                     }
                 }
             }
-
-
-
-            return _estimatedAndRealizedDaysDTO = new EstimatedAndRealizedDaysDTO(estimatedSubProjectDays, realizedSubProjectsDays, estimatedCurrentSubGoalsDays.Sum(), realizedCurrentSubGoalsDays.Sum(), estimatedCurrentTasksDays.Sum(), realizedCurrentTasksDays.Sum(), currentSubGoalsDaysDTOs, currentTasksDaysDTO);
+            return dtos;
         }
 
-       
 
         public double CalculateDateDays(DateTime endDate, DateTime startDate)
         {

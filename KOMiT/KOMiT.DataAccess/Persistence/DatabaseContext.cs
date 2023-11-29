@@ -409,6 +409,69 @@ public class DatabaseContext : DbContext
                 Name = "Per Hansen",
                 JobPosition = "Konsulent",
                 Email = "per@komit.dk",
+            },
+            new Employee
+            {
+                Id = 3,
+                Name = "Henrik Sørensen",
+                JobPosition = "Udvikler",
+                Email = "henrik@komit.dk",
+            },
+            new Employee
+            {
+                Id = 4,
+                Name = "Janni Iversen",
+                JobPosition = "Konsulent",
+                Email = "janni@komit.dk",
+            },
+            new Employee
+            {
+                Id = 5,
+                Name = "Kristian Kristensen",
+                JobPosition = "Projektleder",
+                Email = "kristian@komit.dk",
+            },
+            new Employee
+            {
+                Id = 6,
+                Name = "Sofie Pedersen",
+                JobPosition = "Marketing Specialist",
+                Email = "sofie@komit.dk",
+            },
+            new Employee
+            {
+                Id = 7,
+                Name = "Mikkel Andersen",
+                JobPosition = "Systemadministrator",
+                Email = "mikkel@komit.dk",
+            },
+            new Employee
+            {
+                Id = 8,
+                Name = "Kurt Jakobsen",
+                JobPosition = "Udvikler",
+                Email = "kurt@komit.dk",
+            },
+            new Employee
+            {
+                Id = 9,
+                Name = "Kevin Poulsen",
+                JobPosition = "Udvikler",
+                Email = "kevin@komit.dk",
+            },
+            new Employee
+            {
+                Id = 10,
+                Name = "Signe Sørensen",
+                JobPosition = "Udvikler",
+                Email = "signe@komit.dk",
+            },
+            new Employee
+            {
+                Id = 11,
+                Name = "Julie M. Frederiksen",
+                JobPosition = "Udvikler",
+                Email = "julie@komit.dk",
             }
             );
 
@@ -444,6 +507,134 @@ public class DatabaseContext : DbContext
                 Description = "Jeg føler mig stærk i...",
                 Experience = "4 år",
                 EmployeeId = 1
+            },
+            new Competence
+            {
+                Id = 5,
+                Title = "UX",
+                Description = "Jeg føler mig stærk i...",
+                Experience = "4 år",
+                EmployeeId = 3
+            },
+            new Competence
+            {
+                Id = 6,
+                Title = "HTML",
+                Description = "Jeg føler mig stærk i...",
+                Experience = "5 år",
+                EmployeeId = 3
+            },
+            new Competence
+            {
+                Id = 7,
+                Title = "Kunderådgivning",
+                Description = "Jeg føler mig stærk i...",
+                Experience = "1 år",
+                EmployeeId = 4
+            },
+            new Competence
+            {
+                Id = 8,
+                Title = "Salg",
+                Description = "Jeg føler mig stærk i...",
+                Experience = "3 år",
+                EmployeeId = 4
+            },
+            new Competence
+            {
+                Id = 9,
+                Title = "Ledelse",
+                Description = "Jeg føler mig stærk i...",
+                Experience = "9 år",
+                EmployeeId = 5
+            },
+            new Competence
+            {
+                Id = 10,
+                Title = "Drift",
+                Description = "Jeg føler mig stærk i...",
+                Experience = "9 år",
+                EmployeeId = 5
+            },
+            new Competence
+            {
+                Id = 11,
+                Title = "Marketing",
+                Description = "Jeg føler mig stærk i...",
+                Experience = "4 år",
+                EmployeeId = 6
+            },
+            new Competence
+            {
+                Id = 12,
+                Title = "Strategier",
+                Description = "Jeg føler mig stærk i...",
+                Experience = "4 år",
+                EmployeeId = 6
+            },
+            new Competence
+            {
+                Id = 13,
+                Title = "Systemadministration",
+                Description = "Jeg føler mig stærk i...",
+                Experience = "10 år",
+                EmployeeId = 7
+            },
+            new Competence
+            {
+                Id = 14,
+                Title = "Scripting",
+                Description = "Jeg føler mig stærk i...",
+                Experience = "10 år",
+                EmployeeId = 7
+            },
+            new Competence
+            {
+                Id = 15,
+                Title = "C#",
+                Description = "Jeg føler mig stærk i...",
+                Experience = "7 år",
+                EmployeeId = 8
+            },
+            new Competence
+            {
+                Id = 16,
+                Title = "Blazor",
+                Description = "Jeg føler mig stærk i...",
+                Experience = "2 år",
+                EmployeeId = 8
+            },
+            new Competence
+            {
+                Id = 17,
+                Title = "HTML",
+                Description = "Jeg føler mig stærk i...",
+                Experience = "2 år",
+                EmployeeId = 9
+            },
+            new Competence
+            {
+                Id = 18,
+                Title = "CSS",
+                Description = "Jeg føler mig stærk i...",
+                Experience = "2 år",
+                EmployeeId = 9
+            },
+            new Competence
+            {
+                Id = 19,
+                Title = "JavaScript",
+                Description = "Jeg føler mig stærk i...",
+                Experience = "5 år",
+                EmployeeId = 10
+            },
+            new Competence
+            {
+                Id = 20,
+                Title = "Python",
+                Description = "Jeg føler mig stærk i...",
+                Experience = "8 år",
+                EmployeeId = 11
             }
             );
 
@@ -451,13 +642,13 @@ public class DatabaseContext : DbContext
             new ProjectMember
             {
                 Id = 1,
-                ProjectRole = "Udvikler",
+                ProjectRole = Core.Model.Enum.ProjectRole.Udvikler,
                 ProjectMemberStatus = Core.Model.Enum.ProjectMemberStatus.Aktiv,
             },
             new ProjectMember
             {
                 Id = 2,
-                ProjectRole = "Projektleder",
+                ProjectRole = Core.Model.Enum.ProjectRole.Projektleder,
                 ProjectMemberStatus = Core.Model.Enum.ProjectMemberStatus.Aktiv,
             }
             );
