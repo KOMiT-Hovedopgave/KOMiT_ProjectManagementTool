@@ -12,10 +12,11 @@
 else
 {
     <div style="margin:5px">
-        <Button Color="ButtonColor.Primary" @onclick="OnShowModalClick">Opret Projekt  </Button>
-        <Modal @ref="modal" Title="Opret Projekt">
+        <Button Color="ButtonColor.Primary" @onclick="OnShowModalClickAddProject">Opret Projekt  </Button>
+        <Button Color="ButtonColor.Primary" @onclick="OnShowModalClick">Opret standardfase  </Button>
+        <Modal @ref="modalAddProject" Title="Opret Projekt">
             <BodyTemplate>
-                <CreateProject OnClick="OnHideModalClick">
+                <CreateProject OnClick="OnHideModalClickAddProject">
                 </CreateProject>
             </BodyTemplate>
             
@@ -123,6 +124,7 @@ else
     @code {
     private ICollection<Project>? Projects { get; set; }
     private Modal modal;
+    private Modal modalAddProject;
 
 
     protected override async Task OnInitializedAsync()
@@ -155,5 +157,15 @@ else
     {
         await modal?.HideAsync();
     }
+    private async Task OnShowModalClickAddProject()
+    {
+        await modalAddProject.ShowAsync();
+    }
+    private async Task OnHideModalClickAddProject()
+    {
+        await modalAddProject.HideAsync();
+    }
+
+    
     }
 }
