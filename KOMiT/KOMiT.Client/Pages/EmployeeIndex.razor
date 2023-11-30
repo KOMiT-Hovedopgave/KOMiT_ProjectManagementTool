@@ -19,7 +19,7 @@ else
             <FooterTemplate>
             </FooterTemplate>
         </Modal>
-        <Button Color="ButtonColor.Primary">Alle kompetencer</Button>
+        <Button Color="ButtonColor.Primary" @onclick="AllCompetences">Alle kompetencer</Button>
     </div>
 
     <Grid DataProvider="EmployeeDataProvider" HeaderRowCssClass="bg-secondary text-white border-bottom-0" TItem="Employee" AllowPaging="true" PageSize="12" AllowSorting="true">
@@ -67,6 +67,11 @@ else
     private async Task<GridDataProviderResult<Employee>> EmployeeDataProvider(GridDataProviderRequest<Employee> request)
     {
         return await Task.FromResult(request.ApplyTo(Employees));
+    }
+
+    private void AllCompetences()
+    {
+        navigationManager.NavigateTo("/AllCompetences");
     }
 
     private async Task OnShowModalClick()

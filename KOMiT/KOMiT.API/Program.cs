@@ -25,6 +25,8 @@ builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 builder.Services.AddScoped<IProjectMemberService, ProjectMemberService>();
 builder.Services.AddScoped<IProjectMemberRepository, ProjectMemberRepository>();
+builder.Services.AddScoped<ICompetenceService, CompetenceService>();
+builder.Services.AddScoped<ICompetenceRepository, CompetenceRepository>();
 
 var app = builder.Build();
 

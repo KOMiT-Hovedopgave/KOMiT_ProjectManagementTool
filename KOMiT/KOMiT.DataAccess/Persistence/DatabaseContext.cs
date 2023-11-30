@@ -19,6 +19,7 @@ public class DatabaseContext : DbContext
     public DbSet<StandardSubGoal> StandardSubGoals { get; set; }
     public DbSet<StandardTask> StandardTasks { get; set; }
     public DbSet<Employee> Employees { get; set; }
+    public DbSet<Competence> Competence { get; set; }
     public DbSet<ProjectMember> ProjectMembers { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
