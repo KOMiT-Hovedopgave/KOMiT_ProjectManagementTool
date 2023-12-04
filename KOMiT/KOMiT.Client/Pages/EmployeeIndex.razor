@@ -44,7 +44,7 @@ else
         </GridColumn>
         <GridColumn TItem="Employee" HeaderText="Kompetencer" SortKeySelector="Item => Item.Name">
             <div style="text-align:left">
-                <a class="is-link" style="cursor: pointer;"> @context.Name kompetencer</a>
+                <a class="is-link" style="cursor: pointer;" @onclick="CompetenceDetails">@context.Name kompetencer</a>
                 <Tooltip Title="@($"{string.Join(", ", context.Competences?.Select(c => c.Title))}")">
                     <Icon Name="IconName.InfoCircleFill" Color="IconColor.Primary" />
                 </Tooltip>
@@ -72,6 +72,11 @@ else
     private void AllCompetences()
     {
         navigationManager.NavigateTo("/AllCompetences");
+    }
+
+    private void CompetenceDetails()
+    {
+        navigationManager.NavigateTo($"/competencedetails");
     }
 
     private async Task OnShowModalClick()

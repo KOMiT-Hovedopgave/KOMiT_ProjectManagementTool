@@ -1,5 +1,6 @@
 ﻿using KOMiT.Core.Model;
 using KOMiT.DataAccess.Repositories;
+using KOMiT.DataAccess.Repositories.Implementations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +20,12 @@ namespace KOMiT.App.Service.Implementations
         public async Task<ICollection<Competence>> GetAll()
         {
             return await _competenceRepository.GetAll();
+        }
+
+        public async Task<ICollection<Competence>> GetDetails()
+        {
+            return await _competenceRepository.GetDetails();
+
         }
     }
 }

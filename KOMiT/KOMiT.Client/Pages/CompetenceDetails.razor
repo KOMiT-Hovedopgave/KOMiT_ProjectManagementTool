@@ -1,0 +1,62 @@
+﻿@page "/competencedetails"
+@inject HttpClient _httpClient
+@inject NavigationManager navigationManager
+
+
+@if (Competences == null)
+{
+    <h1>Loading...</h1>
+}
+else
+{
+    <div style="margin:5px">
+        <Button Color="ButtonColor.Primary">Opret kompetence</Button>
+    </div>
+
+    <Grid DataProvider="CompetenceDetailsDataProvider" HeaderRowCssClass="bg-secondary text-white border-bottom-0" TItem="Competence" AllowPaging="true" PageSize="12" AllowSorting="true">
+        <GridColumn TItem="Competence" HeaderText="Kompetence" SortKeySelector="Item => Item.Title">
+            @context.Title
+        </GridColumn>
+        <GridColumn TItem="Competence" HeaderText="Erfaring" SortKeySelector="Item => Item.Experience">
+            @context.Experience
+        </GridColumn>
+        <GridColumn TItem="Competence" HeaderText="Beskrivelse">
+            <Tooltip Title="@context.Description">
+                <Icon Name="IconName.InfoCircleFill" Color="IconColor.Primary" />
+            </Tooltip>
+        </GridColumn>
+    </Grid>
+
+
+}
+
+@code {
+
+    private ICollection<Competence>? Competences { get; set; }
+    private Modal modal;
+
+    protected override async Task OnInitializedAsync()
+    {
+        Competences = await _httpClient.GetFromJsonAsync<ICollection<Competence>>("https://localhost:7282/api/competence/getdetails");
+    }
+
+    private async Task<GridDataProviderResult<Competence>> CompetenceDetailsDataProvider(GridDataProviderRequest<Competence> request)
+    {
+        return await Task.FromResult(request.ApplyTo(Competences));
+    }
+
+    private void AllCompetences()
+    {
+        navigationManager.NavigateTo("/AllCompetences");
+    }
+
+    private async Task OnShowModalClick()
+    {
+        await modal?.ShowAsync();
+    }
+
+    private async Task OnHideModalClick()
+    {
+        await modal?.HideAsync();
+    }
+}
