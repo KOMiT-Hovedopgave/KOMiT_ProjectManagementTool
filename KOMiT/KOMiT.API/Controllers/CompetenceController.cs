@@ -1,4 +1,5 @@
 ﻿using KOMiT.App.Service;
+using KOMiT.App.Service.Implementations;
 using KOMiT.Core.Model;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -22,5 +23,11 @@ namespace KOMiT.API.Controllers
             return Ok(result);
         }
 
+        [HttpGet("GetDetails")]
+        public async Task<ActionResult<ICollection<Competence>>> GetDetails()
+        {
+            var result = await _competenceService.GetDetails();
+            return Ok(result);
+        }
     }
 }

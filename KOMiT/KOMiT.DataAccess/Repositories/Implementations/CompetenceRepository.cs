@@ -15,7 +15,7 @@ namespace KOMiT.DataAccess.Repositories.Implementations
         }
         public async Task<ICollection<Competence>> GetAll()
         {
-            var result =  await _context.Competence
+            var result =  await _context.Competences
                 .Select(x => new Competence
                 {
                     Id = x.Id,
@@ -28,5 +28,21 @@ namespace KOMiT.DataAccess.Repositories.Implementations
 
             return result;
         }
+
+        public async Task<ICollection<Competence>> GetDetails()
+        {
+            var result = await _context.Competences
+                .Select(c => new Competence
+                {
+                    Id = c.Id,
+                    Title = c.Title,
+                    Description = c.Description,
+                    Experience = c.Experience
+                })
+                .ToListAsync();
+
+            return result;
+        }
+
     }
 }
