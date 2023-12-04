@@ -27,12 +27,27 @@ namespace KOMiT.App.Service.Implementations
             return await _projectRepository.GetDetailsById(id);
 
         }
-        
-           
-            public async Task CreateProject(Project project)
-            {
-                await _projectRepository.CreateProject(project);
-            }
-        
+
+
+        public async Task CreateProject(Project project)
+        {
+            await _projectRepository.CreateProject(project);
+        }
+
+        public async Task DeleteProject(int id)
+        {
+            await _projectRepository.DeleteProject(id);
+        }
+
+        public async Task UpdateProject (Project project)
+        {
+            await _projectRepository.UpdateProject(project);
+        }
+
+        public async Task FinishProject(Project project)
+        {
+            await _projectRepository.FinishProject(project);
+        }
+
     }
 }

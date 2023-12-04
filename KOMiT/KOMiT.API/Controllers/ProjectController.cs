@@ -36,5 +36,27 @@ namespace KOMiT.API.Controllers
             await _projectService.CreateProject(project);
             return Ok(project);
         }
+
+        [HttpPut("UpdateProject")]
+        public async Task<ActionResult> UpdateProject([FromBody] Project project)
+        {
+            await _projectService.UpdateProject(project);
+            return Ok(project);
+        }
+
+        [HttpPut("FinishProject")]
+        public async Task<ActionResult> FinishProject([FromBody] Project project)
+        {
+            await _projectService.FinishProject(project);
+            return Ok(project);
+        }
+
+        [HttpDelete("DeleteProject")]
+        public async Task<ActionResult> DeleteProject([FromBody] int Id)
+        {
+            await _projectService.DeleteProject(Id);
+            return Ok();
+        }
+
     }
 }

@@ -91,6 +91,73 @@ public class ProjectRepository : IProjectRepository
         var result = _context.Projects.Add(project);
         await _context.SaveChangesAsync();
     }
+
+    public async Task DeleteProject(int Id)
+    {
+        var project = await _context.Projects
+        .Include(p => p.CurrentPhases)
+         .ThenInclude(currentPhase => currentPhase.ProjectMembers)
+            .Include(p => p.CurrentPhases).ThenInclude(x => x.CurrentSubGoals)
+             .ThenInclude(x => x.CurrentTasks)
+
+        .FirstOrDefaultAsync(p => p.Id == Id);
+        if (project.CurrentPhases != null)
+        {
+            foreach (var currentPhases in project.CurrentPhases)
+            {
+                foreach (var projectMembers in currentPhases.ProjectMembers)
+                {
+                    _context.ProjectMembers.Remove(projectMembers);
+                }
+                foreach (var currenSubGoals in currentPhases.CurrentSubGoals)
+                {
+                    _context.CurrentSubGoals.Remove(currenSubGoals);
+                    foreach (var currentTasks in currenSubGoals.CurrentTasks)
+                    {
+                        _context.CurrentTasks.Remove(currentTasks);
+                    }
+                }
+                _context.CurrentPhases.Remove(currentPhases);
+            }
+        }
+        _context.Projects.Remove(project);
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task UpdateProject(Project project)
+    {
+        var projectWithDependency = await _context.Projects
+            .Include(p => p.CurrentPhases)
+            .ThenInclude(currentPhase => currentPhase.ProjectMembers)
+            .Include(p => p.CurrentPhases).ThenInclude(x => x.CurrentSubGoals)
+            .ThenInclude(x => x.CurrentTasks)
+            .FirstOrDefaultAsync(p => p.Id == project.Id);
+
+        _context.Entry(projectWithDependency).CurrentValues.SetValues(project);
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task FinishProject(Project project)
+    {
+        var projectWithDependency = await _context.Projects
+            .Include(p => p.CurrentPhases)
+            .ThenInclude(currentPhase => currentPhase.ProjectMembers)
+            .Include(p => p.CurrentPhases).ThenInclude(x => x.CurrentSubGoals)
+            .ThenInclude(x => x.CurrentTasks)
+            .FirstOrDefaultAsync(p => p.Id == project.Id);
+        _context.Entry(projectWithDependency).CurrentValues.SetValues(project);
+
+        foreach (var currentPhase in projectWithDependency.CurrentPhases)
+        {
+            var updatedPhase = project.CurrentPhases.FirstOrDefault(t => t.Id == currentPhase.Id);
+            if (updatedPhase != null)
+            {
+                _context.Entry(currentPhase).CurrentValues.SetValues(updatedPhase);
+            }
+
+        }
+        await _context.SaveChangesAsync();
+    }
 }
 
 

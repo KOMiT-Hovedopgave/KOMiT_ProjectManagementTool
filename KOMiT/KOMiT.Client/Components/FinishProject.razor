@@ -1,0 +1,66 @@
+﻿@using KOMiT.Core.Model
+@inject HttpClient http
+@inject NavigationManager navManger
+@inject ConfirmationService confirmationService 
+
+
+<EditForm class="container" Model="project" OnValidSubmit="@Create">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <h2>Afslut project: @project.Name</h2>
+    <div class="form-group">
+        <p> <Icon Name="IconName.Calendar" Color="IconColor.Primary" />Deadline: @project.EstimatedEndDate.ToShortDateString()</p>
+        <p> <Icon Name="IconName.Calendar" Color="IconColor.Primary" />Afslut: @project.RealizedDate?.ToShortDateString()</p>
+    </div>
+    <div class="form-group">
+        <label>Kommentar</label>
+        <InputTextArea @bind-Value="project.Comment" class="form-control" />
+    </div>
+    <div style="margin-top:10px;">
+        <Button Color="ButtonColor.Secondary" @onclick="OnClick">Luk</Button>
+        <Button Color="ButtonColor.Primary" @onclick="Create"> Afslut</Button>
+    </div>
+</EditForm>
+
+@code {
+    [Parameter]
+    public int ID { get; set; }
+
+    [Parameter]
+    public EventCallback<MouseEventArgs> OnClick { get; set; }
+
+    [Parameter]
+    public Project? project { get; set; }
+
+    [Parameter]
+    public ProjectMember? ProjectMember { get; set; }
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        project.Status = Core.Model.Enum.Status.Færdiggjort;
+        project.RealizedDate = DateTime.Today;
+        project.CurrentPhases = ID;
+        foreach (var currentPhases in project.CurrentPhases)
+        {
+            currentPhases.Status = Core.Model.Enum.Status.Færdiggjort;
+        }
+    }
+
+    private async Task Create()
+    {
+
+        var response = await http.PostAsJsonAsync("https://localhost:7282/api/Project/FinishProject", project);
+
+        if (response.IsSuccessStatusCode)
+        {
+            confirmationService.SetSuccessMessage("Projektet er opdateret!");
+            navManger.NavigateTo("/");
+        }
+        else
+        {
+            confirmationService.SetWarningMessage("Fejl ved opdatering af Projekt. Prøv igen.");
+        }
+
+    }
+}

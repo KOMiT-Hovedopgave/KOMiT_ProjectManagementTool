@@ -12,6 +12,10 @@ namespace KOMiT.App.Service
         Task<ICollection<Project>> GetAll();
         Task<Project> GetDetailsById(int id);
         Task CreateProject(Project project);
+        Task DeleteProject(int id);
+        Task UpdateProject(Project project);
+        Task FinishProject(Project project);
+
     }
     
 }
