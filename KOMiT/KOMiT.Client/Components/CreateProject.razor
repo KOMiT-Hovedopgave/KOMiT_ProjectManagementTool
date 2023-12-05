@@ -3,55 +3,83 @@
 @inject NavigationManager navManger
 @inject ConfirmationService confirmationService
 
-
 <div class="row">
     <div class="col-md-4">
         <EditForm class="container" Model="project">
             <DataAnnotationsValidator />
             <ValidationSummary />
 
-            
             <div class="form-group">
                 <label>Projektnavn</label>
                 <input @bind-value="project.Name" class="form-control" />
-                <span asp-validation-for="Projektnavn" class="text-danger"></span>
+                <span asp-validation-for="project.Name" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label>Beskrivelse</label>
                 <input @bind-value="project.Description" class="form-control" />
-                <span asp-validation-for="Beskrivelse" class="text-danger"></span>
+                <span asp-validation-for="project.Beskrivelse" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label>Projekttype</label>
-                <input @bind-value="project.ProjectType" class="form-control" />
-                <span asp-validation-for="Projekttype" class="text-danger"></span>
+                <select @bind="project.ProjectType" class="form-control" style="width: 150px;">
+                    <option value="Drift">Drift</option>
+                    <option value="Udvikling">Udvikling</option>
+                    <option value="Integration">Integration</option>
+                </select>
+                <span asp-validation-for="project.Status" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label>Prioritet</label>
-                <input @bind-value="project.Priority" class="form-control" />
-                <span asp-validation-for="Prioritet" class="text-danger"></span>
+                <select @bind="project.Priority" class="form-control" style="width: 150px;">
+                    <option value="Høj">Høj</option>
+                    <option value="Mellem">Mellem</option>
+                    <option value="Lav">Lav</option>
+                </select>
+                <span asp-validation-for="project.Prioritet" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label>Status</label>
-                <input @bind-value="project.Status" class="form-control" />
-                <span asp-validation-for="Status" class="text-danger"></span>
+                <select @bind="project.Status" class="form-control" style="width: 150px;">
+                    <option value="Aktiv">Aktiv</option>
+                    <option value="Inaktiv">Inaktiv</option>
+                    <option value="Færdiggjort">Færdiggjort</option>
+                </select>
+                <span asp-validation-for="project.Status" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label>Startdato</label>
-                <input @bind-value="project.EstimatedStartDate" class="form-control" />
-                <span asp-validation-for="Startdato" class="text-danger"></span>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Startdato</label>
+                        <div style="display: flex; gap: 10px;">
+                            <InputDate style="width: 150px;" @bind-Value="project.EstimatedStartDate" class="form-control" />
+                        </div>
+                        <span asp-validation-for="project.Startdato" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label>Slutdato</label>
+                        <div style="display: flex; gap: 10px;">
+                            <InputDate style="width: 150px;" @bind-Value="project.EstimatedEndDate" class="form-control" />
+                        </div>
+                        <span asp-validation-for="project.slutdato" class="text-danger"></span>
+                    </div>
+                </div>
             </div>
-            <div class="form-group">
-                <label>Slutdato</label>
-                <input @bind-value="project.EstimatedEndDate" class="form-control" />
-                <span asp-validation-for="slutdato" class="text-danger"></span>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group" style="display: flex; justify-content: flex-end; margin-top: 10px;">
+                        <button class="btn btn-primary" style="width: 100px;" @onclick="Create">Opret</button>
+                        <Button Color="ButtonColor.Secondary" style="width: 100px; margin-left: 10px;" @onclick="OnClick">Luk</Button>
+                    </div>
+                </div>
             </div>
-            <button class="btn btn-primary" @onclick="Create"> Opret </button>
-            <Button Color="ButtonColor.Secondary" @onclick="OnClick">Luk</Button>
+
         </EditForm>
     </div>
 </div>
-
 
 @if (!string.IsNullOrEmpty(confirmationService.SuccessMessage))
 {
@@ -70,9 +98,15 @@
 @code {
     public Project project = new Project();
     [Parameter]
-    public EventCallback<MouseEventArgs> OnClick{ get; set; }
+    public EventCallback<MouseEventArgs> OnClick { get; set; }
+
     private async Task Create()
     {
+        if (project.EstimatedEndDate == default)
+        {
+            project.EstimatedEndDate = DateTime.Now;
+        }
+        project.EstimatedStartDate = DateTime.Now;
         var response = await http.PostAsJsonAsync("https://localhost:7282/api/Project/CreateProject", project);
 
         if (response.IsSuccessStatusCode)
@@ -85,5 +119,8 @@
             confirmationService.SetWarningMessage("Fejl ved oprettelse af Projekt. Prøv igen.");
         }
     }
-
+    void SetPriority(Core.Model.Enum.Priority priority)
+    {
+        project.Priority = priority;
+    }
 }

@@ -17,9 +17,11 @@ public class Project
 
     public ICollection<CurrentPhase>? CurrentPhases { get; set; } = new List<CurrentPhase>();
 
+
     public  Project()
     {
-
+        EstimatedStartDate = DateTime.Now;
+        EstimatedEndDate = DateTime.Now;
     }
 
     public Project(int id, string name, string description, ProjectType projectType, Priority priority, Status status, DateTime estimatedStartDate, DateTime estimatedEndDate, string? comment, DateTime? realizedDate, ICollection<CurrentPhase>? currentPhases)
