@@ -1,0 +1,86 @@
+﻿@using KOMiT.Core.Model
+@inject HttpClient http
+@inject NavigationManager navManger
+@inject ConfirmationService confirmationService
+
+<div class="row">
+    <div class="col-md-4">
+        <EditForm class="container" Model="Project" OnInvalidSubmit="@Update">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+            <div class="form-group">
+                <label>Projektnavn</label>
+                <input @bind-value="Project.Name" class="form-control" />
+                <span asp-validation-for="Projektnavn" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label>Beskrivelse</label>
+                <input @bind-value="Project.Description" class="form-control" />
+                <span asp-validation-for="Beskrivelse" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label>Projekttype</label>
+                <input @bind-value="Project.ProjectType" class="form-control" />
+                <span asp-validation-for="Projekttype" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label>Prioritet</label>
+                <input @bind-value="Project.Priority" class="form-control" />
+                <span asp-validation-for="Prioritet" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label>Status</label>
+                <input @bind-value="Project.Status" class="form-control" />
+                <span asp-validation-for="Status" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label>Startdato</label>
+                <input @bind-value="Project.EstimatedStartDate" class="form-control" />
+                <span asp-validation-for="Startdato" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label>Slutdato</label>
+                <input @bind-value="Project.EstimatedEndDate" class="form-control" />
+                <span asp-validation-for="slutdato" class="text-danger"></span>
+            </div>
+            <div style="margin-top:10px;">
+                <Button Color="ButtonColor.Secondary" @onclick="OnClick">Luk</Button>
+                <Button Color="ButtonColor.Primary" @onclick="Update"> Opdatere</Button>
+            </div>
+        </EditForm>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public int ID { get; set; }
+
+    [Parameter]
+    public Project? Project { get; set; }
+
+    [Parameter]
+    public EventCallback<MouseEventArgs> OnClick { get; set; }
+
+    [Parameter]
+    public EventCallback EventCallback { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+
+    }
+
+    private async Task Update()
+    {
+        var response = await http.PostAsJsonAsync("https://localhost:7282/api/Project/UpdateProject", Project);
+
+        if (response.IsSuccessStatusCode)
+        {
+            confirmationService.SetSuccessMessage("Projektet er opdateret!");
+            EventCallback.InvokeAsync();
+        }
+        else
+        {
+            confirmationService.SetWarningMessage("Fejl ved opdatering af projektet. Prøv igen.");
+        }
+    }
+}
