@@ -51,8 +51,8 @@ namespace KOMiT.API.Controllers
             return Ok(project);
         }
 
-        [HttpDelete("DeleteProject")]
-        public async Task<ActionResult> DeleteProject([FromBody] int Id)
+        [HttpDelete("DeleteProject/{Id}")]
+        public async Task<ActionResult> DeleteProject( int Id)
         {
             await _projectService.DeleteProject(Id);
             return Ok();

@@ -4,17 +4,17 @@
 @inject ConfirmationService confirmationService 
 
 
-<EditForm class="container" Model="project" OnValidSubmit="@Create">
+<EditForm class="container" Model="Project" OnValidSubmit="@Create">
     <DataAnnotationsValidator />
     <ValidationSummary />
-    <h2>Afslut project: @project.Name</h2>
+    <h2>Afslut project: @Project.Name</h2>
     <div class="form-group">
-        <p> <Icon Name="IconName.Calendar" Color="IconColor.Primary" />Deadline: @project.EstimatedEndDate.ToShortDateString()</p>
-        <p> <Icon Name="IconName.Calendar" Color="IconColor.Primary" />Afslut: @project.RealizedDate?.ToShortDateString()</p>
+        <p> <Icon Name="IconName.Calendar" Color="IconColor.Primary" />Deadline: @Project.EstimatedEndDate.ToShortDateString()</p>
+        <p> <Icon Name="IconName.Calendar" Color="IconColor.Primary" />Afslut: @Project.RealizedDate?.ToShortDateString()</p>
     </div>
     <div class="form-group">
         <label>Kommentar</label>
-        <InputTextArea @bind-Value="project.Comment" class="form-control" />
+        <InputTextArea @bind-Value="Project.Comment" class="form-control" />
     </div>
     <div style="margin-top:10px;">
         <Button Color="ButtonColor.Secondary" @onclick="OnClick">Luk</Button>
@@ -23,25 +23,18 @@
 </EditForm>
 
 @code {
-    [Parameter]
-    public int ID { get; set; }
-
+    
     [Parameter]
     public EventCallback<MouseEventArgs> OnClick { get; set; }
 
     [Parameter]
-    public Project? project { get; set; }
-
-    [Parameter]
-    public ProjectMember? ProjectMember { get; set; }
-
+    public Project? Project { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        project.Status = Core.Model.Enum.Status.Færdiggjort;
-        project.RealizedDate = DateTime.Today;
-        project.CurrentPhases = ID;
-        foreach (var currentPhases in project.CurrentPhases)
+        Project.Status = Core.Model.Enum.Status.Færdiggjort;
+        Project.RealizedDate = DateTime.Today;
+        foreach (var currentPhases in Project.CurrentPhases)
         {
             currentPhases.Status = Core.Model.Enum.Status.Færdiggjort;
         }
@@ -50,16 +43,16 @@
     private async Task Create()
     {
 
-        var response = await http.PostAsJsonAsync("https://localhost:7282/api/Project/FinishProject", project);
+        var response = await http.PostAsJsonAsync("https://localhost:7282/api/Project/FinishProject", Project);
 
         if (response.IsSuccessStatusCode)
         {
-            confirmationService.SetSuccessMessage("Projektet er opdateret!");
+            confirmationService.SetSuccessMessage("Projektet er afsluttet!");
             navManger.NavigateTo("/");
         }
         else
         {
-            confirmationService.SetWarningMessage("Fejl ved opdatering af Projekt. Prøv igen.");
+            confirmationService.SetWarningMessage("Fejl ved afslutning af projektet. Prøv igen.");
         }
 
     }
