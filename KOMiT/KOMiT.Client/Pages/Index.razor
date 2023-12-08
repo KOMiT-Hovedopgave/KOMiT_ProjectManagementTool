@@ -30,12 +30,10 @@ else
 
         <Modal @ref="modalFinishProject">
             <BodyTemplate>
-                <FinishProject Project="selectedProject"  OnClick="OnHideModalFinishProjectClick">
-
+                <FinishProject Project="selectedProject"  OnClick="OnHideModalFinishProjectClick" OnUpdate="OnHideModalFinishProjectClick">
                 </FinishProject>
             </BodyTemplate>
         </Modal>
-
 
 
         <Modal @ref="modal" Title="Opret standardfase">
