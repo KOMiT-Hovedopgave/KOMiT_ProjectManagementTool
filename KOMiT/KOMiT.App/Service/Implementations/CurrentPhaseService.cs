@@ -30,8 +30,8 @@ namespace KOMiT.App.Service.Implementations
         {
             var result = await _currentPhaseRepository.GetEstimatedAndRealizedData(id);
 
-            double estimatedSubProjectDays = CalculateDateDays(result.EstimatedEndDate, result.EstimatedStartDate);
-            double realizedSubProjectsDays = CalculateRealizedCurrentPhasesDays(result);
+            double estimatedCurrentPhaseDays = CalculateDateDays(result.EstimatedEndDate, result.EstimatedStartDate);
+            double realizedCurrentPhasesDays = CalculateRealizedCurrentPhasesDays(result);
 
             List<double> estimatedCurrentSubGoalsDays = CalculateEstimatedSubGoalsDays(result);
             List<double> realizedCurrentSubGoalsDays = CalculateRealizedCurrentSubGoalsDays(result);
@@ -42,8 +42,8 @@ namespace KOMiT.App.Service.Implementations
             List<CurrentTaskDaysDTO> currentTasksDaysDTO = CalculateCurrentTasksDTO(result);
 
             return new EstimatedAndRealizedDaysDTO(
-                estimatedSubProjectDays,
-                realizedSubProjectsDays,
+                estimatedCurrentPhaseDays,
+                realizedCurrentPhasesDays,
                 estimatedCurrentSubGoalsDays.Sum(),
                 realizedCurrentSubGoalsDays.Sum(),
                 estimatedCurrentTasksDays.Sum(),
