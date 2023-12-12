@@ -23,12 +23,15 @@
 </EditForm>
 
 @code {
-    
+
     [Parameter]
     public EventCallback<MouseEventArgs> OnClick { get; set; }
 
     [Parameter]
     public Project? Project { get; set; }
+
+    [Parameter]
+    public EventCallback OnUpdate { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
@@ -44,11 +47,11 @@
     {
 
         var response = await http.PostAsJsonAsync("https://localhost:7282/api/Project/FinishProject", Project);
-
+        await OnUpdate.InvokeAsync();
         if (response.IsSuccessStatusCode)
         {
             confirmationService.SetSuccessMessage("Projektet er afsluttet!");
-            navManger.NavigateTo("/");
+            
         }
         else
         {
