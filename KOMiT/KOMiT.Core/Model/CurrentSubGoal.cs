@@ -13,9 +13,9 @@ public class CurrentSubGoal
     public int Id { get; set; }
 
     [Required]
-    [StringLength(50, ErrorMessage = "Navn for lang")]
+    [StringLength(50, ErrorMessage = "Navnet på et delmål må maks. være 50 antal tegn")]
     public string Name { get; set; }
-    [Required]
+    [Required(ErrorMessage = "Beskrivelsen for delmål skal være udfyldt")]
     public string Description { get; set; }
     public Status Status { get; set; }
     [Required]

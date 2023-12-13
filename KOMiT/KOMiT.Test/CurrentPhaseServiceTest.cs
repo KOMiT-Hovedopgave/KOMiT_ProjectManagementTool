@@ -50,8 +50,8 @@ namespace KOMiT.Test
                 };
                 mockRepository.Setup(repo => repo.GetEstimatedAndRealizedData(id)).ReturnsAsync(mockResult);
 
-                double estimatedSubProjectDays = 776;
-                double realizedSubProjectsDays = 762;
+                double estimatedCurrentPhaseDays = 776;
+                double realizedCurrentPhasesDays = 762;
                 double estimatedCurrentSubGoalsDays = 61 + 213;
                 double realizedCurrentSubGoalsDays = 57 + 362;
                 double estimatedCurrentTasksDays = 51 + 264;
@@ -73,8 +73,8 @@ namespace KOMiT.Test
                
                 // Assert
                 Assert.NotNull(result);
-                Assert.Equal(estimatedSubProjectDays, result.EstimatedCurrentPhaseDaysSum);
-                Assert.Equal(realizedSubProjectsDays, result.RealizedCurrentPhaseDaysSum);
+                Assert.Equal(estimatedCurrentPhaseDays, result.EstimatedCurrentPhaseDaysSum);
+                Assert.Equal(realizedCurrentPhasesDays, result.RealizedCurrentPhaseDaysSum);
                 Assert.Equal(estimatedCurrentSubGoalsDays, result.EstimatedCurrentSubGoalsDaysSum);
                 Assert.Equal(realizedCurrentSubGoalsDays, result.RealizedCurrentSubGoalsDaysSum);
                 Assert.Equal(estimatedCurrentTasksDays, result.EstimatedCurrentTaskDaysSum);
