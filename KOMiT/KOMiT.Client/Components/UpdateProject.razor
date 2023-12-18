@@ -1,80 +1,85 @@
 ﻿@using KOMiT.Core.Model
+@using KOMiT.Core.Model.Enum;
 @inject HttpClient http
 @inject NavigationManager navManger
 @inject ConfirmationService confirmationService
 
-<div class="row">
-    <div class="col-md-4">
-        <EditForm class="container" Model="Project" OnInvalidSubmit="@Update">
-            <DataAnnotationsValidator />
-            <ValidationSummary />
 
-            <div class="form-group">
-                <label>Projektnavn</label>
-                <input @bind-value="Project.Name" class="form-control" />
-                <span asp-validation-for="Project.Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label>Beskrivelse</label>
-                <input @bind-value="Project.Description" class="form-control" />
-                <span asp-validation-for="Project.Beskrivelse" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label>Projekttype</label>
-                <select @bind="Project.ProjectType" class="form-control" style="width: 150px;">
-                    <option value="Drift">Drift</option>
-                    <option value="Udvikling">Udvikling</option>
-                    <option value="Integration">Integration</option>
-                </select>
-                <span asp-validation-for="Project.Status" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label>Prioritet</label>
-                <select @bind="Project.Priority" class="form-control" style="width: 150px;">
-                    <option value="Høj">Høj</option>
-                    <option value="Mellem">Mellem</option>
-                    <option value="Lav">Lav</option>
-                </select>
-                <span asp-validation-for="Project.Prioritet" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label>Status</label>
-                <select @bind="Project.Status" class="form-control" style="width: 150px;">
-                    <option value="Aktiv">Aktiv</option>
-                    <option value="Inaktiv">Inaktiv</option>
-                    <option value="Færdiggjort">Færdiggjort</option>
-                </select>
-                <span asp-validation-for="Project.Status" class="text-danger"></span>
-            </div>
-
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label>Startdato</label>
-                        <div style="display: flex; gap: 10px;">
-                            <InputDate style="width: 150px;" @bind-Value="Project.EstimatedStartDate" class="form-control" />
-                        </div>
-                        <span asp-validation-for="Project.Startdato" class="text-danger"></span>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group">
-                        <label>Slutdato</label>
-                        <div style="display: flex; gap: 10px;">
-                            <InputDate style="width: 150px;" @bind-Value="Project.EstimatedEndDate" class="form-control" />
-                        </div>
-                        <span asp-validation-for="Project.slutdato" class="text-danger"></span>
-                    </div>
-                </div>
-            </div>
-            <div style="margin-top:10px;">
-                <Button Color="ButtonColor.Secondary" @onclick="OnClick">Luk</Button>
-                <Button Color="ButtonColor.Primary" @onclick="Update"> Opdatere</Button>
-            </div>
-        </EditForm>
+<EditForm class="container" Model="Project">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <div class="form-group" style="margin-bottom:10px">
+        <label>Projektnavn</label>
+        <input @bind-value="Project.Name" class="form-control" />
     </div>
-</div>
+    <div class="form-group" style="margin-bottom:10px">
+        <label>Beskrivelse</label>
+        <InputTextArea @bind-Value="Project.Description" class="form-control" />
+    </div>
+    <div class="form-group" style="margin-bottom:10px">
+        <label>Projekttype</label>
+        <InputSelect @bind-Value="Project.ProjectType">
+            @foreach (var projectType in Enum.GetValues(typeof(ProjectType)))
+            {
+                <option value="@projectType">
+                    @projectType
+                </option>
+            }
+        </InputSelect>
+        <span asp-validation-for="project.Status" class="text-danger"></span>
+    </div>
+    <div class="form-group" style="margin-bottom:10px">
+        <label>Prioritet</label>
+        <InputSelect @bind-Value="Project.Priority">
+            @foreach (var priority in Enum.GetValues(typeof(Priority)))
+            {
+                <option value="@priority">
+                    @priority
+                </option>
+            }
+        </InputSelect>
+        <span asp-validation-for="project.Prioritet" class="text-danger"></span>
+    </div>
+    <div class="form-group" style="margin-bottom:10px">
+        <label>Status</label>
+        <InputSelect @bind-Value="Project.Status">
+            @foreach (var status in Enum.GetValues(typeof(Status)))
+            {
+                <option value="@status">
+                    @status
+                </option>
+            }
+        </InputSelect>
+        <span asp-validation-for="project.Status" class="text-danger"></span>
+    </div>
 
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label>Startdato</label>
+                <div>
+                    <InputDate style="width: 150px;" @bind-Value="Project.EstimatedStartDate" class="form-control" />
+                </div>
+                <span asp-validation-for="Project.Startdato" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label>Slutdato</label>
+                <div>
+                    <InputDate style="width: 150px;" @bind-Value="Project.EstimatedEndDate" class="form-control" />
+                </div>
+                <span asp-validation-for="Project.slutdato" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+
+    <div style="margin-top:10px;">
+        <Button Color="ButtonColor.Primary" @onclick="Update"> Opret</Button>
+        <Button Color="ButtonColor.Secondary" @onclick="OnClick">Luk</Button>
+    </div>
+
+</EditForm>
 @code {
     [Parameter]
     public int ID { get; set; }
