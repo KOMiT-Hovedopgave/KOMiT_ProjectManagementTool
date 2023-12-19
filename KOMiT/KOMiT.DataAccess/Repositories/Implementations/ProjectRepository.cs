@@ -1,12 +1,6 @@
 ﻿using KOMiT.Core.Model;
-using KOMiT.Core.Model.Enum;
 using KOMiT.DataAccess.Persistence;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace KOMiT.DataAccess.Repositories.Implementations;
 

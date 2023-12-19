@@ -1,28 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace KOMiT.Core.Model;
-
-public class Competence
+﻿namespace KOMiT.Core.Model
 {
-    public int Id { get; set; }
-    public string Title { get; set; }
-    public string Description { get; set; }
-    public string Experience { get; set; }
-
-    public int? EmployeeId { get; set; }
-    public Employee? Employee { get; set; }
-    
-    public Competence() { }
-    public Competence(int id, string title, string description, string experience)
+    public class Competence
     {
-        Id = id;
-        Title = title;
-        Description = description;
-        Experience = experience;
-    }
+        public int Id { get; set; }
+        public string Title { get; set; }
+        public string Description { get; set; }
+        public string Experience { get; set; }
 
+        public int? EmployeeId { get; set; }
+        public Employee? Employee { get; set; }
+
+        public Competence() { }
+        public Competence(int id, string title, string description, string experience)
+        {
+            Id = id;
+            Title = title;
+            Description = description;
+            Experience = experience;
+        }
+
+    }
 }

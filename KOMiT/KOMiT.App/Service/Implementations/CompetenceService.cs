@@ -1,31 +1,23 @@
 ﻿using KOMiT.Core.Model;
 using KOMiT.DataAccess.Repositories;
-using KOMiT.DataAccess.Repositories.Implementations;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace KOMiT.App.Service.Implementations
+namespace KOMiT.App.Service.Implementations;
+
+public class CompetenceService : ICompetenceService
 {
-    public class CompetenceService : ICompetenceService
+    private ICompetenceRepository _competenceRepository;
+
+    public CompetenceService(ICompetenceRepository competenceRepository)
     {
-        private ICompetenceRepository _competenceRepository;
+        _competenceRepository = competenceRepository;
+    }
+    public async Task<ICollection<Competence>> GetAll()
+    {
+        return await _competenceRepository.GetAll();
+    }
 
-        public CompetenceService(ICompetenceRepository competenceRepository)
-        {
-            _competenceRepository = competenceRepository;
-        }
-        public async Task<ICollection<Competence>> GetAll()
-        {
-            return await _competenceRepository.GetAll();
-        }
-
-        public async Task<ICollection<Competence>> GetDetails()
-        {
-            return await _competenceRepository.GetDetails();
-
-        }
+    public async Task<ICollection<Competence>> GetDetails()
+    {
+        return await _competenceRepository.GetDetails();
     }
 }

@@ -3,8 +3,6 @@
 @inject NavigationManager navManger
 @inject ConfirmationService confirmationService
 
-
-
 <EditForm class="container" Model="employee" OnValidSubmit="@Create">
     <DataAnnotationsValidator />
     <ValidationSummary />
@@ -47,7 +45,7 @@
 }
 
 @code {
-    private Employee employee = new Employee();
+    public Employee employee = new Employee();
 
     [Parameter]
     public EventCallback<MouseEventArgs> OnClick { get; set; }
@@ -66,6 +64,5 @@
             confirmationService.SetWarningMessage("Fejl ved oprettelse af ansat. Prøv igen.");
         }
     }
-
 }
 

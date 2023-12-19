@@ -1,10 +1,5 @@
 ﻿using KOMiT.Core.Model.Enum;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace KOMiT.Core.Model;
 
@@ -26,7 +21,7 @@ public class CurrentSubGoal
     public int? CurrentPhaseId { get; set; }
     public CurrentPhase? CurrentPhase { get; set; }
 
-    public ICollection <CurrentTask>? CurrentTasks { get; set; } 
+    public ICollection<CurrentTask>? CurrentTasks { get; set; }
 
     public CurrentSubGoal()
     {

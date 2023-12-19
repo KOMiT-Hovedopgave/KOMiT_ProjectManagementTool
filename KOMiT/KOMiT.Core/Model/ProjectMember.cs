@@ -1,4 +1,5 @@
 ﻿using KOMiT.Core.Model.Enum;
+
 namespace KOMiT.Core.Model;
 
 public class ProjectMember
@@ -17,7 +18,7 @@ public class ProjectMember
     {
 
     }
-    public ProjectMember(int id, ProjectRole projectRole, ProjectMemberStatus projectMemberStatus, ICollection<Employee>? employees) 
+    public ProjectMember(int id, ProjectRole projectRole, ProjectMemberStatus projectMemberStatus, ICollection<Employee>? employees)
     {
         Id = id;
         ProjectRole = projectRole;

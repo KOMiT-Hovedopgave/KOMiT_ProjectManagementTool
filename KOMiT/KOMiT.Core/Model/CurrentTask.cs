@@ -1,4 +1,5 @@
 ﻿using KOMiT.Core.Model.Enum;
+
 namespace KOMiT.Core.Model;
     public class CurrentTask
     {

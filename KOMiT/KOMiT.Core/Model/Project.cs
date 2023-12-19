@@ -7,7 +7,7 @@ public class Project
     public int Id { get; set; }
     public string Name { get; set; }
     public string Description { get; set; }
-    public ProjectType ProjectType { get; set; } 
+    public ProjectType ProjectType { get; set; }
     public Priority Priority { get; set; }
     public Status Status { get; set; }
     public DateTime EstimatedStartDate { get; set; }
@@ -18,7 +18,7 @@ public class Project
     public ICollection<CurrentPhase>? CurrentPhases { get; set; } = new List<CurrentPhase>();
 
 
-    public  Project()
+    public Project()
     {
         EstimatedStartDate = DateTime.Now;
         EstimatedEndDate = DateTime.Now;

@@ -1,55 +1,48 @@
 ﻿using KOMiT.Core.Model;
 using KOMiT.DataAccess.Persistence;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.XPath;
 
-namespace KOMiT.DataAccess.Repositories.Implementations
+namespace KOMiT.DataAccess.Repositories.Implementations;
+
+public class ProjectMemberRepository : IProjectMemberRepository
 {
-    public class ProjectMemberRepository : IProjectMemberRepository
+    private DatabaseContext _context;
+    public ProjectMemberRepository(DatabaseContext context)
     {
-        private DatabaseContext _context;
-        public ProjectMemberRepository(DatabaseContext context)
+        _context = context;
+    }
+    public async Task AddProjectMemberToCurrentPhase(int currentPhaseId, int employeeId, ProjectMember projectMember)
+    {
+        var currentPhase = _context.CurrentPhases.Include(cp => cp.ProjectMembers).Single(x => x.Id == currentPhaseId);
+        var employee = _context.Employees.Include(cp => cp.ProjectMembers).Single(x => x.Id == employeeId);
+        _context.ProjectMembers.Add(projectMember);
+        currentPhase.ProjectMembers.Add(projectMember);
+        employee.ProjectMembers.Add(projectMember);
+
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task<List<Employee>> GetEmployeesWithoutProjectMemberToCurrentPhase(int id)
+    {
+        var currentPhase = await _context.CurrentPhases
+            .Include(cp => cp.ProjectMembers)
+            .ThenInclude(cp => cp.Employees)
+            .Where(x => x.Id == id)
+            .FirstOrDefaultAsync();
+
+        List<Employee> employees = new List<Employee>();
+
+        if (currentPhase != null)
         {
-            _context = context;
-        }
-        public async Task AddProjectMemberToCurrentPhase(int currentPhaseId, int employeeId, ProjectMember projectMember)
-        {
-            var currentPhase = _context.CurrentPhases.Include(cp => cp.ProjectMembers).Single(x => x.Id == currentPhaseId);
-            var employee = _context.Employees.Include(cp => cp.ProjectMembers).Single(x => x.Id == employeeId);
-            _context.ProjectMembers.Add(projectMember);
-            currentPhase.ProjectMembers.Add(projectMember);
-            employee.ProjectMembers.Add(projectMember);
+            var currentPhaseEmployeeIds = currentPhase.ProjectMembers
+                .SelectMany(pm => pm.Employees.Select(e => e.Id))
+                .ToList();
 
-            await _context.SaveChangesAsync();
+            employees = await _context.Employees
+                .Where(e => !currentPhaseEmployeeIds.Contains(e.Id))
+                .ToListAsync();
         }
 
-        public async Task<List<Employee>> GetEmployeesWithoutProjectMemberToCurrentPhase(int id)
-        {
-            var currentPhase = await _context.CurrentPhases
-                .Include(cp => cp.ProjectMembers)
-                .ThenInclude(cp => cp.Employees)
-                .Where(x => x.Id == id)
-                .FirstOrDefaultAsync();
-
-            List<Employee> employees = new List<Employee>();
-
-            if (currentPhase != null)
-            {
-                var currentPhaseEmployeeIds = currentPhase.ProjectMembers
-                    .SelectMany(pm => pm.Employees.Select(e => e.Id))
-                    .ToList();
-
-                employees = await _context.Employees
-                    .Where(e => !currentPhaseEmployeeIds.Contains(e.Id))
-                    .ToListAsync();
-            }
-
-            return employees;
-        }
+        return employees;
     }
 }

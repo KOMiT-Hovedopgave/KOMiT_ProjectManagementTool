@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace KOMiT.Core.Model;
+﻿namespace KOMiT.Core.Model;
 
 public class StandardTask
 {   
@@ -22,5 +16,4 @@ public class StandardTask
         Title = title;
         Description = description;
     }
-
 }

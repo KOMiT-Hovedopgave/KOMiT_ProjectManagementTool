@@ -1,6 +1,4 @@
 ﻿using KOMiT.Core.Model.Enum;
-using System;
-using System.Xml.Linq;
 
 namespace KOMiT.Core.Model;
 
@@ -14,7 +12,7 @@ public class CurrentPhase
     public DateTime? RealizedDate { get; set; }
 
     //FK bliver lavet her (ProjectId)
-    public int? ProjectId {get; set;}
+    public int? ProjectId { get; set; }
     public Project? Project { get; set; }
 
     public ICollection<CurrentSubGoal>? CurrentSubGoals { get; set; }
@@ -25,12 +23,11 @@ public class CurrentPhase
     public int StandardPhaseId { get; set; }
     public StandardPhase StandardPhase { get; set; }
 
-
     public CurrentPhase()
     {
     }
 
-    public CurrentPhase(int id, Status status, DateTime estimatedStartDate, DateTime estimatedEndDate, string? comment, DateTime? realizedDate, int? projectId, int standardPhaseId, StandardPhase standardPhase)     
+    public CurrentPhase(int id, Status status, DateTime estimatedStartDate, DateTime estimatedEndDate, string? comment, DateTime? realizedDate, int? projectId, int standardPhaseId, StandardPhase standardPhase)
     {
         Id = id;
         Status = status;
@@ -48,9 +45,4 @@ public class CurrentPhase
         CurrentSubGoals = currentSubGoals;
         ProjectMembers = projectMembers;
     }
-
-
-
-
-
 }
