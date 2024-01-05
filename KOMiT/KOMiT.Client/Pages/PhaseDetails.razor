@@ -16,22 +16,22 @@ else
     <Button @onclick="OnShowModalAddProjectMemberToCurrentPhaseClick" Color="ButtonColor.Primary">Tilføj projektdeltagere</Button>
         <Modal @ref="modal" Title="Opret delmål">
             <BodyTemplate>
-                <CreateCurrentSubGoal ID="ID" OnClick="OnHideModalClick"></CreateCurrentSubGoal>
+                <CreateCurrentSubGoal ID="ID" OnClick="OnHideModalClick" OnUpdate="OnHideModalClick"></CreateCurrentSubGoal>
             </BodyTemplate>
         </Modal>
         <Modal @ref="modalAddProjectMemberToCurrentPhase" Title="Tilføj projektdeltager">
             <BodyTemplate>
-                <AddProjectMemberToCurrentPhase ID="ID" OnClick="OnHideModalUAddProjectMemberToCurrentPhaseClick"></AddProjectMemberToCurrentPhase>
+                <AddProjectMemberToCurrentPhase ID="ID" OnClick="OnHideModalUAddProjectMemberToCurrentPhaseClick" OnUpdate="OnHideModalUAddProjectMemberToCurrentPhaseClick"></AddProjectMemberToCurrentPhase>
             </BodyTemplate>
         </Modal>
         <Modal @ref="modalFinishCurrentSubGoal">
             <BodyTemplate>
-                <FinishCurrentSubGoal ID="ID" CurrentSubGoal="_selectedCurrentSubGoal" OnClick="OnHideModalFinishCurrentSubGoalClick"></FinishCurrentSubGoal>
+                <FinishCurrentSubGoal ID="ID" CurrentSubGoal="_selectedCurrentSubGoal" OnClick="OnHideModalFinishCurrentSubGoalClick" OnUpdate="OnHideModalFinishCurrentSubGoalClick"></FinishCurrentSubGoal>
             </BodyTemplate>
         </Modal>
         <Modal @ref="modalUpdateCurrentSubGoal">
             <BodyTemplate>
-                <UpdateCurrentSubGoal ID="ID" CurrentSubGoal="_selectedCurrentSubGoal" OnClick="OnHideModalUpdateCurrentSubGoalClick"></UpdateCurrentSubGoal>
+                <UpdateCurrentSubGoal ID="ID" CurrentSubGoal="_selectedCurrentSubGoal" OnClick="OnHideModalUpdateCurrentSubGoalClick" OnUpdate="OnHideModalUpdateCurrentSubGoalClick"></UpdateCurrentSubGoal>
             </BodyTemplate>
         </Modal>
 </div>
@@ -316,6 +316,14 @@ else
     [Parameter]
     public int ID { get; set; }
 
+    public ChartData ChartData { get; set; }
+
+    public BarChartOptions BarChartOptions { get; set; }
+
+    public ChartData ChartDataCurrentTask { get; set; }
+
+    public BarChartOptions BarChartOptionsCurrentTask { get; set; }
+
     private BarChart? barChartCurrentSubGoals;
     private BarChart? barChartCurrentTasks;
     private CurrentPhase? _currentPhase;
@@ -339,10 +347,74 @@ else
         var response = await _httpClient.DeleteAsync($"https://localhost:7282/api/currentsubgoal/DeleteCurrentSubGoal/{id}");
         if (response.IsSuccessStatusCode)
         {
-            navigationManager.NavigateTo($"/phasedetails/{ID}", true);
+            //navigationManager.NavigateTo($"/phasedetails/{ID}", true);
+            _currentPhase = await _httpClient.GetFromJsonAsync<CurrentPhase>($"https://localhost:7282/api/currentphase/GetDetailsById/{ID}");
+            _estimatedAndRealizedDaysDTO = await _httpClient.GetFromJsonAsync<EstimatedAndRealizedDaysDTO>($"https://localhost:7282/api/currentphase/GetCalculatedDays/{ID}");
+            barChartCurrentSubGoals.UpdateAsync(ChartData, BarChartOptions);
+            barChartCurrentTasks.UpdateAsync(ChartDataCurrentTask, BarChartOptionsCurrentTask);
         }
     }
 
+    private void SelectedCurrentSubGoal(CurrentSubGoal currentSubGoal)
+    {
+        _selectedCurrentSubGoal = currentSubGoal;
+    }
+
+    private async Task OnShowModalClick()
+    {
+        await modal?.ShowAsync();
+    }
+
+    private async Task OnHideModalClick()
+    {
+        await modal?.HideAsync();
+        _currentPhase = await _httpClient.GetFromJsonAsync<CurrentPhase>($"https://localhost:7282/api/currentphase/GetDetailsById/{ID}");
+        _estimatedAndRealizedDaysDTO = await _httpClient.GetFromJsonAsync<EstimatedAndRealizedDaysDTO>($"https://localhost:7282/api/currentphase/GetCalculatedDays/{ID}");
+        barChartCurrentSubGoals.UpdateAsync(ChartData, BarChartOptions);
+        barChartCurrentTasks.UpdateAsync(ChartDataCurrentTask, BarChartOptionsCurrentTask);
+        this.StateHasChanged();
+    }
+
+    private async Task OnShowModalFinishCurrentSubGoalClick(CurrentSubGoal currentSubGoal)
+    {
+        SelectedCurrentSubGoal(currentSubGoal);
+        await modalFinishCurrentSubGoal?.ShowAsync();
+    }
+
+    private async Task OnHideModalFinishCurrentSubGoalClick()
+    {
+        await modalFinishCurrentSubGoal?.HideAsync();
+        _currentPhase = await _httpClient.GetFromJsonAsync<CurrentPhase>($"https://localhost:7282/api/currentphase/GetDetailsById/{ID}");
+        _estimatedAndRealizedDaysDTO = await _httpClient.GetFromJsonAsync<EstimatedAndRealizedDaysDTO>($"https://localhost:7282/api/currentphase/GetCalculatedDays/{ID}");
+        barChartCurrentSubGoals.UpdateAsync(ChartData, BarChartOptions);
+        barChartCurrentTasks.UpdateAsync(ChartDataCurrentTask, BarChartOptionsCurrentTask);
+    }
+
+    private async Task OnShowModalUpdateCurrentSubGoalClick(CurrentSubGoal currentSubGoal)
+    {
+        SelectedCurrentSubGoal(currentSubGoal);
+        await modalUpdateCurrentSubGoal?.ShowAsync();
+    }
+
+    private async Task OnHideModalUpdateCurrentSubGoalClick()
+    {
+        await modalUpdateCurrentSubGoal?.HideAsync();
+        _currentPhase = await _httpClient.GetFromJsonAsync<CurrentPhase>($"https://localhost:7282/api/currentphase/GetDetailsById/{ID}");
+        _estimatedAndRealizedDaysDTO = await _httpClient.GetFromJsonAsync<EstimatedAndRealizedDaysDTO>($"https://localhost:7282/api/currentphase/GetCalculatedDays/{ID}");
+        barChartCurrentSubGoals.UpdateAsync(ChartData, BarChartOptions);
+        barChartCurrentTasks.UpdateAsync(ChartDataCurrentTask, BarChartOptionsCurrentTask);
+    }
+
+    private async Task OnShowModalAddProjectMemberToCurrentPhaseClick()
+    {
+        await modalAddProjectMemberToCurrentPhase?.ShowAsync();
+    }
+
+    private async Task OnHideModalUAddProjectMemberToCurrentPhaseClick()
+    {
+        await modalAddProjectMemberToCurrentPhase?.HideAsync();
+        _currentPhase = await _httpClient.GetFromJsonAsync<CurrentPhase>($"https://localhost:7282/api/currentphase/GetDetailsById/{ID}");
+    }
 
     private async Task RenderBarChartCurrentSubGoals()
     {
@@ -350,7 +422,7 @@ else
         var dataListEstimatedSubGoalDays = await DataListEstimatedSubGoalDaysMethod();
         var dataListRealizedSubGoalDays = await DataListRealizedSubGoalDaysMethod();
 
-        var data = new ChartData
+        ChartData = new ChartData
             {
                 Labels = LabelsList,
                 Datasets = new List<IChartDataset>()
@@ -374,23 +446,23 @@ else
                 }
             };
 
-        var options = new BarChartOptions();
+        BarChartOptions = new BarChartOptions();
 
-        options.Interaction.Mode = InteractionMode.Index;
+        BarChartOptions.Interaction.Mode = InteractionMode.Index;
 
-        options.Plugins.Title.Text = "Dage pr. delmål";
-        options.Plugins.Title.Display = true;
-        options.Plugins.Title.Font.Size = 20;
+        BarChartOptions.Plugins.Title.Text = "Dage pr. delmål";
+        BarChartOptions.Plugins.Title.Display = true;
+        BarChartOptions.Plugins.Title.Font.Size = 20;
 
-        options.Responsive = true;
+        BarChartOptions.Responsive = true;
 
-        options.Scales.X.Title.Text = "Delmål";
-        options.Scales.X.Title.Display = true;
+        BarChartOptions.Scales.X.Title.Text = "Delmål";
+        BarChartOptions.Scales.X.Title.Display = true;
 
-        options.Scales.Y.Title.Text = "Dage";
-        options.Scales.Y.Title.Display = true;
+        BarChartOptions.Scales.Y.Title.Text = "Dage";
+        BarChartOptions.Scales.Y.Title.Display = true;
 
-        await barChartCurrentSubGoals.InitializeAsync(data, options);
+        await barChartCurrentSubGoals.InitializeAsync(ChartData, BarChartOptions);
     }
 
     private async Task<List<double>> DataListEstimatedSubGoalDaysMethod()
@@ -429,7 +501,7 @@ else
         var dataListEstimatedSubGoalDays = await DataListEstimatedTaskDaysMethod();
         var dataListRealizedSubGoalDays = await DataListRealizedTaskDaysMethod();
 
-        var data = new ChartData
+        ChartDataCurrentTask = new ChartData
             {
                 Labels = LabelsList,
                 Datasets = new List<IChartDataset>()
@@ -453,23 +525,23 @@ else
                 }
             };
 
-        var options = new BarChartOptions();
+        BarChartOptionsCurrentTask = new BarChartOptions();
 
-        options.Interaction.Mode = InteractionMode.Index;
+        BarChartOptionsCurrentTask.Interaction.Mode = InteractionMode.Index;
 
-        options.Plugins.Title.Text = "Dage pr. opgave";
-        options.Plugins.Title.Display = true;
-        options.Plugins.Title.Font.Size = 20;
+        BarChartOptionsCurrentTask.Plugins.Title.Text = "Dage pr. opgave";
+        BarChartOptionsCurrentTask.Plugins.Title.Display = true;
+        BarChartOptionsCurrentTask.Plugins.Title.Font.Size = 20;
 
-        options.Responsive = true;
+        BarChartOptionsCurrentTask.Responsive = true;
 
-        options.Scales.X.Title.Text = "Opgaver";
-        options.Scales.X.Title.Display = true;
+        BarChartOptionsCurrentTask.Scales.X.Title.Text = "Opgaver";
+        BarChartOptionsCurrentTask.Scales.X.Title.Display = true;
 
-        options.Scales.Y.Title.Text = "Dage";
-        options.Scales.Y.Title.Display = true;
+        BarChartOptionsCurrentTask.Scales.Y.Title.Text = "Dage";
+        BarChartOptionsCurrentTask.Scales.Y.Title.Display = true;
 
-        await barChartCurrentTasks.InitializeAsync(data, options);
+        await barChartCurrentTasks.InitializeAsync(ChartDataCurrentTask, BarChartOptionsCurrentTask);
     }
 
     private async Task<List<double>> DataListEstimatedTaskDaysMethod()
@@ -502,52 +574,7 @@ else
         return LabelsList;
     }
 
-    private void SelectedCurrentSubGoal(CurrentSubGoal currentSubGoal)
-    {
-        _selectedCurrentSubGoal = currentSubGoal;
-    }
-
-    private async Task OnShowModalClick()
-    {
-        await modal?.ShowAsync();
-    }
-
-    private async Task OnHideModalClick()
-    {
-        await modal?.HideAsync();
-    }
-
-    private async Task OnShowModalFinishCurrentSubGoalClick(CurrentSubGoal currentSubGoal)
-    {
-        SelectedCurrentSubGoal(currentSubGoal);
-        await modalFinishCurrentSubGoal?.ShowAsync();
-    }
-
-    private async Task OnHideModalFinishCurrentSubGoalClick()
-    {
-        await modalFinishCurrentSubGoal?.HideAsync();
-    }
-
-    private async Task OnShowModalUpdateCurrentSubGoalClick(CurrentSubGoal currentSubGoal)
-    {
-        SelectedCurrentSubGoal(currentSubGoal);
-        await modalUpdateCurrentSubGoal?.ShowAsync();
-    }
-
-    private async Task OnHideModalUpdateCurrentSubGoalClick()
-    {
-        await modalUpdateCurrentSubGoal?.HideAsync();
-    }
-
-    private async Task OnShowModalAddProjectMemberToCurrentPhaseClick()
-    {
-        await modalAddProjectMemberToCurrentPhase?.ShowAsync();
-    }
-
-    private async Task OnHideModalUAddProjectMemberToCurrentPhaseClick()
-    {
-        await modalAddProjectMemberToCurrentPhase?.HideAsync();
-    }
+    
     
 }
 

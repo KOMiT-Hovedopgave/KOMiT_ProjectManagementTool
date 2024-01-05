@@ -32,6 +32,9 @@
     public EventCallback<MouseEventArgs> OnClick { get; set; }
 
     [Parameter]
+    public EventCallback OnUpdate { get; set; }
+
+    [Parameter]
     public CurrentSubGoal? CurrentSubGoal { get; set; }
 
     protected override async Task OnInitializedAsync()
@@ -46,7 +49,8 @@
             var response = await http.PutAsJsonAsync("https://localhost:7282/api/CurrentSubGoal/UpdateCurrentSubGoal", CurrentSubGoal);
             if (response.IsSuccessStatusCode)
                 {
-                    navigationManager.NavigateTo($"/phasedetails/{ID}", true);
+                    //navigationManager.NavigateTo($"/phasedetails/{ID}", true);
+                await OnUpdate.InvokeAsync();
                 }
         }
         catch (HttpRequestException ex)

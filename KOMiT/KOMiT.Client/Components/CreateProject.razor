@@ -103,6 +103,9 @@
     [Parameter]
     public EventCallback<MouseEventArgs> OnClick { get; set; }
 
+    [Parameter]
+    public EventCallback OnUpdate { get; set; }
+
     private async Task Create()
     {
         if (project.EstimatedEndDate == default)
@@ -114,8 +117,9 @@
 
         if (response.IsSuccessStatusCode)
         {
-            confirmationService.SetSuccessMessage("Projektet er oprettet succesfuldt!");
-            navManger.NavigateTo("/", true);
+            //confirmationService.SetSuccessMessage("Projektet er oprettet succesfuldt!");
+            //navManger.NavigateTo("/", true);
+            await OnUpdate.InvokeAsync();
         }
         else
         {

@@ -101,11 +101,11 @@
     private async Task Update()
     {
         var response = await http.PostAsJsonAsync("https://localhost:7282/api/Project/UpdateProject", Project);
-        await OnUpdate.InvokeAsync();
 
         if (response.IsSuccessStatusCode)
         {
-            confirmationService.SetSuccessMessage("Projektet er opdateret!");
+            //confirmationService.SetSuccessMessage("Projektet er opdateret!");
+            await OnUpdate.InvokeAsync();
         }
         else
         {

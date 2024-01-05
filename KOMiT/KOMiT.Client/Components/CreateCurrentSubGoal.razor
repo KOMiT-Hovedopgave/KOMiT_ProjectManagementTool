@@ -32,6 +32,9 @@
     [Parameter]
     public EventCallback<MouseEventArgs> OnClick { get; set; }
 
+    [Parameter]
+    public EventCallback OnUpdate { get; set; }
+
     private CurrentSubGoal? _currentSubGoal;
 
     protected override async Task OnInitializedAsync()
@@ -48,7 +51,8 @@
 
         if (response.IsSuccessStatusCode)
         {
-            navigationManager.NavigateTo($"/phasedetails/{ID}", true);
+            //navigationManager.NavigateTo($"/phasedetails/{ID}", true);
+            await OnUpdate.InvokeAsync();
         }
     }
 }

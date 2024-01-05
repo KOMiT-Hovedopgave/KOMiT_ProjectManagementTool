@@ -2,6 +2,7 @@
 @using KOMiT.Core.Model;
 @inject HttpClient _httpClient
 @inject NavigationManager navigationManager
+@inherits ComponentBase
 
 
 
@@ -16,7 +17,7 @@ else
         <Button Color="ButtonColor.Primary" @onclick="OnShowModalClick">Opret standardfase  </Button>
         <Modal @ref="modalAddProject" Title="Opret Projekt">
             <BodyTemplate>
-                <CreateProject OnClick="OnHideModalClickAddProject">
+                <CreateProject OnClick="OnHideModalClickAddProject" OnUpdate="OnHideModalClickAddProject">
                 </CreateProject>
             </BodyTemplate>
         </Modal>
@@ -43,7 +44,7 @@ else
             </BodyTemplate>
         </Modal>
     </div>
-    <Grid DataProvider="ProjectDataProvider" HeaderRowCssClass="bg-secondary text-white border-bottom-0" TItem="Project" AllowPaging="true" PageSize="12" AllowSorting="true">
+    <Grid @ref="GridComponent" DataProvider="ProjectDataProvider" HeaderRowCssClass="bg-secondary text-white border-bottom-0" TItem="Project" AllowPaging="true" PageSize="12" AllowSorting="true">
         <GridColumn TItem="Project" HeaderText="Id" SortKeySelector=" Item => Item.Id">
             @context.Id
         </GridColumn>
@@ -137,6 +138,8 @@ else
     private Modal modalFinishProject;
     private Modal modalUpdateProject;
     private Project selectedProject;
+    private Grid<Project> GridComponent;
+
 
 
 
@@ -177,12 +180,17 @@ else
     private async Task OnHideModalClickAddProject()
     {
         await modalAddProject.HideAsync();
+        Projects = await _httpClient.GetFromJsonAsync<ICollection<Project>>("https://localhost:7282/api/project/getall");
+        await GridComponent.RefreshDataAsync();
+
     }
 
     private async Task DeleteProject(int id)
     {
         await _httpClient.DeleteAsync($"https://localhost:7282/api/project/DeleteProject/{id}");
-        navigationManager.NavigateTo("/", true);
+        //navigationManager.NavigateTo("/", true);'
+        Projects = await _httpClient.GetFromJsonAsync<ICollection<Project>>("https://localhost:7282/api/project/getall");
+        await GridComponent.RefreshDataAsync(); 
 
     }
     private void SelectedProject(Project project)
@@ -198,6 +206,8 @@ else
     private async Task OnHideModalFinishProjectClick()
     {
         await modalFinishProject.HideAsync();
+        Projects = await _httpClient.GetFromJsonAsync<ICollection<Project>>("https://localhost:7282/api/project/getall");
+        await GridComponent.RefreshDataAsync();
     }
 
     private async Task OnShowModalUpdatehProjectClick(Project project) 
@@ -209,6 +219,8 @@ else
     private async Task OnHideModalUpdateProjectClick()
     {
         await modalUpdateProject.HideAsync();
+        Projects = await _httpClient.GetFromJsonAsync<ICollection<Project>>("https://localhost:7282/api/project/getall");
+        await GridComponent.RefreshDataAsync();
     }
 
     }
